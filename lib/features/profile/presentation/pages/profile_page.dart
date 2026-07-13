@@ -1,0 +1,212 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../../config/routes/app_routes.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_text_styles.dart';
+import '../../../../shared/widgets/app_network_image.dart';
+import '../../../../shared/widgets/empty_state_widget.dart';
+import '../../../../shared/widgets/loading_widget.dart';
+import '../controllers/profile_controller.dart';
+
+class ProfilePage extends GetView<ProfileController> {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.white,
+      body: Obx(() {
+        if (controller.isLoading.value && controller.profile.value == null) {
+          return const LoadingWidget();
+        }
+
+        if (controller.errorMessage.value != null && controller.profile.value == null) {
+          return EmptyStateWidget(
+            icon: Icons.wifi_off,
+            message: controller.errorMessage.value!,
+            actionText: 'Retry',
+            onAction: controller.fetchProfile,
+          );
+        }
+
+        final profile = controller.profile.value;
+        if (profile == null) return const SizedBox.shrink();
+
+        return RefreshIndicator(
+          onRefresh: controller.fetchProfile,
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.fromLTRB(20, 50, 20, 24),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(colors: AppColors.dashboardCardGradient),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Profile', style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                        IconButton(
+                          icon: const Icon(Icons.chevron_right, color: AppColors.white),
+                          onPressed: controller.goToEditProfile,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 28,
+                          backgroundColor: AppColors.white.withOpacity(0.2),
+                          child: profile.profilePic == null || profile.profilePic!.isEmpty
+                              ? const Icon(Icons.person, color: AppColors.white, size: 28)
+                              : ClipOval(
+                                  child: AppNetworkImage(
+                                    url: profile.profilePic,
+                                    width: 56,
+                                    height: 56,
+                                  ),
+                                ),
+                        ),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(profile.name,
+                                style: AppTextStyles.h3.copyWith(color: AppColors.white)),
+                            Text(profile.email,
+                                style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: _StatBox(
+                                value: '${profile.testStats.completedCount}', label: 'Tests Done')),
+                        Expanded(
+                            child: _StatBox(value: '${profile.streak}', label: 'Streak Days')),
+                        Expanded(
+                            child: _StatBox(
+                                value: '${profile.testStats.bestScore}%', label: 'Best Score')),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              _SectionLabel('ACCOUNT'),
+              _MenuTile(icon: Icons.person_outline, label: 'Personal Information', onTap: controller.goToEditProfile),
+              _MenuTile(
+                icon: Icons.notifications_none,
+                label: 'Notifications',
+                trailing: Switch(value: true, activeColor: AppColors.primary, onChanged: (_) {}),
+              ),
+              const SizedBox(height: 12),
+              _SectionLabel('SUBSCRIPTION'),
+              _MenuTile(
+                icon: Icons.credit_card,
+                label: 'My Subscription',
+                onTap: () => Get.toNamed(AppRoutes.subscription),
+              ),
+              const SizedBox(height: 12),
+              _SectionLabel('SUPPORT'),
+              _MenuTile(icon: Icons.access_time, label: 'Help Center'),
+              _MenuTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy'),
+              _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Obx(() => Material(
+                      color: AppColors.errorBg,
+                      borderRadius: BorderRadius.circular(12),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: controller.isLoggingOut.value ? null : controller.logout,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.logout, color: AppColors.error, size: 18),
+                              const SizedBox(width: 8),
+                              Text('Log Out',
+                                  style: AppTextStyles.label.copyWith(color: AppColors.error)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )),
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class _StatBox extends StatelessWidget {
+  final String value;
+  final String label;
+
+  const _StatBox({required this.value, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(value, style: AppTextStyles.h3.copyWith(color: AppColors.white)),
+        Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+      ],
+    );
+  }
+}
+
+class _SectionLabel extends StatelessWidget {
+  final String text;
+
+  const _SectionLabel(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+      child: Text(text, style: AppTextStyles.caption.copyWith(fontWeight: FontWeight.w700)),
+    );
+  }
+}
+
+class _MenuTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Widget? trailing;
+  final VoidCallback? onTap;
+
+  const _MenuTile({required this.icon, required this.label, this.trailing, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Row(
+          children: [
+            Icon(icon, color: AppColors.textSecondary, size: 20),
+            const SizedBox(width: 14),
+            Expanded(child: Text(label, style: AppTextStyles.body)),
+            trailing ?? const Icon(Icons.chevron_right, color: AppColors.textHint, size: 20),
+          ],
+        ),
+      ),
+    );
+  }
+}
