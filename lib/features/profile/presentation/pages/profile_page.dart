@@ -102,24 +102,51 @@ class ProfilePage extends GetView<ProfileController> {
               ),
               const SizedBox(height: 16),
               _SectionLabel('ACCOUNT'),
-              _MenuTile(icon: Icons.person_outline, label: 'Personal Information', onTap: controller.goToEditProfile),
-              _MenuTile(
-                icon: Icons.notifications_none,
-                label: 'Notifications',
-                trailing: Switch(value: true, activeColor: AppColors.primary, onChanged: (_) {}),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  child: Column(
+                    children: [
+                      _MenuTile(icon: Icons.person_outline, label: 'Personal Information', onTap: controller.goToEditProfile),
+                      _MenuTile(
+                        icon: Icons.notifications_none,
+                        label: 'Notifications',
+                        trailing: Switch(value: true, activeColor: AppColors.primary, onChanged: (_) {}),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 12),
+              const _SectionLabel('SUBSCRIPTION'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  color: AppColors.surface,
+                  child: _MenuTile(
+                    icon: Icons.credit_card,
+                    label: 'My Subscription',
+                    onTap: () => Get.toNamed(AppRoutes.subscription),
+                  ),
+                ),
               ),
               const SizedBox(height: 12),
-              _SectionLabel('SUBSCRIPTION'),
-              _MenuTile(
-                icon: Icons.credit_card,
-                label: 'My Subscription',
-                onTap: () => Get.toNamed(AppRoutes.subscription),
-              ),
-              const SizedBox(height: 12),
-              _SectionLabel('SUPPORT'),
-              _MenuTile(icon: Icons.access_time, label: 'Help Center'),
-              _MenuTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy'),
-              _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'),
+              const _SectionLabel('SUPPORT'),
+               const Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 16),
+                 child:  Card(
+                    color: AppColors.surface,
+                  child: Column(
+                    children: [
+                      _MenuTile(icon: Icons.access_time, label: 'Help Center'),
+                      _MenuTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy'),
+                      _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'),
+                    ],
+                  ),
+                               ),
+               ),
+
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -161,11 +188,15 @@ class _StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(value, style: AppTextStyles.h3.copyWith(color: AppColors.white)),
-        Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
-      ],
+    return Card(
+      //color: AppColors.,
+      color: AppColors.textHint,
+      child: Column(
+        children: [
+          Text(value, style: AppTextStyles.h3.copyWith(color: AppColors.white)),
+          Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+        ],
+      ),
     );
   }
 }
