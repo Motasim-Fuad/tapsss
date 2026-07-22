@@ -36,9 +36,9 @@ class ForgotPasswordController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   emailController.dispose();
+  //   super.onClose();
+  // }
 }

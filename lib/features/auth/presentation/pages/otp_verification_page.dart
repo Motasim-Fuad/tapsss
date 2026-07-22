@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/custom_button.dart';
 import '../../../../shared/widgets/inline_error_widget.dart';
+import '../../../../shared/widgets/otp_input_field.dart';
 import '../controllers/otp_controller.dart';
 
 class OtpVerificationPage extends GetView<OtpController> {
@@ -32,22 +32,10 @@ class OtpVerificationPage extends GetView<OtpController> {
             ),
             const SizedBox(height: 28),
             Obx(() => InlineErrorWidget(message: controller.errorMessage.value)),
-            TextField(
+            OtpInputField(
               controller: controller.otpController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              textAlign: TextAlign.center,
-              style: AppTextStyles.h2.copyWith(letterSpacing: 12),
-              maxLength: 6,
-              decoration: InputDecoration(
-                counterText: '',
-                filled: true,
-                fillColor: AppColors.surface,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.border),
-                ),
-              ),
+              length: 6,
+              onCompleted: (_) => controller.verify(),
             ),
             const SizedBox(height: 12),
             Center(
@@ -59,11 +47,11 @@ class OtpVerificationPage extends GetView<OtpController> {
             ),
             const SizedBox(height: 12),
             Obx(() => CustomButton(
-                  text: 'Next',
-                  icon: Icons.arrow_forward,
-                  isLoading: controller.isLoading.value,
-                  onPressed: controller.verify,
-                )),
+              text: 'Next',
+              icon: Icons.arrow_forward,
+              isLoading: controller.isLoading.value,
+              onPressed: controller.verify,
+            )),
           ],
         ),
       ),

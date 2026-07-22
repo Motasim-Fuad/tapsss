@@ -68,9 +68,9 @@ class OtpController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    otpController.dispose();
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   otpController.dispose();
+  //   super.onClose();
+  // }
 }

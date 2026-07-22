@@ -35,7 +35,7 @@ class ShimmerWidget {
   }
 
   // List shimmer (multiple cards)
-  static Widget list({int itemCount = 6, double itemHeight = 80}) {
+  static Widget list({int itemCount = 7, double itemHeight = 80}) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -155,7 +155,7 @@ class ShimmerWidget {
   }
 
   // Grid shimmer (for defect type selection)
-  static Widget grid({int count = 6}) {
+  static Widget grid({int count = 7}) {
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,

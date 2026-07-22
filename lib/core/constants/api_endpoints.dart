@@ -1,7 +1,8 @@
 class ApiEndpoints {
   ApiEndpoints._();
 
-  static const String baseUrl = 'https://arashmati-backend.onrender.com';
+  //static const String baseUrl = 'https://arashmati-backend.onrender.com';
+  static const String baseUrl = 'http://10.10.28.92:8000';
 
   static const String register = '/api/auth/register';
   static const String verifyOtp = '/api/auth/verify-otp';
