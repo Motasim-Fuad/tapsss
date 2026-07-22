@@ -5,6 +5,7 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/app_network_image.dart';
+import '../../../../shared/widgets/asset_placeholder.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
 import '../../../../shared/widgets/loading_widget.dart';
 import '../controllers/profile_controller.dart';
@@ -18,7 +19,7 @@ class ProfilePage extends GetView<ProfileController> {
       backgroundColor: AppColors.white,
       body: Obx(() {
         if (controller.isLoading.value && controller.profile.value == null) {
-          return  ShimmerWidget.list();
+          return ShimmerWidget.list();
         }
 
         if (controller.errorMessage.value != null && controller.profile.value == null) {
@@ -38,90 +39,114 @@ class ProfilePage extends GetView<ProfileController> {
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.fromLTRB(20, 50, 20, 24),
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: AppColors.dashboardCardGradient),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Profile', style: AppTextStyles.h2.copyWith(color: AppColors.white)),
-                        IconButton(
-                          icon: const Icon(Icons.chevron_right, color: AppColors.white),
-                          onPressed: controller.goToEditProfile,
+              Stack(
+                children: [
+                  const Positioned.fill(
+                    child:Image(
+                        image: AssetImage(
+                            "assets/images/pexels-jesschen-32963553.jpg",
                         ),
-                      ],
+                      fit: BoxFit.cover,
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 28,
-                          
-                          backgroundColor: AppColors.white.withOpacity(0.2),
-                          child: profile.profilePic == null || profile.profilePic!.isEmpty
-                              ? const Icon(Icons.person, color: AppColors.white, size: 28)
-                              : ClipOval(
-                                  child: AppNetworkImage(
-                                    url: profile.profilePic,
-                                    width: 56,
-                                    height: 56,
-                                  ),
-                                ),
+                  ),
+                  Positioned.fill(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.dashboardCardGradient.first.withOpacity(0.85),
+                            AppColors.dashboardCardGradient.last.withOpacity(0.85),
+                          ],
                         ),
-                        const SizedBox(width: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(20, 50, 20, 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(profile.name,
-                                style: AppTextStyles.h3.copyWith(color: AppColors.white)),
-                            Text(profile.email,
-                                style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+                            Text('Profile', style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                            IconButton(
+                              icon: const Icon(Icons.chevron_right, color: AppColors.white),
+                              onPressed: controller.goToEditProfile,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 28,
+                              backgroundColor: AppColors.white.withOpacity(0.2),
+                              child: profile.profilePic == null || profile.profilePic!.isEmpty
+                                  ? const Icon(Icons.person, color: AppColors.white, size: 28)
+                                  : ClipOval(
+                                child: AppNetworkImage(
+                                  url: profile.profilePic,
+                                  width: 56,
+                                  height: 56,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(profile.name,
+                                    style: AppTextStyles.h3.copyWith(color: AppColors.white)),
+                                Text(profile.email,
+                                    style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 18),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: _StatBox(
+                                    value: '${profile.testStats.completedCount}',
+                                    label: 'Tests Done')),
+                            const SizedBox(width: 8),
+                            Expanded(
+                                child: _StatBox(value: '${profile.streak}', label: 'Streak Days')),
+                            const SizedBox(width: 8),
+                            Expanded(
+                                child: _StatBox(
+                                    value: '${profile.testStats.bestScore}%', label: 'Best Score')),
                           ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 18),
-                    Row(
-                      children: [
-                        Expanded(
-                            child: _StatBox(
-                                value: '${profile.testStats.completedCount}', label: 'Tests Done')),
-                        SizedBox(width: 8,),
-                        Expanded(
-                            child: _StatBox(value: '${profile.streak}', label: 'Streak Days')),
-                        SizedBox(width: 8,),
-                        Expanded(
-                            child: _StatBox(
-                                value: '${profile.testStats.bestScore}%', label: 'Best Score')),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
-              _SectionLabel('ACCOUNT'),
+              const _SectionLabel('ACCOUNT'),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Card(
                   child: Column(
                     children: [
-                      _MenuTile(icon: Icons.person_outline, label: 'Personal Information', onTap: controller.goToEditProfile),
+                      _MenuTile(
+                          icon: Icons.person_outline,
+                          label: 'Personal Information',
+                          onTap: controller.goToEditProfile),
                       _MenuTile(
                         icon: Icons.notifications_none,
                         label: 'Notifications',
-                        trailing: Switch(value: true, activeColor: AppColors.primary, onChanged: (_) {}),
+                        trailing:
+                        Switch(value: true, activeColor: AppColors.primary, onChanged: (_) {}),
                       ),
                     ],
                   ),
                 ),
               ),
-
               const SizedBox(height: 12),
               const _SectionLabel('SUBSCRIPTION'),
               Padding(
@@ -137,10 +162,10 @@ class ProfilePage extends GetView<ProfileController> {
               ),
               const SizedBox(height: 12),
               const _SectionLabel('SUPPORT'),
-               const Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                 child:  Card(
-                    color: AppColors.surface,
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  color: AppColors.surface,
                   child: Column(
                     children: [
                       _MenuTile(icon: Icons.access_time, label: 'Help Center'),
@@ -148,32 +173,31 @@ class ProfilePage extends GetView<ProfileController> {
                       _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'),
                     ],
                   ),
-                               ),
-               ),
-
+                ),
+              ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(() => Material(
-                      color: AppColors.errorBg,
-                      borderRadius: BorderRadius.circular(12),
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(12),
-                        onTap: controller.isLoggingOut.value ? null : controller.logout,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.logout, color: AppColors.error, size: 18),
-                              const SizedBox(width: 8),
-                              Text('Log Out',
-                                  style: AppTextStyles.label.copyWith(color: AppColors.error)),
-                            ],
-                          ),
-                        ),
+                  color: AppColors.errorBg,
+                  borderRadius: BorderRadius.circular(12),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: controller.isLoggingOut.value ? null : controller.logout,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.logout, color: AppColors.error, size: 18),
+                          const SizedBox(width: 8),
+                          Text('Log Out',
+                              style: AppTextStyles.label.copyWith(color: AppColors.error)),
+                        ],
                       ),
-                    )),
+                    ),
+                  ),
+                )),
               ),
               const SizedBox(height: 30),
             ],
@@ -193,9 +217,8 @@ class _StatBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.transparent,
-      decoration:BoxDecoration(
-        border: Border.all(width:1,color: Colors.grey),
+      decoration: BoxDecoration(
+        border: Border.all(width: 1, color: Colors.grey),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
