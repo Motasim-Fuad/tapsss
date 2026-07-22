@@ -43,6 +43,13 @@ class ChapterDetailController extends GetxController {
     }
   }
 
+
+  bool get isFirstLesson => currentLessonIndex.value == 0;
+
+  void previousLesson() {
+    if (!isFirstLesson) currentLessonIndex.value--;
+  }
+
   bool get isLastLesson =>
       chapter.value != null && currentLessonIndex.value >= chapter.value!.lessons.length - 1;
 

@@ -10,7 +10,7 @@ class ApiEndpoints {
   static const String forgotPasswordOtp = '/api/auth/forgot-password-otp';
   static const String resetPassword = '/api/auth/reset-password';
   static const String logout = '/api/auth/logout';
-  static const String refreshToken = '/token/refresh/';
+  static const String refreshToken = '/api/auth/refresh-token';
 
   static const String dashboard = '/api/dashboard';
 
