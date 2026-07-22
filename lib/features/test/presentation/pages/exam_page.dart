@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -75,7 +76,7 @@ class ExamPage extends GetView<ExamController> {
         body: SafeArea(
           child: Obx(() {
             if (controller.isLoading.value && controller.examData.value == null) {
-              return const LoadingWidget();
+              return  ShimmerWidget.list();
             }
 
             if (controller.examData.value == null) {

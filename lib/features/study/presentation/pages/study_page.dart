@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -23,7 +24,7 @@ class StudyPage extends GetView<StudyController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.materials.value == null) {
-          return const LoadingWidget();
+          return ShimmerWidget.list();
         }
 
         if (controller.errorMessage.value != null && controller.materials.value == null) {

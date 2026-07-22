@@ -1,4 +1,5 @@
 import 'package:arashmati_app/features/progress/presentation/widgets/readiness_widgets.dart';
+import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class ProgressPage extends GetView<ProgressController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.overview.value == null) {
-          return const LoadingWidget();
+          return  ShimmerWidget.list();
         }
 
         if (controller.errorMessage.value != null && controller.overview.value == null) {

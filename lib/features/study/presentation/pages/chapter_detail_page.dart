@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -22,7 +23,7 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.chapter.value == null) {
-          return const LoadingWidget();
+          return  ShimmerWidget.list();
         }
 
         final chapter = controller.chapter.value;

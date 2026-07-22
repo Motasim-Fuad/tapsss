@@ -1,4 +1,5 @@
 import 'package:arashmati_app/features/profile/presentation/controllers/profile_controller.dart';
+import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -22,7 +23,7 @@ class HomePage extends GetView<HomeController> {
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value && controller.dashboard.value == null) {
-            return const LoadingWidget();
+            return  ShimmerWidget.list();
           }
 
           if (controller.errorMessage.value != null && controller.dashboard.value == null) {

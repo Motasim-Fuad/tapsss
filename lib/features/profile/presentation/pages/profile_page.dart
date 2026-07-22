@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
@@ -17,7 +18,7 @@ class ProfilePage extends GetView<ProfileController> {
       backgroundColor: AppColors.white,
       body: Obx(() {
         if (controller.isLoading.value && controller.profile.value == null) {
-          return const LoadingWidget();
+          return  ShimmerWidget.list();
         }
 
         if (controller.errorMessage.value != null && controller.profile.value == null) {
@@ -61,6 +62,7 @@ class ProfilePage extends GetView<ProfileController> {
                       children: [
                         CircleAvatar(
                           radius: 28,
+                          
                           backgroundColor: AppColors.white.withOpacity(0.2),
                           child: profile.profilePic == null || profile.profilePic!.isEmpty
                               ? const Icon(Icons.person, color: AppColors.white, size: 28)
@@ -90,8 +92,10 @@ class ProfilePage extends GetView<ProfileController> {
                         Expanded(
                             child: _StatBox(
                                 value: '${profile.testStats.completedCount}', label: 'Tests Done')),
+                        SizedBox(width: 8,),
                         Expanded(
                             child: _StatBox(value: '${profile.streak}', label: 'Streak Days')),
+                        SizedBox(width: 8,),
                         Expanded(
                             child: _StatBox(
                                 value: '${profile.testStats.bestScore}%', label: 'Best Score')),
@@ -188,14 +192,20 @@ class _StatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      //color: AppColors.,
-      color: AppColors.textHint,
-      child: Column(
-        children: [
-          Text(value, style: AppTextStyles.h3.copyWith(color: AppColors.white)),
-          Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
-        ],
+    return Container(
+      // color: Colors.transparent,
+      decoration:BoxDecoration(
+        border: Border.all(width:1,color: Colors.grey),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(value, style: AppTextStyles.h3.copyWith(color: AppColors.warning)),
+            Text(label, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+          ],
+        ),
       ),
     );
   }
