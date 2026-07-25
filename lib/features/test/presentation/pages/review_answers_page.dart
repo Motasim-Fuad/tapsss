@@ -5,6 +5,7 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/app_network_image.dart';
 import '../../data/models/submit_test_model.dart';
 import '../controllers/review_answers_controller.dart';
+import '../../../../config/routes/app_routes.dart';
 
 class ReviewAnswersPage extends GetView<ReviewAnswersController> {
   const ReviewAnswersPage({super.key});
@@ -57,7 +58,7 @@ class ReviewAnswersPage extends GetView<ReviewAnswersController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               itemCount: controller.reviewAnswers.length,
               itemBuilder: (context, index) {
-                return _ReviewCard(answer: controller.reviewAnswers[index], index: index + 1);
+                return ReviewCard(answer: controller.reviewAnswers[index], index: index + 1);
               },
             ),
           ),
@@ -90,11 +91,12 @@ class _SummaryChip extends StatelessWidget {
   }
 }
 
-class _ReviewCard extends StatelessWidget {
+
+class ReviewCard extends StatelessWidget {
   final ReviewAnswerModel answer;
   final int index;
 
-  const _ReviewCard({required this.answer, required this.index});
+  const ReviewCard({super.key, required this.answer, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +146,40 @@ class _ReviewCard extends StatelessWidget {
             ),
           if (selected == null)
             Text('Not answered', style: AppTextStyles.caption.copyWith(color: AppColors.warning)),
+          if (!answer.isCorrect && answer.topic != null) ...[
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () => Get.toNamed(
+                AppRoutes.chapterDetail,
+                arguments: {'chapterId': answer.topic!.chapterId},
+              ),
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.menu_book_outlined, size: 14, color: AppColors.primary),
+                    const SizedBox(width: 6),
+                    Text(
+                      answer.topic!.title,
+                      style: AppTextStyles.caption.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.chevron_right, size: 14, color: AppColors.primary),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

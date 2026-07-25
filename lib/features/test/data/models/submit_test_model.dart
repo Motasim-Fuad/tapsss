@@ -36,6 +36,20 @@ class TestResultModel {
   }
 }
 
+class TopicModel {
+  final String chapterId;
+  final String title;
+
+  TopicModel({required this.chapterId, required this.title});
+
+  factory TopicModel.fromJson(Map<String, dynamic> json) {
+    return TopicModel(
+      chapterId: json['chapterId']?.toString() ?? '',
+      title: json['title']?.toString() ?? '',
+    );
+  }
+}
+
 class ReviewAnswerModel {
   final String questionId;
   final String questionText;
@@ -44,6 +58,7 @@ class ReviewAnswerModel {
   final String? selectedAnswer;
   final String correctAnswer;
   final bool isCorrect;
+  final TopicModel? topic;
 
   ReviewAnswerModel({
     required this.questionId,
@@ -53,6 +68,7 @@ class ReviewAnswerModel {
     this.selectedAnswer,
     required this.correctAnswer,
     required this.isCorrect,
+    this.topic,
   });
 
   factory ReviewAnswerModel.fromJson(Map<String, dynamic> json) {
@@ -65,6 +81,7 @@ class ReviewAnswerModel {
       selectedAnswer: json['selectedAnswer']?.toString(),
       correctAnswer: json['correctAnswer']?.toString() ?? '',
       isCorrect: json['isCorrect'] == true,
+      topic: json['topic'] != null ? TopicModel.fromJson(json['topic']) : null,
     );
   }
 }
