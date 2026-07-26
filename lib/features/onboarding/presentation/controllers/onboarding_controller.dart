@@ -35,19 +35,19 @@ class OnboardingController extends GetxController {
   /// Onboarding Content
   final List<OnboardingSlide> slides = [
     OnboardingSlide(
-      title: 'Prepare for Your Swedish Citizenship Journey',
+      title: 'Prepare for Your Swedish Citizenship Journey'.tr,
       description:
-      'Your trusted companion for the Swedish Citizenship Language Test. Structured lessons, practice exams, and personalized progress tracking — all in one premium platform.',
+      'Your trusted companion for the Swedish Citizenship Language Test. Structured lessons, practice exams, and personalized progress tracking — all in one premium platform.'.tr,
     ),
     OnboardingSlide(
-      title: 'Expert-Crafted Study Materials',
+      title: 'Expert-Crafted Study Materials'.tr,
       description:
-      'Comprehensive curriculum covering all Swedish language competencies required for citizenship. Learn at your own pace with beautifully structured lessons and interactive content.',
+      'Comprehensive curriculum covering all Swedish language competencies required for citizenship. Learn at your own pace with beautifully structured lessons and interactive content.'.tr,
     ),
     OnboardingSlide(
-      title: 'Join 50,000+ Successful Applicants',
+      title: 'Join 50,000+ Successful Applicants'.tr,
       description:
-      'Thousands of immigrants have passed their Swedish citizenship test with SwedishPass. Your journey to becoming a Swedish citizen starts here.',
+      'Thousands of immigrants have passed their Swedish citizenship test with SwedishPass. Your journey to becoming a Swedish citizen starts here.'.tr,
     ),
   ];
 

@@ -29,7 +29,7 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
         if (chapter == null || chapter.lessons.isEmpty) {
           return Center(
             child: Text(
-              controller.errorMessage.value ?? 'No lessons available',
+              controller.errorMessage.value ?? 'No lessons available'.tr,
               style: AppTextStyles.bodySecondary,
             ),
           );
@@ -49,7 +49,10 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Lesson $currentLessonNumber of $totalLessons',
+                        'Lesson @current of @total'.trParams({
+                          'current': '$currentLessonNumber',
+                          'total': '$totalLessons',
+                        }),
                         style: AppTextStyles.caption,
                       ),
                       // Text(
@@ -95,7 +98,7 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
                       if (!controller.isFirstLesson) ...[
                         Expanded(
                           child: CustomButton(
-                            text: 'Previous',
+                            text: 'Previous'.tr,
                             isOutlined: true,
                             onPressed: controller.previousLesson,
                           ),
@@ -104,7 +107,7 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
                       ],
                       Expanded(
                         child: CustomButton(
-                          text: controller.isLastLesson ? 'Mark Complete' : 'Next',
+                          text: controller.isLastLesson ? 'Mark Complete'.tr : 'Next'.tr,
                           icon: controller.isLastLesson ? null : Icons.arrow_forward,
                           isLoading: controller.isMarking.value,
                           onPressed: controller.nextLesson,

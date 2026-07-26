@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 import '../constants/api_endpoints.dart';
 import '../error/exceptions.dart';
 import '../services/storage_service.dart';
@@ -48,7 +49,7 @@ class ApiClient {
 
   ApiException _mapError(DioException e) {
     final data = e.response?.data;
-    String message = 'Something went wrong. Please try again.';
+    String message = 'Something went wrong. Please try again.'.tr;
 
     if (data is Map && data['msg'] != null) {
       message = data['msg'].toString();

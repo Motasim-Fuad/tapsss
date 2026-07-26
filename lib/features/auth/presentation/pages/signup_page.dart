@@ -21,24 +21,24 @@ class SignupPage extends GetView<SignupController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Text('Register Account', style: AppTextStyles.h1),
+              Text('Register Account'.tr, style: AppTextStyles.h1),
               const SizedBox(height: 8),
               Text(
-                'Sign in with your email and password or social media to continue',
+                'Sign in with your email and password or social media to continue'.tr,
                 style: AppTextStyles.bodySecondary,
               ),
               const SizedBox(height: 28),
               Obx(() => InlineErrorWidget(message: controller.errorMessage.value)),
               CustomTextField(
                 controller: controller.nameController,
-                label: 'Full Name',
-                hint: 'Your Name',
+                label: 'Full Name'.tr,
+                hint: 'Your Name'.tr,
                 prefixIcon: Icons.person_outline,
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: controller.emailController,
-                label: 'Email',
+                label: 'Email'.tr,
                 hint: 'you@example.com',
                 prefixIcon: Icons.mail_outline,
                 keyboardType: TextInputType.emailAddress,
@@ -46,7 +46,7 @@ class SignupPage extends GetView<SignupController> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: controller.passwordController,
-                label: 'Password',
+                label: 'Password'.tr,
                 hint: '••••••••',
                 prefixIcon: Icons.lock_outline,
                 isPassword: true,
@@ -54,7 +54,7 @@ class SignupPage extends GetView<SignupController> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: controller.confirmPasswordController,
-                label: 'Confirm Password',
+                label: 'Confirm Password'.tr,
                 hint: '••••••••',
                 prefixIcon: Icons.lock_outline,
                 isPassword: true,
@@ -68,13 +68,13 @@ class SignupPage extends GetView<SignupController> {
                         onChanged: (v) => controller.agreedToTerms.value = v ?? false,
                       ),
                       Expanded(
-                        child: Text('Agree with terms and privacy', style: AppTextStyles.caption),
+                        child: Text('Agree with terms and privacy'.tr, style: AppTextStyles.caption),
                       ),
                     ],
                   )),
               const SizedBox(height: 8),
               Obx(() => CustomButton(
-                    text: 'Sign Up',
+                    text: 'Sign Up'.tr,
                     isLoading: controller.isLoading.value,
                     onPressed: controller.register,
                   )),
@@ -86,9 +86,9 @@ class SignupPage extends GetView<SignupController> {
                     text: TextSpan(
                       style: AppTextStyles.body,
                       children: [
-                        const TextSpan(text: 'Already have an account? '),
+                        TextSpan(text: 'Already have an account? '.tr),
                         TextSpan(
-                          text: 'Sign in',
+                          text: 'Sign in'.tr,
                           style: AppTextStyles.body.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w700,

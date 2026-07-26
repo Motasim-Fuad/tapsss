@@ -22,7 +22,7 @@ class ProgressPage extends GetView<ProgressController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: const Text('Progress Tracker', style: AppTextStyles.h2),
+        title: Text('Progress Tracker'.tr, style: AppTextStyles.h2),
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.overview.value == null) {
@@ -33,7 +33,7 @@ class ProgressPage extends GetView<ProgressController> {
           return EmptyStateWidget(
             icon: Icons.wifi_off,
             message: controller.errorMessage.value!,
-            actionText: 'Retry',
+            actionText: 'Retry'.tr,
             onAction: controller.fetchAll,
           );
         }
@@ -46,7 +46,7 @@ class ProgressPage extends GetView<ProgressController> {
           child: ListView(
             padding: const EdgeInsets.all(20),
             children: [
-             const  Text('Track your readiness for the citizenship test', style: AppTextStyles.bodySecondary),
+             Text('Track your readiness for the citizenship test'.tr, style: AppTextStyles.bodySecondary),
               const SizedBox(height: 16),
               Row(
                 children: [
@@ -68,13 +68,13 @@ class ProgressPage extends GetView<ProgressController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const  Text('Overall Readiness', style: AppTextStyles.caption),
+                          Text('Overall Readiness'.tr, style: AppTextStyles.caption),
                           Text('${overview.readinessScore}%', style: AppTextStyles.h1),
                           Card(
                             color: AppColors.infoBg,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('+${overview.weekChange} this week',
+                              child: Text('+${overview.weekChange} ${'this week'.tr}',
                                   style: AppTextStyles.caption.copyWith(color: AppColors.success)),
                             ),
                           ),
@@ -95,26 +95,26 @@ class ProgressPage extends GetView<ProgressController> {
                       child: _MiniStat(
                           icon: Icons.description_outlined,
                           value: '${overview.testsDone}/${overview.totalTests}',
-                          label: 'Test Done')),
+                          label: 'Test Done'.tr)),
                   const SizedBox(width: 10),
                   Expanded(
                       child: _MiniStat(
                           icon: Icons.check_circle_outline,
                           value: '${overview.accuracy}%',
-                          label: 'Accuracy')),
+                          label: 'Accuracy'.tr)),
                   const SizedBox(width: 10),
                   Expanded(
                       child: _MiniStat(
                           icon: Icons.local_fire_department_outlined,
                           value: '${overview.streak}d',
-                          label: 'Streak')),
+                          label: 'Streak'.tr)),
                 ],
               ),
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Score History', style: AppTextStyles.h3),
+                  Text('Score History'.tr, style: AppTextStyles.h3),
                   Obx(() => Container(
                         decoration: BoxDecoration(
                           color: AppColors.surface,
@@ -141,7 +141,7 @@ class ProgressPage extends GetView<ProgressController> {
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Text(
-                                  period[0].toUpperCase() + period.substring(1),
+                                  (period == 'week' ? 'Week' : 'Month').tr,
                                   style: AppTextStyles.caption.copyWith(
                                     color: isSelected ? AppColors.white : AppColors.textSecondary,
                                   ),
@@ -159,7 +159,7 @@ class ProgressPage extends GetView<ProgressController> {
                 child: Obx(() {
                   final points = controller.scoreHistory;
                   if (points.isEmpty) {
-                    return Center(child: Text('No score data yet', style: AppTextStyles.bodySecondary));
+                    return Center(child: Text('No score data yet'.tr, style: AppTextStyles.bodySecondary));
                   }
                   return LineChart(
                     LineChartData(
@@ -296,13 +296,13 @@ class ProgressPage extends GetView<ProgressController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Test History', style: AppTextStyles.h3),
+                  Text('Test History'.tr, style: AppTextStyles.h3),
                 ],
               ),
               const SizedBox(height: 12),
               Obx(() {
                 if (controller.testHistory.isEmpty) {
-                  return Text('No tests completed yet', style: AppTextStyles.bodySecondary);
+                  return Text('No tests completed yet'.tr, style: AppTextStyles.bodySecondary);
                 }
                 return Column(
                   children: controller.testHistory

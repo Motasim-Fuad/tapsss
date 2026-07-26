@@ -87,8 +87,8 @@ class OnboardingPage extends GetView<OnboardingController> {
               child: Obx(
                     () => CustomButton(
                   text: controller.currentPage.value == controller.slides.length - 1
-                      ? 'Get Started'
-                      : 'Continue',
+                      ? 'Get Started'.tr
+                      : 'Continue'.tr,
                   icon: Icons.arrow_forward,
                   onPressed: controller.next,
                 ),

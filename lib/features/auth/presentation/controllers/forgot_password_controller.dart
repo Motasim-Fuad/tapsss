@@ -19,7 +19,7 @@ class ForgotPasswordController extends GetxController {
     final email = emailController.text.trim();
 
     if (email.isEmpty || !email.contains('@')) {
-      errorMessage.value = 'Please enter a valid email address';
+      errorMessage.value = 'Please enter a valid email address'.tr;
       return;
     }
 
@@ -30,7 +30,7 @@ class ForgotPasswordController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }

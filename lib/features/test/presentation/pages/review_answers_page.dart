@@ -18,12 +18,12 @@ class ReviewAnswersPage extends GetView<ReviewAnswersController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: AppColors.textPrimary),
-        title: Text('Review Answers', style: AppTextStyles.h3),
+        title: Text('Review Answers'.tr, style: AppTextStyles.h3),
         centerTitle: true,
         actions: [
           TextButton(
             onPressed: () => Get.back(),
-            child: Text('See Result', style: AppTextStyles.label.copyWith(color: AppColors.primary)),
+            child: Text('See Result'.tr, style: AppTextStyles.label.copyWith(color: AppColors.primary)),
           ),
         ],
       ),
@@ -36,7 +36,7 @@ class ReviewAnswersPage extends GetView<ReviewAnswersController> {
                 Expanded(
                   child: _SummaryChip(
                     value: '${controller.correctCount}',
-                    label: 'Correct',
+                    label: 'Correct'.tr,
                     bg: AppColors.successBg,
                     color: AppColors.success,
                   ),
@@ -45,7 +45,7 @@ class ReviewAnswersPage extends GetView<ReviewAnswersController> {
                 Expanded(
                   child: _SummaryChip(
                     value: '${controller.incorrectCount}',
-                    label: 'Incorrect',
+                    label: 'Incorrect'.tr,
                     bg: AppColors.errorBg,
                     color: AppColors.error,
                   ),
@@ -136,16 +136,20 @@ class ReviewCard extends StatelessWidget {
           ],
           const SizedBox(height: 8),
           Text(
-            'Correct: ${answer.options[answer.correctAnswer] ?? answer.correctAnswer}',
+            'Correct: @answer'.trParams({
+              'answer': '${answer.options[answer.correctAnswer] ?? answer.correctAnswer}',
+            }),
             style: AppTextStyles.caption.copyWith(color: AppColors.success, fontWeight: FontWeight.w600),
           ),
           if (!answer.isCorrect && selected != null)
             Text(
-              'Your answer: ${answer.options[selected] ?? selected}',
+              'Your answer: @answer'.trParams({
+                'answer': '${answer.options[selected] ?? selected}',
+              }),
               style: AppTextStyles.caption.copyWith(color: AppColors.error, fontWeight: FontWeight.w600),
             ),
           if (selected == null)
-            Text('Not answered', style: AppTextStyles.caption.copyWith(color: AppColors.warning)),
+            Text('Not answered'.tr, style: AppTextStyles.caption.copyWith(color: AppColors.warning)),
           if (!answer.isCorrect && answer.topic != null) ...[
             const SizedBox(height: 10),
             InkWell(

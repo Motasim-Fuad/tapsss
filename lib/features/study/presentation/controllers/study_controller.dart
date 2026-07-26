@@ -27,7 +27,7 @@ class StudyController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }

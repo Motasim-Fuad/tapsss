@@ -25,7 +25,7 @@ class LoginController extends GetxController {
     final password = passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
-      errorMessage.value = 'Please enter both email and password';
+      errorMessage.value = 'Please enter both email and password'.tr;
       return;
     }
 
@@ -37,7 +37,7 @@ class LoginController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }

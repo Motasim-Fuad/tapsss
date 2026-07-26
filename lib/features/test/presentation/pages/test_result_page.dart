@@ -19,7 +19,7 @@ class TestResultPage extends GetView<TestResultController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text('Test Result', style: AppTextStyles.h3),
+        title: Text('Test Result'.tr, style: AppTextStyles.h3),
         centerTitle: true,
       ),
       body: Padding(
@@ -62,7 +62,7 @@ class TestResultPage extends GetView<TestResultController> {
                 Expanded(
                   child: _ResultStat(
                     value: '${result.correctCount}/${result.totalQuestions}',
-                    label: 'Correct Answers',
+                    label: 'Correct Answers'.tr,
                     bg: AppColors.successBg,
                     color: AppColors.success,
                   ),
@@ -71,7 +71,7 @@ class TestResultPage extends GetView<TestResultController> {
                 Expanded(
                   child: _ResultStat(
                     value: '${result.incorrectCount}/${result.totalQuestions}',
-                    label: 'Incorrect',
+                    label: 'Incorrect'.tr,
                     bg: AppColors.errorBg,
                     color: AppColors.error,
                   ),
@@ -84,7 +84,7 @@ class TestResultPage extends GetView<TestResultController> {
                 Expanded(
                   child: _ResultStat(
                     value: '${result.accuracyRate}%',
-                    label: 'Accuracy Rate',
+                    label: 'Accuracy Rate'.tr,
                     bg: AppColors.infoBg,
                     color: AppColors.info,
                   ),
@@ -93,7 +93,7 @@ class TestResultPage extends GetView<TestResultController> {
                 Expanded(
                   child: _ResultStat(
                     value: result.timeTakenFormatted,
-                    label: 'Time Taken',
+                    label: 'Time Taken'.tr,
                     bg: AppColors.warningBg,
                     color: AppColors.warning,
                   ),
@@ -101,16 +101,15 @@ class TestResultPage extends GetView<TestResultController> {
               ],
             ),
             const Spacer(),
-            CustomButton(text: 'Retake Test', onPressed: controller.retakeTest),
+            CustomButton(text: 'Retake Test'.tr, onPressed: controller.retakeTest),
             const SizedBox(height: 10),
             CustomButton(
-              text: 'Review Answers',
+              text: 'Review Answers'.tr,
               isOutlined: true,
               onPressed: controller.reviewAllAnswers,
             ),
             const SizedBox(height: 10),
-            CustomButton(text: "Done ",onPressed: controller.completeExam,)
-
+            CustomButton(text: 'Done'.tr, onPressed: controller.completeExam),
           ],
         ),
       ),

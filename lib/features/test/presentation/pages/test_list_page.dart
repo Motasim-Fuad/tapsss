@@ -20,7 +20,7 @@ class TestListPage extends GetView<TestListController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: const Text('Practice Tests', style: AppTextStyles.h2),
+        title: Text('Practice Tests'.tr, style: AppTextStyles.h2),
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.testList.value == null) {
@@ -31,7 +31,7 @@ class TestListPage extends GetView<TestListController> {
           return EmptyStateWidget(
             icon: Icons.wifi_off,
             message: controller.errorMessage.value!,
-            actionText: 'Retry',
+            actionText: 'Retry'.tr,
             onAction: controller.fetchTests,
           );
         }
@@ -55,10 +55,10 @@ class TestListPage extends GetView<TestListController> {
                   children: [
                     _OverviewStat(
                       value: '${data.overview.completedCount}/${data.overview.totalTests}',
-                      label: 'Completed',
+                      label: 'Completed'.tr,
                     ),
-                    _OverviewStat(value: '${data.overview.bestScore ?? 0}%', label: 'Best Result'),
-                    _OverviewStat(value: '${data.overview.avgScore ?? 0}%', label: 'Avg Score'),
+                    _OverviewStat(value: '${data.overview.bestScore ?? 0}%', label: 'Best Result'.tr),
+                    _OverviewStat(value: '${data.overview.avgScore ?? 0}%', label: 'Avg Score'.tr),
                   ],
                 ),
               ),
@@ -138,7 +138,10 @@ class _TestCard extends StatelessWidget {
                   children: [
                     Text(test.testName, style: AppTextStyles.label),
                     Text(
-                      '${test.totalQuestions} questions  •  ${test.durationMinutes} min',
+                      '@questions questions  •  @minutes min'.trParams({
+                        'questions': '${test.totalQuestions}',
+                        'minutes': '${test.durationMinutes}',
+                      }),
                       style: AppTextStyles.caption,
                     ),
                   ],
@@ -152,7 +155,7 @@ class _TestCard extends StatelessWidget {
                         style: AppTextStyles.label.copyWith(
                           color: test.passed ? AppColors.success : AppColors.error,
                         )),
-                    Text(test.passed ? 'Passed' : 'Failed', style: AppTextStyles.caption),
+                    Text(test.passed ? 'Passed'.tr : 'Failed'.tr, style: AppTextStyles.caption),
                   ],
                 ),
             ],
@@ -171,7 +174,7 @@ class _TestCard extends StatelessWidget {
           ],
           const SizedBox(height: 12),
           CustomButton(
-            text: test.action,
+            text: test.action.tr,
             isOutlined: test.isCompleted,
             onPressed: onTap,
           ),

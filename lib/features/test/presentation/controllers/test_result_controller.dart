@@ -15,10 +15,10 @@ class TestResultController extends GetxController {
   }
 
   String get readinessLabel {
-    if (testResult.score >= 90) return 'Excellent';
-    if (testResult.score >= 70) return 'Almost Ready';
-    if (testResult.score >= 50) return 'Improving';
-    return 'Needs Work';
+    if (testResult.score >= 90) return 'Excellent'.tr;
+    if (testResult.score >= 70) return 'Almost Ready'.tr;
+    if (testResult.score >= 50) return 'Improving'.tr;
+    return 'Needs Work'.tr;
   }
 
   void retakeTest() {

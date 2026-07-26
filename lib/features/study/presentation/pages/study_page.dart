@@ -20,7 +20,7 @@ class StudyPage extends GetView<StudyController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text('Study Materials', style: AppTextStyles.h2),
+        title: Text('Study Materials'.tr, style: AppTextStyles.h2),
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.materials.value == null) {
@@ -31,7 +31,7 @@ class StudyPage extends GetView<StudyController> {
           return EmptyStateWidget(
             icon: Icons.wifi_off,
             message: controller.errorMessage.value!,
-            actionText: 'Retry',
+            actionText: 'Retry'.tr,
             onAction: controller.fetchMaterials,
           );
         }
@@ -67,7 +67,7 @@ class StudyPage extends GetView<StudyController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Study Materials',
+                          Text('Study Materials'.tr,
                               style: AppTextStyles.h3.copyWith(color: AppColors.white)),
                           Text(
                             '${data.overallProgress.completedLessons}/${data.overallProgress.totalLessons} lessons completed',
@@ -80,7 +80,7 @@ class StudyPage extends GetView<StudyController> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text('Chapters', style: AppTextStyles.h3),
+              Text('Chapters'.tr, style: AppTextStyles.h3),
               const SizedBox(height: 12),
               ...data.chapters.map((chapter) => _ChapterCard(
                     chapter: chapter,
@@ -128,7 +128,10 @@ class _ChapterCard extends StatelessWidget {
                 children: [
                   Text(chapter.title, style: AppTextStyles.label),
                   const SizedBox(height: 2),
-                  Text('${chapter.totalLessons} lessons', style: AppTextStyles.caption),
+                  Text(
+                    '@count lessons'.trParams({'count': '${chapter.totalLessons}'}),
+                    style: AppTextStyles.caption,
+                  ),
                 ],
               ),
             ),

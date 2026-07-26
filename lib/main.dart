@@ -6,6 +6,8 @@ import 'config/bindings/initial_binding.dart';
 import 'config/routes/app_pages.dart';
 import 'config/routes/app_routes.dart';
 import 'core/constants/app_colors.dart';
+import 'core/localization/app_translations.dart';
+import 'core/localization/locale_service.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +32,9 @@ class ArashmatiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Sweden Citizenship Test',
+      translations: AppTranslations(),
+      locale: LocaleService.initialLocale,
+      fallbackLocale: LocaleService.english,
       debugShowCheckedModeBanner: false,
       initialBinding: InitialBinding(),
       initialRoute: AppRoutes.splash,

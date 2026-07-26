@@ -28,10 +28,10 @@ class ExamPage extends GetView<ExamController> {
                 child: const Icon(Icons.warning_amber_rounded, color: AppColors.error),
               ),
               const SizedBox(height: 16),
-              const Text('Exit Exam?', style: AppTextStyles.h3),
+              Text('Exit Exam?'.tr, style: AppTextStyles.h3),
               const SizedBox(height: 8),
-             const  Text(
-                'Your progress will be lost. Are you sure you want to exit?',
+             Text(
+                'Your progress will be lost. Are you sure you want to exit?'.tr,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.bodySecondary,
               ),
@@ -40,7 +40,7 @@ class ExamPage extends GetView<ExamController> {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      text: 'Continue Test',
+                      text: 'Continue Test'.tr,
                       isOutlined: true,
                       onPressed: () => Get.back(result: false),
                     ),
@@ -48,7 +48,7 @@ class ExamPage extends GetView<ExamController> {
                   const SizedBox(width: 5),
                   Expanded(
                     child: CustomButton(
-                      text: 'Exit Exam',
+                      text: 'Exit Exam'.tr,
                       color: AppColors.error,
                       onPressed: () => Get.back(result: true),
                     ),
@@ -82,7 +82,7 @@ class ExamPage extends GetView<ExamController> {
             if (controller.examData.value == null) {
               return Center(
                 child: Text(
-                  controller.errorMessage.value ?? 'Unable to start test',
+                  controller.errorMessage.value ?? 'Unable to start test'.tr,
                   style: AppTextStyles.bodySecondary,
                 ),
               );
@@ -146,7 +146,10 @@ class ExamPage extends GetView<ExamController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Question ${controller.currentIndex.value + 1} of ${controller.examData.value!.questions.length}',
+                            'Question @current of @total'.trParams({
+                              'current': '${controller.currentIndex.value + 1}',
+                              'total': '${controller.examData.value!.questions.length}',
+                            }),
                             style: AppTextStyles.bodySecondary,
                           ),
                           Text('${(controller.progress * 100).round()}%', style: AppTextStyles.bodySecondary),
@@ -244,7 +247,7 @@ class ExamPage extends GetView<ExamController> {
                         children: [
                           Expanded(
                             child: CustomButton(
-                              text: 'Previous',
+                              text: 'Previous'.tr,
                               isOutlined: true,
                               onPressed: controller.isFirstQuestion ? null : controller.previousQuestion,
                             ),
@@ -252,7 +255,7 @@ class ExamPage extends GetView<ExamController> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: CustomButton(
-                              text: controller.isLastQuestion ? 'Submit' : 'Next',
+                              text: controller.isLastQuestion ? 'Submit'.tr : 'Next'.tr,
                               icon: Icons.arrow_forward,
                               isLoading: controller.isSubmitting.value,
                               onPressed:

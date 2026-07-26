@@ -24,24 +24,24 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Forgot Password', style: AppTextStyles.h1),
+            Text('Forgot Password'.tr, style: AppTextStyles.h1),
             const SizedBox(height: 8),
             Text(
-              'Select which contact details should we use to reset your password',
+              'Select which contact details should we use to reset your password'.tr,
               style: AppTextStyles.bodySecondary,
             ),
             const SizedBox(height: 28),
             Obx(() => InlineErrorWidget(message: controller.errorMessage.value)),
             CustomTextField(
               controller: controller.emailController,
-              label: 'Email',
+              label: 'Email'.tr,
               hint: 'you@example.com',
               prefixIcon: Icons.mail_outline,
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 20),
             Obx(() => CustomButton(
-                  text: 'Next',
+                  text: 'Next'.tr,
                   icon: Icons.arrow_forward,
                   isLoading: controller.isLoading.value,
                   onPressed: controller.submit,

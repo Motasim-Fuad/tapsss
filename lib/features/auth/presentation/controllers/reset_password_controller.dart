@@ -30,12 +30,12 @@ class ResetPasswordController extends GetxController {
     final confirmPassword = confirmPasswordController.text.trim();
 
     if (password.isEmpty || confirmPassword.isEmpty) {
-      errorMessage.value = 'Please fill in both fields';
+      errorMessage.value = 'Please fill in both fields'.tr;
       return;
     }
 
     if (password != confirmPassword) {
-      errorMessage.value = 'Passwords do not match';
+      errorMessage.value = 'Passwords do not match'.tr;
       return;
     }
 
@@ -50,7 +50,7 @@ class ResetPasswordController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }

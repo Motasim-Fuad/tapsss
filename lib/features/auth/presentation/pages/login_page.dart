@@ -22,17 +22,17 @@ class LoginPage extends GetView<LoginController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Text('Welcome Back!', style: AppTextStyles.h1),
+              Text('Welcome Back!'.tr, style: AppTextStyles.h1),
               const SizedBox(height: 8),
               Text(
-                'Sign in with your email and password or social media to continue',
+                'Sign in with your email and password or social media to continue'.tr,
                 style: AppTextStyles.bodySecondary,
               ),
               const SizedBox(height: 28),
               Obx(() => InlineErrorWidget(message: controller.errorMessage.value)),
               CustomTextField(
                 controller: controller.emailController,
-                label: 'Email',
+                label: 'Email'.tr,
                 hint: 'you@example.com',
                 prefixIcon: Icons.mail_outline,
                 keyboardType: TextInputType.emailAddress,
@@ -40,7 +40,7 @@ class LoginPage extends GetView<LoginController> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: controller.passwordController,
-                label: 'Password',
+                label: 'Password'.tr,
                 hint: '••••••••',
                 prefixIcon: Icons.lock_outline,
                 isPassword: true,
@@ -56,19 +56,19 @@ class LoginPage extends GetView<LoginController> {
                             activeColor: AppColors.primary,
                             onChanged: (v) => controller.rememberMe.value = v ?? false,
                           ),
-                          Text('Remember me', style: AppTextStyles.caption),
+                          Text('Remember me'.tr, style: AppTextStyles.caption),
                         ],
                       )),
                   TextButton(
                     onPressed: () => Get.toNamed(AppRoutes.forgotPassword),
-                    child: Text('Forgot password?',
+                    child: Text('Forgot password?'.tr,
                         style: AppTextStyles.caption.copyWith(color: AppColors.primary)),
                   ),
                 ],
               ),
               const SizedBox(height: 12),
               Obx(() => CustomButton(
-                    text: 'Log in',
+                    text: 'Log in'.tr,
                     isLoading: controller.isLoading.value,
                     onPressed: controller.login,
                   )),
@@ -89,9 +89,9 @@ class LoginPage extends GetView<LoginController> {
                     text: TextSpan(
                       style: AppTextStyles.body,
                       children: [
-                        const TextSpan(text: "Don't have account? "),
+                        TextSpan(text: "Don't have account? ".tr),
                         TextSpan(
-                          text: 'Sign up',
+                          text: 'Sign up'.tr,
                           style: AppTextStyles.body.copyWith(
                             color: AppColors.primary,
                             fontWeight: FontWeight.w700,

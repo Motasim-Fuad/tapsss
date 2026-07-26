@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/localization/locale_service.dart';
 import '../../../../shared/widgets/app_network_image.dart';
 import '../../../../shared/widgets/asset_placeholder.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
@@ -26,7 +27,7 @@ class ProfilePage extends GetView<ProfileController> {
           return EmptyStateWidget(
             icon: Icons.wifi_off,
             message: controller.errorMessage.value!,
-            actionText: 'Retry',
+            actionText: 'Retry'.tr,
             onAction: controller.fetchProfile,
           );
         }
@@ -70,7 +71,7 @@ class ProfilePage extends GetView<ProfileController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Profile', style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                            Text('Profile'.tr, style: AppTextStyles.h2.copyWith(color: AppColors.white)),
                             IconButton(
                               icon: const Icon(Icons.chevron_right, color: AppColors.white),
                               onPressed: controller.goToEditProfile,
@@ -111,14 +112,14 @@ class ProfilePage extends GetView<ProfileController> {
                             Expanded(
                                 child: _StatBox(
                                     value: '${profile.testStats.completedCount}',
-                                    label: 'Tests Done')),
+                                    label: 'Tests Done'.tr)),
                             const SizedBox(width: 8),
                             Expanded(
-                                child: _StatBox(value: '${profile.streak}', label: 'Streak Days')),
+                                child: _StatBox(value: '${profile.streak}', label: 'Streak Days'.tr)),
                             const SizedBox(width: 8),
                             Expanded(
                                 child: _StatBox(
-                                    value: '${profile.testStats.bestScore}%', label: 'Best Score')),
+                                    value: '${profile.testStats.bestScore}%', label: 'Best Score'.tr)),
                           ],
                         ),
                       ],
@@ -127,7 +128,7 @@ class ProfilePage extends GetView<ProfileController> {
                 ],
               ),
               const SizedBox(height: 16),
-              const _SectionLabel('ACCOUNT'),
+              _SectionLabel('ACCOUNT'.tr),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Card(
@@ -135,42 +136,47 @@ class ProfilePage extends GetView<ProfileController> {
                     children: [
                       _MenuTile(
                           icon: Icons.person_outline,
-                          label: 'Personal Information',
+                          label: 'Personal Information'.tr,
                           onTap: controller.goToEditProfile),
                       _MenuTile(
                         icon: Icons.notifications_none,
-                        label: 'Notifications',
+                        label: 'Notifications'.tr,
                         trailing:
                         Switch(value: true, activeColor: AppColors.primary, onChanged: (_) {}),
+                      ),
+                      _MenuTile(
+                        icon: Icons.language,
+                        label: 'Language'.tr,
+                        onTap: () => _showLanguageDialog(context),
                       ),
                     ],
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              const _SectionLabel('SUBSCRIPTION'),
+              _SectionLabel('SUBSCRIPTION'.tr),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Card(
                   color: AppColors.surface,
                   child: _MenuTile(
                     icon: Icons.credit_card,
-                    label: 'My Subscription',
+                    label: 'My Subscription'.tr,
                     onTap: () => Get.toNamed(AppRoutes.subscription),
                   ),
                 ),
               ),
               const SizedBox(height: 12),
-              const _SectionLabel('SUPPORT'),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+              _SectionLabel('SUPPORT'.tr),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Card(
                   color: AppColors.surface,
                   child: Column(
                     children: [
-                      _MenuTile(icon: Icons.access_time, label: 'Help Center'),
-                      _MenuTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy'),
-                      _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'),
+                      _MenuTile(icon: Icons.access_time, label: 'Help Center'.tr),
+                      _MenuTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy'.tr),
+                      _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'.tr),
                     ],
                   ),
                 ),
@@ -191,7 +197,7 @@ class ProfilePage extends GetView<ProfileController> {
                         children: [
                           const Icon(Icons.logout, color: AppColors.error, size: 18),
                           const SizedBox(width: 8),
-                          Text('Log Out',
+                          Text('Log Out'.tr,
                               style: AppTextStyles.label.copyWith(color: AppColors.error)),
                         ],
                       ),
@@ -204,6 +210,33 @@ class ProfilePage extends GetView<ProfileController> {
           ),
         );
       }),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Select Language'.tr),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Text('English'.tr),
+              onTap: () async {
+                await LocaleService.changeLanguage('en');
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: Text('Swedish'.tr),
+              onTap: () async {
+                await LocaleService.changeLanguage('sv');
+                Get.back();
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -237,7 +270,7 @@ class _StatBox extends StatelessWidget {
 class _SectionLabel extends StatelessWidget {
   final String text;
 
-  const _SectionLabel(this.text);
+  _SectionLabel(this.text);
 
   @override
   Widget build(BuildContext context) {

@@ -24,10 +24,10 @@ class OtpVerificationPage extends GetView<OtpController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Verify your Email', style: AppTextStyles.h1),
+            Text('Verify your Email'.tr, style: AppTextStyles.h1),
             const SizedBox(height: 8),
             Text(
-              'Please enter the 6 digit verification code that we have been sent to your email address',
+              'Please enter the 6 digit verification code that we have been sent to your email address'.tr,
               style: AppTextStyles.bodySecondary,
             ),
             const SizedBox(height: 28),
@@ -41,13 +41,13 @@ class OtpVerificationPage extends GetView<OtpController> {
             Center(
               child: TextButton(
                 onPressed: controller.resendCode,
-                child: Text("Don't receive code? Resend code",
+                child: Text("Don't receive code? Resend code".tr,
                     style: AppTextStyles.caption.copyWith(color: AppColors.error)),
               ),
             ),
             const SizedBox(height: 12),
             Obx(() => CustomButton(
-              text: 'Next',
+              text: 'Next'.tr,
               icon: Icons.arrow_forward,
               isLoading: controller.isLoading.value,
               onPressed: controller.verify,

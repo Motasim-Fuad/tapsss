@@ -41,7 +41,7 @@ class EditProfileController extends GetxController {
     final name = nameController.text.trim();
 
     if (name.isEmpty) {
-      errorMessage.value = 'Please enter your full name';
+      errorMessage.value = 'Please enter your full name'.tr;
       return;
     }
 
@@ -59,7 +59,7 @@ class EditProfileController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }

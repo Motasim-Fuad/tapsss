@@ -10,13 +10,13 @@ import '../controllers/test_detail_controller.dart';
 class TestDetailPage extends GetView<TestDetailController> {
   const TestDetailPage({super.key});
 
-  static const _rules = [
-    'The test consists of multiple-choice questions',
-    'You have a fixed duration to complete the test',
-    'Each question has exactly one correct answer',
-    'You can flag questions to review later',
-    'You cannot pause the timer once started',
-    'Results are displayed immediately upon completion',
+  List<String> get _rules => [
+    'The test consists of multiple-choice questions'.tr,
+    'You have a fixed duration to complete the test'.tr,
+    'Each question has exactly one correct answer'.tr,
+    'You can flag questions to review later'.tr,
+    'You cannot pause the timer once started'.tr,
+    'Results are displayed immediately upon completion'.tr,
   ];
 
   @override
@@ -27,7 +27,7 @@ class TestDetailPage extends GetView<TestDetailController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: AppColors.textPrimary),
-        title: Obx(() => Text(controller.testDetail.value?.testName ?? 'Test', style: AppTextStyles.h3)),
+        title: Obx(() => Text(controller.testDetail.value?.testName ?? 'Test'.tr, style: AppTextStyles.h3)),
         centerTitle: true,
       ),
       body: Obx(() {
@@ -38,7 +38,7 @@ class TestDetailPage extends GetView<TestDetailController> {
         final test = controller.testDetail.value;
         if (test == null) {
           return Center(
-            child: Text(controller.errorMessage.value ?? 'Unable to load test',
+            child: Text(controller.errorMessage.value ?? 'Unable to load test'.tr,
                 style: AppTextStyles.bodySecondary),
           );
         }
@@ -57,16 +57,16 @@ class TestDetailPage extends GetView<TestDetailController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Mock Exam', style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+                    Text('Mock Exam'.tr, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
                     Text(test.testName, style: AppTextStyles.h1.copyWith(color: AppColors.white)),
                     const SizedBox(height: 14),
                     Row(
                       children: [
-                        _StatBox(icon: Icons.track_changes, value: '${test.totalQuestions}', label: 'Questions'),
+                        _StatBox(icon: Icons.track_changes, value: '${test.totalQuestions}', label: 'Questions'.tr),
                         const SizedBox(width: 10),
-                        _StatBox(icon: Icons.access_time, value: '${test.durationMinutes}m', label: 'Duration'),
+                        _StatBox(icon: Icons.access_time, value: '${test.durationMinutes}m', label: 'Duration'.tr),
                         const SizedBox(width: 10),
-                        _StatBox(icon: Icons.flash_on, value: '${test.passingPercentage}%', label: 'Passing'),
+                        _StatBox(icon: Icons.flash_on, value: '${test.passingPercentage}%', label: 'Passing'.tr),
                       ],
                     ),
                   ],
@@ -85,7 +85,7 @@ class TestDetailPage extends GetView<TestDetailController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       const Text('Exam Rules', style: AppTextStyles.h3),
+                       Text('Exam Rules'.tr, style: AppTextStyles.h3),
                         const SizedBox(height: 12),
                         ..._rules.asMap().entries.map((entry) => Padding(
                               padding: const EdgeInsets.only(bottom: 10),
@@ -110,13 +110,13 @@ class TestDetailPage extends GetView<TestDetailController> {
                             color: AppColors.warningBg,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: const Row(
+                          child: Row(
                             children: [
                                Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 20),
                                SizedBox(width: 8),
                               Expanded(
                                 child: Text(
-                                  'Ensure you have a stable internet connection before starting. The timer will not pause.',
+                                  'Ensure you have a stable internet connection before starting. The timer will not pause.'.tr,
                                   style: AppTextStyles.caption,
                                 ),
                               ),
@@ -130,7 +130,7 @@ class TestDetailPage extends GetView<TestDetailController> {
               ),
               const SizedBox(height: 16),
               CustomButton(
-                text: 'Start Exam Now',
+                text: 'Start Exam Now'.tr,
                 icon: Icons.flash_on,
                 onPressed: controller.startExam,
               ),

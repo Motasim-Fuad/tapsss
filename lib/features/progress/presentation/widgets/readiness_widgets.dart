@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReadinessIndicator extends StatelessWidget {
   final double percentage;
@@ -31,8 +32,8 @@ class ReadinessIndicator extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                const Text(
-                  "Readiness",
+                Text(
+                  "Readiness".tr,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Color(0xff7B8794),

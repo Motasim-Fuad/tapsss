@@ -30,7 +30,7 @@ class HomePage extends GetView<HomeController> {
             return EmptyStateWidget(
               icon: Icons.wifi_off,
               message: controller.errorMessage.value!,
-              actionText: 'Retry',
+              actionText: 'Retry'.tr,
               onAction: controller.fetchDashboard,
             );
           }
@@ -49,7 +49,7 @@ class HomePage extends GetView<HomeController> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Welcome,', style: AppTextStyles.body),
+                        Text('Welcome,'.tr, style: AppTextStyles.body),
                         Row(
                           children: [
                             Obx(() => Text(
@@ -57,7 +57,7 @@ class HomePage extends GetView<HomeController> {
                                   style: AppTextStyles.h2,
                                 )),
                             const SizedBox(width: 5,),
-                            const Text("👋",style: TextStyle(fontSize: 30),),
+                            Text("👋",style: TextStyle(fontSize: 30),),
                           ],
                         ),
                       ],
@@ -85,7 +85,7 @@ class HomePage extends GetView<HomeController> {
                 const SizedBox(height: 20),
                 _ExamReadinessCard(data: data),
                 const SizedBox(height: 24),
-               const  Text('Study Topics', style: AppTextStyles.h3),
+               Text('Study Topics'.tr, style: AppTextStyles.h3),
                 const SizedBox(height: 12),
 
                 SizedBox(
@@ -111,10 +111,10 @@ class HomePage extends GetView<HomeController> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                const Text('Recent Activity', style: AppTextStyles.h3),
+                Text('Recent Activity'.tr, style: AppTextStyles.h3),
                 const SizedBox(height: 12),
                 if (data.recentActivity.isEmpty)
-                 const  Text('No recent activity yet', style: AppTextStyles.bodySecondary)
+                 Text('No recent activity yet'.tr, style: AppTextStyles.bodySecondary)
                 else
                   ...data.recentActivity.map((activity) => _RecentActivityTile(activity: activity)),
                 const SizedBox(height: 24),
@@ -132,7 +132,7 @@ class HomePage extends GetView<HomeController> {
                         children: [
                           const Icon(Icons.trending_up, size: 16, color: AppColors.info),
                           const SizedBox(width: 6),
-                          Text('SWEDISH FACT OF THE DAY',
+                          Text('SWEDISH FACT OF THE DAY'.tr,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.info,
                                 fontWeight: FontWeight.w700,
@@ -140,8 +140,8 @@ class HomePage extends GetView<HomeController> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Sweden became a member of the European Union on January 1, 1995. Swedish citizens enjoy full freedom of movement across EU member states.',
+                      Text(
+                        'Sweden became a member of the European Union on January 1, 1995. Swedish citizens enjoy full freedom of movement across EU member states.'.tr,
                         style: AppTextStyles.bodySecondary,
                       ),
                     ],
@@ -243,7 +243,7 @@ class _ExamReadinessCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Exam Readiness Score',
+                              'Exam Readiness Score'.tr,
                               style: AppTextStyles.bodySecondary.copyWith(
                                 color: AppColors.white70,
                               ),
@@ -256,7 +256,7 @@ class _ExamReadinessCard extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              "You're making great progress! Keep it up to reach exam readiness.",
+                              "You're making great progress! Keep it up to reach exam readiness.".tr,
                               style: AppTextStyles.caption.copyWith(
                                 color: AppColors.white70,
                               ),
@@ -290,7 +290,7 @@ class _ExamReadinessCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _StatChip(
-                          label: 'Tests Done',
+                          label: 'Tests Done'.tr,
                           value:
                           '${data.testsDone}/${data.totalTests}',
                         ),
@@ -298,7 +298,7 @@ class _ExamReadinessCard extends StatelessWidget {
                       const SizedBox(width: 10),
                       Expanded(
                         child: _StatChip(
-                          label: 'Streak',
+                          label: 'Streak'.tr,
                           value: '${data.streak}d 🔥',
                         ),
                       ),

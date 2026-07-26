@@ -20,7 +20,7 @@ class EditProfilePage extends GetView<EditProfileController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: AppColors.textPrimary),
-        title: Text('Edit Profile', style: AppTextStyles.h3),
+        title: Text('Edit Profile'.tr, style: AppTextStyles.h3),
         centerTitle: true,
       ),
       body: Padding(
@@ -67,15 +67,15 @@ class EditProfilePage extends GetView<EditProfileController> {
             Obx(() => InlineErrorWidget(message: controller.errorMessage.value)),
             CustomTextField(
               controller: controller.nameController,
-              label: 'Full Name',
-              hint: 'Your Name',
+              label: 'Full Name'.tr,
+              hint: 'Your Name'.tr,
               prefixIcon: Icons.person_outline,
             ),
             const SizedBox(height: 16),
-            _ReadonlyField(label: 'Email', value: controller.existingProfile.value?.email ?? ''),
+            _ReadonlyField(label: 'Email'.tr, value: controller.existingProfile.value?.email ?? ''),
             const Spacer(),
             Obx(() => CustomButton(
-                  text: 'Save Changes',
+                  text: 'Save Changes'.tr,
                   isLoading: controller.isLoading.value,
                   onPressed: controller.save,
                 )),

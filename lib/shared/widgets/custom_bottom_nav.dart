@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 
@@ -8,12 +9,12 @@ class CustomBottomNav extends StatelessWidget {
 
   const CustomBottomNav({super.key, required this.currentIndex, required this.onTap});
 
-  static const _items = [
-    _NavItemData(icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'),
-    _NavItemData(icon: Icons.description_outlined, activeIcon: Icons.description, label: 'Tests'),
-    _NavItemData(icon: Icons.menu_book_outlined, activeIcon: Icons.menu_book, label: 'Study'),
-    _NavItemData(icon: Icons.bar_chart_outlined, activeIcon: Icons.bar_chart, label: 'Progress'),
-    _NavItemData(icon: Icons.person_outline, activeIcon: Icons.person, label: 'Profile'),
+  List<_NavItemData> get _items => [
+    _NavItemData(icon: Icons.home_outlined, activeIcon: Icons.home, label: 'Home'.tr),
+    _NavItemData(icon: Icons.description_outlined, activeIcon: Icons.description, label: 'Tests'.tr),
+    _NavItemData(icon: Icons.menu_book_outlined, activeIcon: Icons.menu_book, label: 'Study'.tr),
+    _NavItemData(icon: Icons.bar_chart_outlined, activeIcon: Icons.bar_chart, label: 'Progress'.tr),
+    _NavItemData(icon: Icons.person_outline, activeIcon: Icons.person, label: 'Profile'.tr),
   ];
 
   @override

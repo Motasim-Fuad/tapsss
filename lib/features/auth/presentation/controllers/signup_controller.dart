@@ -27,17 +27,17 @@ class SignupController extends GetxController {
     final confirmPassword = confirmPasswordController.text.trim();
 
     if (name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      errorMessage.value = 'Please fill in all fields';
+      errorMessage.value = 'Please fill in all fields'.tr;
       return;
     }
 
     if (password != confirmPassword) {
-      errorMessage.value = 'Passwords do not match';
+      errorMessage.value = 'Passwords do not match'.tr;
       return;
     }
 
     if (!agreedToTerms.value) {
-      errorMessage.value = 'Please agree to terms and privacy policy';
+      errorMessage.value = 'Please agree to terms and privacy policy'.tr;
       return;
     }
 
@@ -53,7 +53,7 @@ class SignupController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }

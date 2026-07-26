@@ -36,29 +36,29 @@ class SubscriptionPage extends GetView<SubscriptionController> {
                   child: const Icon(Icons.bolt, color: AppColors.primaryDark),
                 ),
                 const SizedBox(height: 12),
-                Text('Premium Membership', style: AppTextStyles.h2.copyWith(color: AppColors.white)),
+                Text('Premium Membership'.tr, style: AppTextStyles.h2.copyWith(color: AppColors.white)),
                 const SizedBox(height: 4),
-                Text('Pass With Confidence',
+                Text('Pass With Confidence'.tr,
                     style: AppTextStyles.bodySecondary.copyWith(color: AppColors.white70)),
                 Text(
-                  'Unlock premium study materials, 10 realistic mock exams, and advanced analytics',
+                  'Unlock premium study materials, 10 realistic mock exams, and advanced analytics'.tr,
                   textAlign: TextAlign.center,
                   style: AppTextStyles.caption.copyWith(color: AppColors.white70),
                 ),
                 const SizedBox(height: 16),
                 Row(
-                  children: const [
-                    Expanded(child: _StatColumn(value: '93%', label: 'Pass Rate')),
-                    Expanded(child: _StatColumn(value: '3x', label: 'More Study Time')),
-                    Expanded(child: _StatColumn(value: '8.4/10', label: 'Readiness Score')),
-                    Expanded(child: _StatColumn(value: '50K+', label: 'Students')),
+                  children: [
+                    Expanded(child: _StatColumn(value: '93%', label: 'Pass Rate'.tr)),
+                    Expanded(child: _StatColumn(value: '3x', label: 'More Study Time'.tr)),
+                    Expanded(child: _StatColumn(value: '8.4/10', label: 'Readiness Score'.tr)),
+                    Expanded(child: _StatColumn(value: '50K+', label: 'Students'.tr)),
                   ],
                 ),
               ],
             ),
           ),
           const SizedBox(height: 20),
-          Text('Choose your plan', style: AppTextStyles.h3),
+          Text('Choose your plan'.tr, style: AppTextStyles.h3),
           const SizedBox(height: 12),
           Obx(() => Column(
                 children: controller.plans
@@ -70,19 +70,19 @@ class SubscriptionPage extends GetView<SubscriptionController> {
                     .toList(),
               )),
           const SizedBox(height: 20),
-          Text('Premium Includes', style: AppTextStyles.h3),
+          Text('Premium Includes'.tr, style: AppTextStyles.h3),
           const SizedBox(height: 10),
           ..._features.map((f) => _FeatureRow(text: f)),
           const SizedBox(height: 24),
           CustomButton(
-            text: 'Unlock Premium — 999 SEK',
+            text: 'Unlock Premium — 999 SEK'.tr,
             icon: Icons.bolt,
             onPressed: controller.unlockPremium,
           ),
           const SizedBox(height: 10),
           Center(
             child: Text(
-              'Subscriptions auto-renew. Cancel anytime in your profile.',
+              'Subscriptions auto-renew. Cancel anytime in your profile.'.tr,
               textAlign: TextAlign.center,
               style: AppTextStyles.caption,
             ),
@@ -92,13 +92,13 @@ class SubscriptionPage extends GetView<SubscriptionController> {
     );
   }
 
-  static const _features = [
-    'Full Study Materials Library',
-    'All 10 Mock Exams',
-    'Unlimited Practice Sessions',
-    'Advanced Progress Analytics',
-    'Bookmarks & Saved Notes',
-    'Priority Support',
+  List<String> get _features => [
+    'Full Study Materials Library'.tr,
+    'All 10 Mock Exams'.tr,
+    'Unlimited Practice Sessions'.tr,
+    'Advanced Progress Analytics'.tr,
+    'Bookmarks & Saved Notes'.tr,
+    'Priority Support'.tr,
   ];
 }
 
@@ -153,8 +153,8 @@ class _PlanTile extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(plan.label, style: AppTextStyles.label),
-                      if (plan.subLabel != null) Text(plan.subLabel!, style: AppTextStyles.caption),
+                      Text(plan.label.tr, style: AppTextStyles.label),
+                      if (plan.subLabel != null) Text(plan.subLabel!.tr, style: AppTextStyles.caption),
                     ],
                   ),
                   Column(
@@ -169,7 +169,7 @@ class _PlanTile extends StatelessWidget {
                             color: AppColors.accent,
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(plan.badge!,
+                          child: Text(plan.badge!.tr,
                               style: AppTextStyles.caption.copyWith(fontSize: 10, color: AppColors.primaryDark)),
                         ),
                     ],

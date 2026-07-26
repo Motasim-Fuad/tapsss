@@ -30,7 +30,7 @@ class OtpController extends GetxController {
     final otp = otpController.text.trim();
 
     if (otp.isEmpty || otp.length < 4) {
-      errorMessage.value = 'Please enter a valid verification code';
+      errorMessage.value = 'Please enter a valid verification code'.tr;
       return;
     }
 
@@ -49,7 +49,7 @@ class OtpController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Something went wrong. Please try again.';
+      errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
     }
@@ -64,7 +64,7 @@ class OtpController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
-      errorMessage.value = 'Failed to resend code';
+      errorMessage.value = 'Failed to resend code'.tr;
     }
   }
 
