@@ -23,7 +23,7 @@ class TestRepositoryImpl implements TestRepository {
   @override
   Future<SubmitTestModel> submitTest({
     required int testNumber,
-    required List<Map<String, String>> answers,
+    required List<Map<String, String?>> answers,
     required int timeTaken,
   }) {
     return remoteDataSource.submitTest(testNumber: testNumber, answers: answers, timeTaken: timeTaken);

@@ -27,7 +27,7 @@ class TestRemoteDataSource {
 
   Future<SubmitTestModel> submitTest({
     required int testNumber,
-    required List<Map<String, String>> answers,
+    required List<Map<String, String?>> answers,
     required int timeTaken,
   }) async {
     final response = await apiClient.post(

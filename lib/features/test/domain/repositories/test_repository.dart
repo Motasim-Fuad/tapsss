@@ -9,7 +9,7 @@ abstract class TestRepository {
   Future<StartTestModel> startTest(int testNumber);
   Future<SubmitTestModel> submitTest({
     required int testNumber,
-    required List<Map<String, String>> answers,
+    required List<Map<String, String?>> answers,
     required int timeTaken,
   });
 }

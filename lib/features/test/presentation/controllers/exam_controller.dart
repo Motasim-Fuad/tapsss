@@ -15,8 +15,7 @@ class ExamController extends GetxController {
   final Rxn<StartTestModel> examData = Rxn<StartTestModel>();
   final RxInt currentIndex = 0.obs;
   final RxMap<String, String> selectedAnswers = <String, String>{}.obs;
-  final RxSet<String> flaggedQuestionIds = <String>{}.obs;
-  final RxSet<String> bookmarkedQuestionIds = <String>{}.obs;
+
 
 
   final RxInt remainingSeconds = 0.obs;
@@ -85,23 +84,7 @@ class ExamController extends GetxController {
     selectedAnswers[currentQuestion.id] = option;
   }
 
-  void toggleFlag() {
-    final id = currentQuestion.id;
-    if (flaggedQuestionIds.contains(id)) {
-      flaggedQuestionIds.remove(id);
-    } else {
-      flaggedQuestionIds.add(id);
-    }
-  }
 
-  void toggleBookmark() {
-    final id = currentQuestion.id;
-    if (bookmarkedQuestionIds.contains(id)) {
-      bookmarkedQuestionIds.remove(id);
-    } else {
-      bookmarkedQuestionIds.add(id);
-    }
-  }
 
   void nextQuestion() {
     if (!isLastQuestion) currentIndex.value++;
@@ -118,10 +101,16 @@ class ExamController extends GetxController {
     errorMessage.value = null;
 
     try {
+      // final answers = examData.value!.questions
+      //     .where((q) => selectedAnswers.containsKey(q.id))
+      //     .map((q) => {'questionId': q.id, 'selectedAnswer': selectedAnswers[q.id]!})
+      //     .toList();
+
       final answers = examData.value!.questions
-          .where((q) => selectedAnswers.containsKey(q.id))
-          .map((q) => {'questionId': q.id, 'selectedAnswer': selectedAnswers[q.id]!})
-          .toList();
+          .map((q) => {
+        'questionId': q.id,
+        'selectedAnswer': selectedAnswers[q.id],
+      }).toList();
 
       final timeTaken = _totalSeconds - remainingSeconds.value;
 

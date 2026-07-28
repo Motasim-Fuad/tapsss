@@ -90,8 +90,7 @@ class ExamPage extends GetView<ExamController> {
 
             final question = controller.currentQuestion;
             final selected = controller.selectedAnswers[question.id];
-            final isFlagged = controller.flaggedQuestionIds.contains(question.id);
-            final isBookmarked = controller.bookmarkedQuestionIds.contains(question.id);
+
 
             return Column(
               children: [
@@ -121,18 +120,6 @@ class ExamPage extends GetView<ExamController> {
                                 style: AppTextStyles.label.copyWith(fontWeight: FontWeight.w700)),
                           ],
                         ),
-                      ),
-                      const Spacer(),
-                      _RoundIconButton(
-                        icon: isFlagged ? Icons.flag : Icons.flag_outlined,
-                        color: isFlagged ? AppColors.warning : AppColors.textSecondary,
-                        onTap: controller.toggleFlag,
-                      ),
-                      const SizedBox(width: 8),
-                      _RoundIconButton(
-                        icon: isBookmarked ? Icons.bookmark : Icons.bookmark_outline,
-                        color: isBookmarked ? AppColors.primary : AppColors.textSecondary,
-                        onTap: controller.toggleBookmark,
                       ),
                     ],
                   ),
