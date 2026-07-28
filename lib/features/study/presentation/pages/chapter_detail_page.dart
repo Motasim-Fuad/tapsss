@@ -55,10 +55,6 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
                         }),
                         style: AppTextStyles.caption,
                       ),
-                      // Text(
-                      //   '${((currentLessonNumber / totalLessons) * 100).round()}%',
-                      //   style: AppTextStyles.caption,
-                      // ),
                     ],
                   ),
                   const SizedBox(height: 6),

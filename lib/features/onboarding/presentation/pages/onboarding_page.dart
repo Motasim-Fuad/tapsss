@@ -31,9 +31,24 @@ class OnboardingPage extends GetView<OnboardingController> {
                         const SizedBox(height: 24),
 
                         Expanded(
-                          child: Image.asset(
-                            controller.images[index],
-                            fit: BoxFit.contain,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.asset(
+                                controller.images[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
 

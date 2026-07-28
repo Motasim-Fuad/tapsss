@@ -35,10 +35,15 @@ class CustomButton extends StatelessWidget {
                 Icon(icon, size: 18, color: isOutlined ? AppColors.primary : AppColors.warning),
                 const SizedBox(width: 8),
               ],
-              Text(
-                text,
-                style: AppTextStyles.buttonText.copyWith(
-                  color: isOutlined ? AppColors.primary : AppColors.warning,
+              Flexible(
+                child: Text(
+                  text,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.buttonText.copyWith(
+                    color: isOutlined ? AppColors.primary : AppColors.warning,
+                  ),
                 ),
               ),
             ],
