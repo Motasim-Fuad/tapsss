@@ -24,7 +24,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
         return true;
       }
 
-      // Memory থেকে সরাসরি নাও
+
       final token = NotificationService.to.fcmToken.value;
       if (token == null || token.isEmpty) {
         if (kDebugMode) print('No token available');
