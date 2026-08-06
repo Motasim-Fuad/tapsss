@@ -1,3 +1,4 @@
+import 'package:arashmati_app/features/notification/presentation/controllers/notification_controller.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/storage_keys.dart';
 import '../../../../core/services/storage_service.dart';
@@ -34,10 +35,12 @@ class AuthSessionController extends GetxController {
 
   Future<void> logout() async {
     try {
+
       await authRepository.logout();
     } catch (_) {
       // ignore network errors on logout, clear local session regardless
     }
+    await NotificationController.to.clear();
     await storageService.deleteAll();
     currentUser.value = null;
     isLoggedIn.value = false;

@@ -10,6 +10,7 @@ import 'config/routes/app_routes.dart';
 import 'core/constants/app_colors.dart';
 import 'core/localization/app_translations.dart';
 import 'core/localization/locale_service.dart';
+import 'core/services/notification_services.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,8 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await Get.putAsync(() async => await NotificationService().init());
 
   await PreferenceService.instance.init();
 

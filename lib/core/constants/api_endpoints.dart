@@ -12,6 +12,9 @@ class ApiEndpoints {
   static const String logout = '/api/auth/logout';
   static const String refreshToken = '/api/auth/refresh-token';
 
+  static const String registerNotificationToken = '/api/notification/register-fcm-token';
+
+
   static const String dashboard = '/api/dashboard';
 
   static const String studyMaterials = '/api/user-study/materials';

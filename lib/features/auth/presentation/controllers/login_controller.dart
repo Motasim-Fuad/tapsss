@@ -1,3 +1,4 @@
+import 'package:arashmati_app/features/notification/presentation/controllers/notification_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
@@ -33,6 +34,7 @@ class LoginController extends GetxController {
     try {
       final response = await authRepository.login(email: email, password: password);
       await sessionController.saveSession(response);
+      await NotificationController.to.register();
       Get.offAllNamed(AppRoutes.main);
     } on ApiException catch (e) {
       errorMessage.value = e.message;
