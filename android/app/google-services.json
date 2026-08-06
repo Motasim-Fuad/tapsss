@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "347085841227",
+    "project_id": "tapass-2026",
+    "storage_bucket": "tapass-2026.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347085841227:android:f7b3bb49fcc0a712ad7ece",
+        "android_client_info": {
+          "package_name": "com.tapass.tapass"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX3C57Hd6LBdpOop8VPhHvhBJ2KQ3ERgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
