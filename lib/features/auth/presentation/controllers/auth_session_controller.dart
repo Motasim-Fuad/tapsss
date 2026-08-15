@@ -2,6 +2,7 @@ import 'package:arashmati_app/features/notification/presentation/controllers/not
 import 'package:get/get.dart';
 import '../../../../core/constants/storage_keys.dart';
 import '../../../../core/services/storage_service.dart';
+import '../../../../core/services/revenuecat_service.dart';
 import '../../data/models/login_response_model.dart';
 import '../../data/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -22,6 +23,15 @@ class AuthSessionController extends GetxController {
     await storageService.write(StorageKeys.userEmail, data.user.email);
     currentUser.value = data.user;
     isLoggedIn.value = true;
+
+    // Use the backend user id as RevenueCat appUserID so the same
+    // subscription identity can be recognized across iOS and Android.
+    try {
+      await RevenueCatService.logIn(data.user.id);
+    } catch (e) {
+      // RevenueCat must never block normal authentication.
+      print('[RevenueCat] login failed: $e');
+    }
   }
 
   void updateUser(UserModel user) {
@@ -42,6 +52,11 @@ class AuthSessionController extends GetxController {
     }
     await NotificationController.to.clear();
     await storageService.deleteAll();
+    try {
+      await RevenueCatService.logOut();
+    } catch (e) {
+      print('[RevenueCat] logout failed: $e');
+    }
     currentUser.value = null;
     isLoggedIn.value = false;
   }

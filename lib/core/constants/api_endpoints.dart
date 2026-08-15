@@ -11,6 +11,7 @@ class ApiEndpoints {
   static const String resetPassword = '/api/auth/reset-password';
   static const String logout = '/api/auth/logout';
   static const String refreshToken = '/api/auth/refresh-token';
+  static const String changeLanguage = '/api/auth/language';
 
   static const String registerNotificationToken = '/api/notification/register-fcm-token';
 

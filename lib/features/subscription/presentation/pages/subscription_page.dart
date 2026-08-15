@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/custom_button.dart';
@@ -16,104 +17,210 @@ class SubscriptionPage extends GetView<SubscriptionController> {
         backgroundColor: AppColors.white,
         elevation: 0,
         leading: const BackButton(color: AppColors.textPrimary),
+        actions: [
+          TextButton(
+            onPressed: controller.restorePurchases,
+            child: Text('Restore Purchases'.tr),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
+      body: SafeArea(
+        child: Obx(
+          () => ListView(
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
+            children: [
+              _heroCard(context),
+              const SizedBox(height: 20),
+              Text('Choose your plan'.tr, style: AppTextStyles.h3),
+              const SizedBox(height: 12),
+              if (controller.isLoading.value)
+                const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(30),
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else if (controller.plans.isEmpty)
+                _emptyPlans()
+              else
+                ...controller.plans.map(
+                  (plan) => _PlanTile(
+                    plan: plan,
+                    isSelected:
+                        controller.selectedPlanId.value == plan.id,
+                    onTap: () => controller.selectPlan(plan.id),
+                  ),
+                ),
+              const SizedBox(height: 18),
+              Text('Premium Includes'.tr, style: AppTextStyles.h3),
+              const SizedBox(height: 10),
+              ..._features.map((f) => _FeatureRow(text: f)),
+              const SizedBox(height: 24),
+              if (controller.plans.isNotEmpty)
+                CustomButton(
+                  text: controller.isPurchasing.value
+                      ? 'Processing...'.tr
+                      : 'Unlock Premium'.tr,
+                  icon: Icons.bolt,
+                  onPressed: controller.isPurchasing.value
+                      ? null
+                      : controller.unlockPremium,
+                ),
+              const SizedBox(height: 10),
+              Text(
+                'Subscriptions auto-renew. Cancel anytime in your profile.'.tr,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.caption,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _heroCard(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: AppColors.dashboardCardGradient,
+        ),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: Column(
         children: [
           Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(20),
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              gradient: const LinearGradient(colors: AppColors.dashboardCardGradient),
-              borderRadius: BorderRadius.circular(18),
+              color: AppColors.accent,
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Column(
-              children: [
-                Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(12)),
-                  child: const Icon(Icons.bolt, color: AppColors.primaryDark),
-                ),
-                const SizedBox(height: 12),
-                Text('Premium Membership'.tr, style: AppTextStyles.h2.copyWith(color: AppColors.white)),
-                const SizedBox(height: 4),
-                Text('Pass With Confidence'.tr,
-                    style: AppTextStyles.bodySecondary.copyWith(color: AppColors.white70)),
-                Text(
-                  'Unlock premium study materials, 10 realistic mock exams, and advanced analytics'.tr,
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.caption.copyWith(color: AppColors.white70),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(child: _StatColumn(value: '93%', label: 'Pass Rate'.tr)),
-                    Expanded(child: _StatColumn(value: '3x', label: 'More Study Time'.tr)),
-                    Expanded(child: _StatColumn(value: '8.4/10', label: 'Readiness Score'.tr)),
-                    Expanded(child: _StatColumn(value: '50K+', label: 'Students'.tr)),
-                  ],
-                ),
-              ],
+            child: const Icon(
+              Icons.bolt,
+              color: AppColors.primaryDark,
             ),
           ),
-          const SizedBox(height: 20),
-          Text('Choose your plan'.tr, style: AppTextStyles.h3),
           const SizedBox(height: 12),
-          Obx(() => Column(
-                children: controller.plans
-                    .map((plan) => _PlanTile(
-                          plan: plan,
-                          isSelected: controller.selectedPlanId.value == plan.id,
-                          onTap: () => controller.selectPlan(plan.id),
-                        ))
-                    .toList(),
-              )),
-          const SizedBox(height: 20),
-          Text('Premium Includes'.tr, style: AppTextStyles.h3),
-          const SizedBox(height: 10),
-          ..._features.map((f) => _FeatureRow(text: f)),
-          const SizedBox(height: 24),
-          CustomButton(
-            text: 'Unlock Premium — 999 SEK'.tr,
-            icon: Icons.bolt,
-            onPressed: controller.unlockPremium,
-          ),
-          const SizedBox(height: 10),
-          Center(
-            child: Text(
-              'Subscriptions auto-renew. Cancel anytime in your profile.'.tr,
-              textAlign: TextAlign.center,
-              style: AppTextStyles.caption,
+          Text(
+            'Premium Membership'.tr,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.h2.copyWith(
+              color: AppColors.white,
             ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Pass With Confidence'.tr,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.bodySecondary.copyWith(
+              color: AppColors.white70,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Unlock premium study materials, 10 realistic mock exams, and advanced analytics'
+                .tr,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.caption.copyWith(
+              color: AppColors.white70,
+            ),
+          ),
+          const SizedBox(height: 18),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final narrow = constraints.maxWidth < 390;
+
+              final stats = [
+                ('93%', 'Pass Rate'.tr),
+                ('3x', 'More Study Time'.tr),
+                ('8.4/10', 'Readiness Score'.tr),
+                ('50K+', 'Students'.tr),
+              ];
+
+              return Wrap(
+                alignment: WrapAlignment.center,
+                runAlignment: WrapAlignment.center,
+                spacing: narrow ? 18 : 4,
+                runSpacing: 14,
+                children: stats
+                    .map(
+                      (item) => SizedBox(
+                        width: narrow
+                            ? (constraints.maxWidth - 18) / 2
+                            : constraints.maxWidth / 4 - 2,
+                        child: _StatColumn(
+                          value: item.$1,
+                          label: item.$2,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              );
+            },
           ),
         ],
       ),
     );
   }
 
+  Widget _emptyPlans() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Text(
+        'No subscription plans are available right now.'.tr,
+        textAlign: TextAlign.center,
+        style: AppTextStyles.body,
+      ),
+    );
+  }
+
   List<String> get _features => [
-    'Full Study Materials Library'.tr,
-    'All 10 Mock Exams'.tr,
-    'Unlimited Practice Sessions'.tr,
-    'Advanced Progress Analytics'.tr,
-    'Bookmarks & Saved Notes'.tr,
-    'Priority Support'.tr,
-  ];
+        'Full Study Materials Library'.tr,
+        'All 10 Mock Exams'.tr,
+        'Unlimited Practice Sessions'.tr,
+        'Advanced Progress Analytics'.tr,
+        'Bookmarks & Saved Notes'.tr,
+        'Priority Support'.tr,
+      ];
 }
 
 class _StatColumn extends StatelessWidget {
   final String value;
   final String label;
 
-  const _StatColumn({required this.value, required this.label});
+  const _StatColumn({
+    required this.value,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: AppTextStyles.h3.copyWith(color: AppColors.white)),
-        Text(label, textAlign: TextAlign.center, style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+        Text(
+          value,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.h3.copyWith(
+            color: AppColors.white,
+          ),
+        ),
+        Text(
+          label,
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.caption.copyWith(
+            color: AppColors.white70,
+          ),
+        ),
       ],
     );
   }
@@ -124,7 +231,11 @@ class _PlanTile extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _PlanTile({required this.plan, required this.isSelected, required this.onTap});
+  const _PlanTile({
+    required this.plan,
+    required this.isSelected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -135,46 +246,75 @@ class _PlanTile extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary.withOpacity(0.06) : AppColors.surface,
+          color: isSelected
+              ? AppColors.primary.withOpacity(0.06)
+              : AppColors.surface,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: isSelected ? AppColors.primary : AppColors.border, width: isSelected ? 1.5 : 1),
+          border: Border.all(
+            color: isSelected
+                ? AppColors.primary
+                : AppColors.border,
+            width: isSelected ? 1.5 : 1,
+          ),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
-              isSelected ? Icons.radio_button_checked : Icons.radio_button_off,
-              color: isSelected ? AppColors.primary : AppColors.textHint,
+              isSelected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_off,
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.textHint,
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(plan.label.tr, style: AppTextStyles.label),
-                      if (plan.subLabel != null) Text(plan.subLabel!.tr, style: AppTextStyles.caption),
-                    ],
+                  Text(
+                    plan.label.tr,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.label,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(plan.price, style: AppTextStyles.label.copyWith(fontWeight: FontWeight.w700)),
-                      if (plan.badge != null)
-                        Container(
-                          margin: const EdgeInsets.only(top: 4),
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: AppColors.accent,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(plan.badge!.tr,
-                              style: AppTextStyles.caption.copyWith(fontSize: 10, color: AppColors.primaryDark)),
+                  if (plan.badge != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
                         ),
-                    ],
-                  ),
+                        decoration: BoxDecoration(
+                          color: AppColors.accent,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          plan.badge!.tr,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.caption.copyWith(
+                            fontSize: 10,
+                            color: AppColors.primaryDark,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            Flexible(
+              child: Text(
+                plan.price,
+                textAlign: TextAlign.end,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.label.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],
@@ -192,12 +332,23 @@ class _FeatureRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: const EdgeInsets.only(bottom: 9),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.check_circle, size: 18, color: AppColors.success),
+          const Icon(
+            Icons.check_circle,
+            size: 18,
+            color: AppColors.success,
+          ),
           const SizedBox(width: 8),
-          Text(text, style: AppTextStyles.body),
+          Expanded(
+            child: Text(
+              text,
+              softWrap: true,
+              style: AppTextStyles.body,
+            ),
+          ),
         ],
       ),
     );

@@ -12,7 +12,7 @@ class SplashPage extends GetView<SplashController> {
 
     return Scaffold(
       body: Center(
-        child: Image.asset("assets/images/splash.png"),
+        child: Image.asset("assets/images/app_mobile_logo.png"),
       ),
     );
   }
