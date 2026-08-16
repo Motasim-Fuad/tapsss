@@ -46,3 +46,5 @@ android/upload-keystore.jks
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+.env

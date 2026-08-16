@@ -1,7 +1,7 @@
 name: arashmati_app
 description: Sweden Citizenship Test App
 publish_to: 'none'
-version: 1.0.2+2
+version: 1.0.3+3
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -24,6 +24,7 @@ dependencies:
   firebase_auth: ^6.0.2
   flutter_local_notifications: ^19.4.2
   purchases_flutter: ^10.6.0
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -62,4 +63,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-#    - assets/icons/
+    - .env

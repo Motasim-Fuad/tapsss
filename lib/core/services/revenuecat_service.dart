@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -9,11 +9,11 @@ class RevenueCatService {
 
   static const String entitlementId = 'Tapass Pro';
 
-  static const String _iosApiKey =
-      String.fromEnvironment('REVENUECAT_IOS_API_KEY');
+  static String get _iosApiKey =>
+      dotenv.env['REVENUECAT_IOS_API_KEY'] ?? '';
 
-  static const String _androidApiKey =
-      String.fromEnvironment('REVENUECAT_ANDROID_API_KEY');
+  static String get _androidApiKey =>
+      dotenv.env['REVENUECAT_ANDROID_API_KEY'] ?? '';
 
   static bool _configured = false;
 

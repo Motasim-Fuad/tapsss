@@ -11,10 +11,12 @@ import 'core/constants/app_colors.dart';
 import 'core/localization/app_translations.dart';
 import 'core/localization/locale_service.dart';
 import 'core/services/notification_services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load(fileName: ".env");
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
