@@ -19,9 +19,12 @@ dependencies:
   image_picker: ^1.0.7
   intl: ^0.19.0
   shimmer: ^3.0.0
-  firebase_core: ^4.1.0
-  firebase_messaging: ^16.0.1
-  firebase_auth: ^6.0.2
+#  firebase_core: ^4.1.0
+#  firebase_messaging: ^16.0.1
+#  firebase_auth: ^6.0.2
+  firebase_core: 3.15.2
+  firebase_auth: 5.7.0
+  firebase_messaging: 15.2.10
   flutter_local_notifications: ^19.4.2
   purchases_flutter: ^10.6.0
   flutter_dotenv: ^5.2.1
