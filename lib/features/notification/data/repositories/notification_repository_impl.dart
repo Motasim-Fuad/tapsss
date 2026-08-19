@@ -25,7 +25,14 @@ class NotificationRepositoryImpl implements NotificationRepository {
       }
 
 
-      final token = NotificationService.to.fcmToken.value;
+      String? token = NotificationService.to.fcmToken.value;
+      if (token == null || token.isEmpty) {
+        for (int i = 0; i < 10; i++) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          token = NotificationService.to.fcmToken.value;
+          if (token != null && token.isNotEmpty) break;
+        }
+      }
       if (token == null || token.isEmpty) {
         if (kDebugMode) print('No token available');
         return false;

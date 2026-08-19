@@ -15,7 +15,7 @@ class LoginResponseModel {
     return LoginResponseModel(
       accessToken: json['accessToken']?.toString() ?? '',
       refreshToken: json['refreshToken']?.toString() ?? '',
-      user: UserModel.fromJson(json['userData'] ?? {}),
+      user: UserModel.fromJson(json['userData'] ?? json['user'] ?? {}),
     );
   }
 }

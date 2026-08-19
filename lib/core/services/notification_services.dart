@@ -1,5 +1,6 @@
 // lib/core/services/notification_services.dart
 
+import 'dart:async';
 import 'dart:io';
 import 'package:arashmati_app/core/services/storage_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -58,11 +59,15 @@ class NotificationService extends GetxService {
     await _requestPermission();
     await _initLocalNotifications();
     await _createAndroidChannel();
-    await _getFcmTokenOnly();
+    _fcm.onTokenRefresh.listen((token) {
+      fcmToken.value = token;
+      debugPrint('Notification Token (refresh): $token');
+    });
+    unawaited(_getFcmTokenOnly());
 
     _listenForeground();
     _listenBackgroundTap();
-    await _handleTerminatedLaunch();
+    unawaited(_handleTerminatedLaunch());
 
     debugPrint('✅ NotificationService ready (foreground + background)');
     return this;
@@ -111,41 +116,30 @@ class NotificationService extends GetxService {
       await androidPlugin?.createNotificationChannel(_channel);
     }
   }
-
-  // Future<void> _getFcmTokenOnly() async {
-  //   if (Platform.isIOS) {
-  //     String? apns;
-  //     for (int i = 0; i < 15; i++) {
-  //       apns = await _fcm.getAPNSToken();
-  //       if (apns != null) break;
-  //       await Future.delayed(const Duration(seconds: 2));
-  //     }
-  //   }
-  //
-  //   try {
-  //     final token = await _fcm.getToken();
-  //     fcmToken.value = token;
-  //     debugPrint('FCM Token: ${token ?? "null"}');
-  //   } catch (e) {
-  //     debugPrint('FCM getToken() failed: $e');
-  //   }
-  // }
   Future<void> _getFcmTokenOnly() async {
     if (Platform.isIOS) {
       String? apns;
-      for (int i = 0; i < 15; i++) {
+      for (int i = 0; i < 20; i++) {
         apns = await _fcm.getAPNSToken();
         if (apns != null) break;
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(milliseconds: 500));
+      }
+      if (apns == null) {
+        debugPrint('APNS token not ready yet; waiting for onTokenRefresh');
+        return;
       }
     }
 
-    try {
-      final token = await _fcm.getToken();
-      fcmToken.value = token;
-      debugPrint('Notification Token: ${token ?? "null"}');
-    } catch (e) {
-      debugPrint('getToken() failed: $e');
+    for (int i = 0; i < 8; i++) {
+      try {
+        final token = await _fcm.getToken();
+        fcmToken.value = token;
+        debugPrint('Notification Token: ${token ?? "null"}');
+        return;
+      } catch (e) {
+        debugPrint('getToken() failed (try ${i + 1}/8): $e');
+        await Future.delayed(const Duration(seconds: 2));
+      }
     }
   }
 
@@ -164,12 +158,18 @@ class NotificationService extends GetxService {
   }
 
   Future<void> _handleTerminatedLaunch() async {
-    final RemoteMessage? message = await _fcm.getInitialMessage();
-    if (message != null) {
-      debugPrint('[Terminated] ${message.messageId}');
-      Future.delayed(const Duration(milliseconds: 500), () {
-        _handlePayload(NotificationPayload.fromRemoteMessage(message));
-      });
+    try {
+      final RemoteMessage? message = await _fcm.getInitialMessage().timeout(
+        const Duration(seconds: 3),
+      );
+      if (message != null) {
+        debugPrint('[Terminated] ${message.messageId}');
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _handlePayload(NotificationPayload.fromRemoteMessage(message));
+        });
+      }
+    } catch (e) {
+      debugPrint('getInitialMessage skipped: $e');
     }
   }
 

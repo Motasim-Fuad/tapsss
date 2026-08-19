@@ -6,6 +6,8 @@ class ApiEndpoints {
   static const String register = '/api/auth/register';
   static const String verifyOtp = '/api/auth/verify-otp';
   static const String login = '/api/auth/login/';
+  static const String googleLogin = '/api/auth/google/';
+  static const String appleLogin = '/api/auth/apple/';
   static const String forgotPassword = '/api/auth/forgot-password';
   static const String forgotPasswordOtp = '/api/auth/forgot-password-otp';
   static const String resetPassword = '/api/auth/reset-password';

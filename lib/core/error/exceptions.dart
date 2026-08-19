@@ -7,3 +7,5 @@ class ApiException implements Exception {
   @override
   String toString() => message;
 }
+
+class SocialAuthCancelledException implements Exception {}

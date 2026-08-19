@@ -63,13 +63,12 @@ class DefaultFirebaseOptions {
     projectId: 'tapass-2026',
     storageBucket: 'tapass-2026.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyD_VutzsZAkj-v_B1ijth-HgjHPwpAg5Dc',
-    appId: '1:347085841227:ios:e6f5729db62c4096ad7ece',
+    appId: '1:347085841227:ios:d1869e0c407ceedaad7ece',
     messagingSenderId: '347085841227',
     projectId: 'tapass-2026',
     storageBucket: 'tapass-2026.firebasestorage.app',
-    iosBundleId: 'com.tapass.tapass',
+    iosBundleId: 'com.tapass.tapassapp',
   );
 }

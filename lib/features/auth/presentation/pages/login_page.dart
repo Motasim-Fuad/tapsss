@@ -73,14 +73,24 @@ class LoginPage extends GetView<LoginController> {
                     onPressed: controller.login,
                   )),
               const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _SocialIconButton(icon: Icons.g_mobiledata, onTap: () {}),
-                  const SizedBox(width: 16),
-                  _SocialIconButton(icon: Icons.apple, onTap: () {}),
-                ],
-              ),
+              Obx(() => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _SocialIconButton(
+                        icon: Icons.g_mobiledata,
+                        onTap: controller.isLoading.value
+                            ? null
+                            : controller.loginWithGoogle,
+                      ),
+                      const SizedBox(width: 16),
+                      _SocialIconButton(
+                        icon: Icons.apple,
+                        onTap: controller.isLoading.value
+                            ? null
+                            : controller.loginWithApple,
+                      ),
+                    ],
+                  )),
               const SizedBox(height: 24),
               Center(
                 child: GestureDetector(
@@ -112,7 +122,7 @@ class LoginPage extends GetView<LoginController> {
 
 class _SocialIconButton extends StatelessWidget {
   final IconData icon;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const _SocialIconButton({required this.icon, required this.onTap});
 

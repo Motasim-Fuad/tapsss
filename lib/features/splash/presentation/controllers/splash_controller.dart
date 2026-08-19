@@ -13,9 +13,9 @@ class SplashController extends GetxController {
   SplashController({required this.preferenceService, required this.sessionController});
 
   @override
-  void onReady() {
-    super.onReady();
-    print('SPLASH: onReady called');
+  void onInit() {
+    super.onInit();
+    print('SPLASH: onInit called');
     _decideNextRoute();
   }
 

@@ -33,6 +33,26 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<LoginResponseModel> loginWithGoogle({required String idToken}) {
+    return remoteDataSource.loginWithGoogle(idToken: idToken);
+  }
+
+  @override
+  Future<LoginResponseModel> loginWithApple({
+    required String identityToken,
+    String? email,
+    String? givenName,
+    String? familyName,
+  }) {
+    return remoteDataSource.loginWithApple(
+      identityToken: identityToken,
+      email: email,
+      givenName: givenName,
+      familyName: familyName,
+    );
+  }
+
+  @override
   Future<String> forgotPassword({required String email}) {
     return remoteDataSource.forgotPassword(email: email);
   }

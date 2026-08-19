@@ -2,7 +2,11 @@ import 'package:arashmati_app/core/constants/storage_keys.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageService {
-  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage(
+    iOptions: IOSOptions(
+      accessibility: KeychainAccessibility.first_unlock,
+    ),
+  );
 
   Future<void> write(String key, String value) => _storage.write(key: key, value: value);
 

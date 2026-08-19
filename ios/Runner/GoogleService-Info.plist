@@ -4,12 +4,16 @@
 <dict>
 	<key>API_KEY</key>
 	<string>AIzaSyD_VutzsZAkj-v_B1ijth-HgjHPwpAg5Dc</string>
+	<key>CLIENT_ID</key>
+	<string>234575698534-ej4rp8sf5mb10ql7te7tuvb4bijfasfq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.234575698534-ej4rp8sf5mb10ql7te7tuvb4bijfasfq</string>
 	<key>GCM_SENDER_ID</key>
 	<string>347085841227</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.tapass.tapass</string>
+	<string>com.tapass.tapassapp</string>
 	<key>PROJECT_ID</key>
 	<string>tapass-2026</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:347085841227:ios:e6f5729db62c4096ad7ece</string>
+	<string>1:347085841227:ios:d1869e0c407ceedaad7ece</string>
 </dict>
 </plist>

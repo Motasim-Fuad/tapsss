@@ -6,6 +6,7 @@ import '../../../../core/services/revenuecat_service.dart';
 import '../../data/models/login_response_model.dart';
 import '../../data/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
+import '../../data/services/social_auth_service.dart';
 
 class AuthSessionController extends GetxController {
   final AuthRepository authRepository;
@@ -51,6 +52,7 @@ class AuthSessionController extends GetxController {
       // ignore network errors on logout, clear local session regardless
     }
     await NotificationController.to.clear();
+    await SocialAuthService.instance.signOut();
     await storageService.deleteAll();
     try {
       await RevenueCatService.logOut();

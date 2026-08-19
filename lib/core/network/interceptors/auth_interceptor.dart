@@ -15,6 +15,8 @@ class AuthInterceptor extends Interceptor {
     ApiEndpoints.register,
     ApiEndpoints.verifyOtp,
     ApiEndpoints.login,
+    ApiEndpoints.googleLogin,
+    ApiEndpoints.appleLogin,
     ApiEndpoints.forgotPassword,
     ApiEndpoints.forgotPasswordOtp,
     ApiEndpoints.resetPassword,

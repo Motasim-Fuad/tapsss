@@ -38,6 +38,33 @@ class AuthRemoteDataSource {
     return LoginResponseModel.fromJson(response.data);
   }
 
+  Future<LoginResponseModel> loginWithGoogle({required String idToken}) async {
+    final response = await apiClient.post(ApiEndpoints.googleLogin, data: {
+      'idToken': idToken,
+    });
+    return LoginResponseModel.fromJson(response.data);
+  }
+
+  Future<LoginResponseModel> loginWithApple({
+    required String identityToken,
+    String? email,
+    String? givenName,
+    String? familyName,
+  }) async {
+    final data = <String, dynamic>{
+      'identityToken': identityToken,
+      'fullName': {
+        'givenName': givenName ?? '',
+        'familyName': familyName ?? '',
+      },
+    };
+    if (email != null && email.isNotEmpty) {
+      data['email'] = email;
+    }
+    final response = await apiClient.post(ApiEndpoints.appleLogin, data: data);
+    return LoginResponseModel.fromJson(response.data);
+  }
+
   Future<String> forgotPassword({required String email}) async {
     final response = await apiClient.post(ApiEndpoints.forgotPassword, data: {
       'email': email,

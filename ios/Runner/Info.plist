@@ -26,6 +26,15 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Tapass uses the local network during development and to complete sign-in and notifications.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+		<string>_dartVmService._tcp</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -74,5 +83,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>GIDClientID</key>
+	<string>234575698534-ej4rp8sf5mb10ql7te7tuvb4bijfasfq.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.234575698534-ej4rp8sf5mb10ql7te7tuvb4bijfasfq</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
