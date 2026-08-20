@@ -6,7 +6,7 @@ class ApiEndpoints {
   /// iPhone cannot use localhost — that is the phone itself.
   /// Use the Mac LAN IP while the backend runs on this machine.
   static String get baseUrl =>
-      dotenv.env['API_BASE_URL'] ?? 'http://10.10.28.177:8001';
+      dotenv.env['API_BASE_URL'] ?? 'http://13.61.95.127:8000';
 
   static const String register = '/api/auth/register';
   static const String verifyOtp = '/api/auth/verify-otp';
