@@ -1,13 +1,18 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class ApiEndpoints {
   ApiEndpoints._();
 
-  static const String baseUrl = 'http://13.61.95.127:8000';
+  /// iPhone cannot use localhost — that is the phone itself.
+  /// Use the Mac LAN IP while the backend runs on this machine.
+  static String get baseUrl =>
+      dotenv.env['API_BASE_URL'] ?? 'http://10.10.28.177:8001';
 
   static const String register = '/api/auth/register';
   static const String verifyOtp = '/api/auth/verify-otp';
   static const String login = '/api/auth/login/';
-  static const String googleLogin = '/api/auth/google/';
-  static const String appleLogin = '/api/auth/apple/';
+  static const String googleLogin = '/api/auth/google';
+  static const String appleLogin = '/api/auth/apple';
   static const String forgotPassword = '/api/auth/forgot-password';
   static const String forgotPasswordOtp = '/api/auth/forgot-password-otp';
   static const String resetPassword = '/api/auth/reset-password';
