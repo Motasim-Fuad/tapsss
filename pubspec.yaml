@@ -1,7 +1,7 @@
 name: arashmati_app
 description: Sweden Citizenship Test App
 publish_to: 'none'
-version: 1.0.3+3
+version: 1.0.4+4
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -27,6 +27,7 @@ dependencies:
   sign_in_with_apple: ^6.1.4
   purchases_flutter: ^10.6.0
   flutter_dotenv: ^5.2.1
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

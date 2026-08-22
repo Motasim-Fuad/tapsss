@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
+import '../../../../core/utils/legal_links.dart';
 import '../../../../shared/widgets/custom_button.dart';
 import '../../../../shared/widgets/custom_text_field.dart';
 import '../../../../shared/widgets/inline_error_widget.dart';
@@ -61,6 +62,7 @@ class SignupPage extends GetView<SignupController> {
               ),
               const SizedBox(height: 14),
               Obx(() => Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Checkbox(
                         value: controller.agreedToTerms.value,
@@ -68,7 +70,35 @@ class SignupPage extends GetView<SignupController> {
                         onChanged: (v) => controller.agreedToTerms.value = v ?? false,
                       ),
                       Expanded(
-                        child: Text('Agree with terms and privacy'.tr, style: AppTextStyles.caption),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text('I agree to the '.tr, style: AppTextStyles.caption),
+                            GestureDetector(
+                              onTap: LegalLinks.openTerms,
+                              child: Text(
+                                'Terms'.tr,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                            Text(' and '.tr, style: AppTextStyles.caption),
+                            GestureDetector(
+                              onTap: LegalLinks.openPrivacyPolicy,
+                              child: Text(
+                                'Privacy Policy'.tr,
+                                style: AppTextStyles.caption.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w700,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   )),

@@ -22,7 +22,6 @@ class NotificationRemoteDataSource {
       },
     );
 
-    // success: true হলেই registered ধরো
     final success = response.data['success'] == true;
     if (success) return 'registered';
     return null;

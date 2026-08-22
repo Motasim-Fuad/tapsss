@@ -47,6 +47,14 @@ class ApiClient {
     }
   }
 
+  Future<Response> delete(String path, {dynamic data}) async {
+    try {
+      return await dio.delete(path, data: data);
+    } on DioException catch (e) {
+      throw _mapError(e);
+    }
+  }
+
   ApiException _mapError(DioException e) {
     final data = e.response?.data;
     String message = 'Something went wrong. Please try again.'.tr;

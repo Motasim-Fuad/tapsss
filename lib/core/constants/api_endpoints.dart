@@ -39,4 +39,9 @@ class ApiEndpoints {
   static const String scoreHistory = '/api/progress/score-history';
 
   static const String profile = '/api/profile';
+  static const String deleteAccount = '/api/profile/delete-account';
+  static const String faqs = '/api/faqs';
+
+  static const String termsUrl = 'http://13.61.95.127:8000/terms';
+  static const String privacyPolicyUrl = 'http://13.61.95.127:8000/privacy-policy';
 }

@@ -12,13 +12,13 @@ class NotificationController extends GetxController {
 
   final RxBool isRegistered = false.obs;
 
-  /// Login success এর পরে call করো
+  /// Call after a successful login.
   Future<void> register() async {
     isRegistered.value = await _repo.registerToken();
     if (kDebugMode) print('Token registration: ${isRegistered.value}');
   }
 
-  /// Logout এর সময় call করো
+  /// Call on logout.
   Future<void> clear() async {
     await _repo.clearTokenData();
     isRegistered.value = false;

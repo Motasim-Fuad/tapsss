@@ -220,12 +220,3 @@ class ShimmerWidget {
 
 
 
-
-// Controller-এ
-// var isLoading = true.obs;
-//
-// // Page-এ
-// Obx(() => controller.isLoading.value
-// ? ShimmerWidget.list()        // loading
-// : YourActualWidget()          // data
-// )

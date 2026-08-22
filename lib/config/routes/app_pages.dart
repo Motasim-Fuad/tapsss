@@ -9,6 +9,7 @@ import '../../features/onboarding/presentation/bindings/onboarding_binding.dart'
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
 import '../../features/profile/presentation/pages/edit_profile_page.dart';
+import '../../features/profile/presentation/pages/faq_page.dart';
 import '../../features/splash/presentation/bindings/splash_binding.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/study/presentation/bindings/study_binding.dart';
@@ -99,6 +100,11 @@ class AppPages {
       name: AppRoutes.subscription,
       page: () => const SubscriptionPage(),
       binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.faq,
+      page: () => const FaqPage(),
+      binding: FaqBinding(),
     ),
   ];
 }

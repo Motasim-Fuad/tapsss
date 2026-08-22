@@ -5,6 +5,7 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../core/localization/locale_service.dart';
+import '../../../../core/utils/legal_links.dart';
 import '../../../../shared/widgets/app_network_image.dart';
 import '../../../../shared/widgets/asset_placeholder.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
@@ -174,9 +175,21 @@ class ProfilePage extends GetView<ProfileController> {
                   color: AppColors.surface,
                   child: Column(
                     children: [
-                      _MenuTile(icon: Icons.access_time, label: 'Help Center'.tr),
-                      _MenuTile(icon: Icons.privacy_tip_outlined, label: 'Privacy Policy'.tr),
-                      _MenuTile(icon: Icons.description_outlined, label: 'Terms of Service'.tr),
+                      _MenuTile(
+                        icon: Icons.help_outline,
+                        label: 'FAQ'.tr,
+                        onTap: () => Get.toNamed(AppRoutes.faq),
+                      ),
+                      _MenuTile(
+                        icon: Icons.privacy_tip_outlined,
+                        label: 'Privacy Policy'.tr,
+                        onTap: LegalLinks.openPrivacyPolicy,
+                      ),
+                      _MenuTile(
+                        icon: Icons.description_outlined,
+                        label: 'Terms of Service'.tr,
+                        onTap: LegalLinks.openTerms,
+                      ),
                     ],
                   ),
                 ),
@@ -199,6 +212,44 @@ class ProfilePage extends GetView<ProfileController> {
                           const SizedBox(width: 8),
                           Text('Log Out'.tr,
                               style: AppTextStyles.label.copyWith(color: AppColors.error)),
+                        ],
+                      ),
+                    ),
+                  ),
+                )),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Obx(() => Material(
+                  color: AppColors.errorBg,
+                  borderRadius: BorderRadius.circular(12),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: controller.isDeletingAccount.value
+                        ? null
+                        : controller.confirmDeleteAccount,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (controller.isDeletingAccount.value)
+                            const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: AppColors.error,
+                              ),
+                            )
+                          else
+                            const Icon(Icons.delete_outline, color: AppColors.error, size: 18),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Delete Account'.tr,
+                            style: AppTextStyles.label.copyWith(color: AppColors.error),
+                          ),
                         ],
                       ),
                     ),

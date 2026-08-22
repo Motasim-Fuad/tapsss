@@ -4,6 +4,7 @@ import '../../data/datasources/profile_remote_datasource.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 import '../../domain/repositories/profile_repository.dart';
 import '../controllers/edit_profile_controller.dart';
+import '../controllers/faq_controller.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileBinding extends Bindings {
@@ -29,5 +30,12 @@ class EditProfileBinding extends Bindings {
           profileRepository: Get.find(),
           sessionController: Get.find<AuthSessionController>(),
         ));
+  }
+}
+
+class FaqBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => FaqController(profileRepository: Get.find()));
   }
 }

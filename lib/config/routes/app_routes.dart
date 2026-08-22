@@ -22,4 +22,5 @@ class AppRoutes {
 
   static const String editProfile = '/edit-profile';
   static const String subscription = '/subscription';
+  static const String faq = '/faq';
 }

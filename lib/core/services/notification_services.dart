@@ -43,7 +43,6 @@ class NotificationService extends GetxService {
   final RxnString fcmToken = RxnString();
   void Function(NotificationPayload payload)? onNotificationTap;
 
-  // v19.x এ AndroidNotificationChannel const হিসেবে declare করা যায়
   static const AndroidNotificationChannel _channel = AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Notifications',
