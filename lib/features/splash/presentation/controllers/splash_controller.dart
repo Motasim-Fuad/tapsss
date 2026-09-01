@@ -2,45 +2,46 @@ import 'package:arashmati_app/core/services/preference_service.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/storage_keys.dart';
-import '../../../../core/services/storage_service.dart';
 import '../../../auth/presentation/controllers/auth_session_controller.dart';
 
 class SplashController extends GetxController {
-  // final StorageService storageService;
   final PreferenceService preferenceService;
   final AuthSessionController sessionController;
 
-  SplashController({required this.preferenceService, required this.sessionController});
+  SplashController({
+    required this.preferenceService,
+    required this.sessionController,
+  });
+
+  bool _navigated = false;
 
   @override
-  void onInit() {
-    super.onInit();
-    print('SPLASH: onInit called');
+  void onReady() {
+    super.onReady();
+    // If Lottie never finishes (asset fail), still leave splash.
+    Future.delayed(const Duration(seconds: 4), goNext);
+  }
+
+  void goNext() {
+    if (_navigated) return;
+    _navigated = true;
     _decideNextRoute();
   }
 
   Future<void> _decideNextRoute() async {
-    await Future.delayed(const Duration(milliseconds: 3000));
-    print('SPLASH: delay finished, checking onboarding flag');
-
     try {
-      final hasSeenOnboarding = preferenceService.getBool(StorageKeys.hasSeenOnboarding);
-      print('SPLASH: hasSeenOnboarding = $hasSeenOnboarding');
+      final hasSeenOnboarding =
+          preferenceService.getBool(StorageKeys.hasSeenOnboarding);
 
       if (!hasSeenOnboarding) {
         Get.offAllNamed(AppRoutes.onboarding);
         return;
       }
 
-      print('SPLASH: checking session token');
       final hasSession = await sessionController.hasValidSession();
-      print('SPLASH: hasSession = $hasSession');
-
       if (hasSession) {
-        print('SPLASH: navigating to main');
         Get.offAllNamed(AppRoutes.main);
       } else {
-        print('SPLASH: navigating to login');
         Get.offAllNamed(AppRoutes.login);
       }
     } catch (e, stack) {
