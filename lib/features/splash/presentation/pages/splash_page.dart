@@ -12,7 +12,7 @@ class SplashPage extends GetView<SplashController> {
 
     return Scaffold(
       body: Center(
-        child: Image.asset("assets/images/app_mobile_logo.png"),
+        child: Image.asset("assets/images/tapass-logo-1024-transparent.png"),
       ),
     );
   }

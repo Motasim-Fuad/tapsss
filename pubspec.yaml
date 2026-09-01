@@ -39,28 +39,16 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
+  image_path: "assets/images/tapass-logo-1024.png"
+  adaptive_icon_background: "#1D345B"
+  adaptive_icon_foreground: "assets/images/tapass-logo-1024-transparent.png"
   web:
     generate: true
-    image_path: "assets/images/ios_logo.png"
+    image_path: "assets/images/tapass-logo-1024.png"
     background_color: "#FFFFFF"
     theme_color: "#FFFFFF"
-
-  image_path: "assets/images/ios_logo.png"
   min_sdk_android: 21
   remove_alpha_ios: true
-
-flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/images/ios_logo.png
-
-  android: true
-  ios: true
-
-  android_12:
-    color: "#FFFFFF"
-    image: assets/images/ios_logo.png
-
-  fullscreen: true
 
 flutter:
   uses-material-design: true
