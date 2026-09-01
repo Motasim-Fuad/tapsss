@@ -20,8 +20,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> _decideNextRoute() async {
-    print('SPLASH: waiting 1400ms');
-    await Future.delayed(const Duration(milliseconds: 1400));
+    await Future.delayed(const Duration(milliseconds: 3000));
     print('SPLASH: delay finished, checking onboarding flag');
 
     try {
