@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../../../../core/services/revenuecat_service.dart';
+import 'subscription_access_controller.dart';
 
 class SubscriptionPlan {
   final String id;
@@ -31,7 +32,8 @@ class SubscriptionController extends GetxController {
 
   final RxBool isLoading = true.obs;
   final RxBool isPurchasing = false.obs;
-  final RxBool isPremium = false.obs;
+
+  RxBool get isPremium => SubscriptionAccessController.to.isPremium;
 
   final RxList<SubscriptionPlan> plans = <SubscriptionPlan>[].obs;
 
@@ -144,13 +146,7 @@ class SubscriptionController extends GetxController {
         }
       }
 
-      final customerInfo =
-      await RevenueCatService.getCustomerInfo();
-
-      if (customerInfo != null) {
-        isPremium.value =
-            RevenueCatService.isPremium(customerInfo);
-      }
+      await SubscriptionAccessController.to.syncFromStore();
     } catch (e) {
       debugPrint(
         '[RevenueCat] Failed to load subscription: $e',
@@ -191,8 +187,8 @@ class SubscriptionController extends GetxController {
     isPurchasing.value = true;
 
     try {
-      final result = await RevenueCatService.purchase(plan.package);
-      isPremium.value = RevenueCatService.isPremium(result.customerInfo);
+      await RevenueCatService.purchase(plan.package);
+      await SubscriptionAccessController.to.syncFromStore();
 
       if (isPremium.value) {
         Get.snackbar(
@@ -200,6 +196,7 @@ class SubscriptionController extends GetxController {
           '${plan.price} ${plan.label} subscription is now active.',
           snackPosition: SnackPosition.BOTTOM,
         );
+        Get.back();
       }
     } catch (e) {
       final message = e.toString();
@@ -223,8 +220,8 @@ class SubscriptionController extends GetxController {
 
   Future<void> restorePurchases() async {
     try {
-      final info = await RevenueCatService.restorePurchases();
-      isPremium.value = RevenueCatService.isPremium(info);
+      await RevenueCatService.restorePurchases();
+      await SubscriptionAccessController.to.syncFromStore();
 
       Get.snackbar(
         'Restore Purchases',

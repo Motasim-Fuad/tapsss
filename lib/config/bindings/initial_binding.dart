@@ -10,6 +10,7 @@ import '../../features/auth/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
 import '../../features/auth/presentation/controllers/auth_session_controller.dart';
+import '../../features/subscription/presentation/controllers/subscription_access_controller.dart';
 
 class InitialBinding extends Bindings {
   @override
@@ -31,6 +32,8 @@ class InitialBinding extends Bindings {
       AuthSessionController(authRepository: Get.find(), storageService: Get.find()),
       permanent: true,
     );
+
+    Get.put(SubscriptionAccessController(), permanent: true);
 
     Get.put<NotificationRemoteDataSource>(
       NotificationRemoteDataSource(Get.find<ApiClient>()),

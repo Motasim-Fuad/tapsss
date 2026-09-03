@@ -6,6 +6,9 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
 import '../../../../shared/widgets/loading_widget.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
+import '../../../subscription/presentation/widgets/premium_lock_badge.dart';
+import '../../../subscription/presentation/widgets/upgrade_banner.dart';
 import '../../data/models/study_materials_model.dart';
 import '../controllers/study_controller.dart';
 
@@ -23,6 +26,7 @@ class StudyPage extends GetView<StudyController> {
         title: Text('Study Materials'.tr, style: AppTextStyles.h2),
       ),
       body: Obx(() {
+        SubscriptionAccessController.to.isPremium.value;
         if (controller.isLoading.value && controller.materials.value == null) {
           return ShimmerWidget.list();
         }
@@ -80,12 +84,18 @@ class StudyPage extends GetView<StudyController> {
                 ),
               ),
               const SizedBox(height: 20),
+              const UpgradeBanner(),
               Text('Chapters'.tr, style: AppTextStyles.h3),
               const SizedBox(height: 12),
-              ...data.chapters.map((chapter) => _ChapterCard(
-                    chapter: chapter,
-                    onTap: () => controller.openChapter(chapter.id),
-                  )),
+              ...data.chapters.map((chapter) {
+                final locked = !SubscriptionAccessController.to
+                    .canAccessChapter(chapter.chapterNumber);
+                return _ChapterCard(
+                  chapter: chapter,
+                  isLocked: locked,
+                  onTap: () => controller.openChapter(chapter),
+                );
+              }),
             ],
           ),
         );
@@ -97,8 +107,13 @@ class StudyPage extends GetView<StudyController> {
 class _ChapterCard extends StatelessWidget {
   final ChapterModel chapter;
   final VoidCallback onTap;
+  final bool isLocked;
 
-  const _ChapterCard({required this.chapter, required this.onTap});
+  const _ChapterCard({
+    required this.chapter,
+    required this.onTap,
+    this.isLocked = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +150,10 @@ class _ChapterCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: AppColors.textHint),
+            if (isLocked)
+              const PremiumLockBadge()
+            else
+              const Icon(Icons.chevron_right, color: AppColors.textHint),
           ],
         ),
       ),

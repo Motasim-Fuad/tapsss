@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../../data/models/chapter_detail_model.dart';
 import '../../domain/repositories/study_repository.dart';
 
@@ -21,6 +22,7 @@ class ChapterDetailController extends GetxController {
     super.onInit();
     final args = Get.arguments as Map<String, dynamic>? ?? {};
     chapterId = args['chapterId']?.toString() ?? '';
+    ever(SubscriptionAccessController.to.isPremium, (_) => _enforceAccess());
     fetchChapter();
   }
 
@@ -30,6 +32,7 @@ class ChapterDetailController extends GetxController {
     try {
       final data = await studyRepository.getChapterDetails(chapterId);
       chapter.value = data;
+      if (!_enforceAccess()) return;
       final firstIncomplete = data.lessons.indexWhere(
         (lesson) => !data.completedLessonIds.contains(lesson.id),
       );
@@ -43,6 +46,17 @@ class ChapterDetailController extends GetxController {
     }
   }
 
+
+  bool _enforceAccess() {
+    final data = chapter.value;
+    if (data == null) return true;
+    if (SubscriptionAccessController.to.canAccessChapter(data.chapterNumber)) {
+      return true;
+    }
+    Get.back();
+    SubscriptionAccessController.to.openPaywall();
+    return false;
+  }
 
   bool get isFirstLesson => currentLessonIndex.value == 0;
 

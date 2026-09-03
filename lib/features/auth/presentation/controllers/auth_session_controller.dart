@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../../core/constants/storage_keys.dart';
 import '../../../../core/services/storage_service.dart';
 import '../../../../core/services/revenuecat_service.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../../data/models/login_response_model.dart';
 import '../../data/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -20,6 +21,7 @@ class AuthSessionController extends GetxController {
   Future<void> saveSession(LoginResponseModel data) async {
     await storageService.write(StorageKeys.accessToken, data.accessToken);
     await storageService.write(StorageKeys.refreshToken, data.refreshToken);
+    await storageService.write(StorageKeys.userId, data.user.id);
     await storageService.write(StorageKeys.userName, data.user.name);
     await storageService.write(StorageKeys.userEmail, data.user.email);
     currentUser.value = data.user;
@@ -27,11 +29,14 @@ class AuthSessionController extends GetxController {
 
     // Use the backend user id as RevenueCat appUserID so the same
     // subscription identity can be recognized across iOS and Android.
-    try {
-      await RevenueCatService.logIn(data.user.id);
-    } catch (e) {
-      // RevenueCat must never block normal authentication.
-      print('[RevenueCat] login failed: $e');
+    if (Get.isRegistered<SubscriptionAccessController>()) {
+      await SubscriptionAccessController.to.identifyUser(data.user.id);
+    } else {
+      try {
+        await RevenueCatService.logIn(data.user.id);
+      } catch (e) {
+        print('[RevenueCat] login failed: $e');
+      }
     }
   }
 
@@ -54,10 +59,14 @@ class AuthSessionController extends GetxController {
     await NotificationController.to.clear();
     await SocialAuthService.instance.signOut();
     await storageService.deleteAll();
-    try {
-      await RevenueCatService.logOut();
-    } catch (e) {
-      print('[RevenueCat] logout failed: $e');
+    if (Get.isRegistered<SubscriptionAccessController>()) {
+      await SubscriptionAccessController.to.clearUser();
+    } else {
+      try {
+        await RevenueCatService.logOut();
+      } catch (e) {
+        print('[RevenueCat] logout failed: $e');
+      }
     }
     currentUser.value = null;
     isLoggedIn.value = false;

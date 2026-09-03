@@ -8,6 +8,8 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/app_network_image.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
 import '../../../../shared/widgets/loading_widget.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
+import '../../../subscription/presentation/widgets/premium_lock_badge.dart';
 import '../../data/models/dashboard_model.dart';
 import '../controllers/home_controller.dart';
 
@@ -22,6 +24,7 @@ class HomePage extends GetView<HomeController> {
       backgroundColor: AppColors.white,
       body: SafeArea(
         child: Obx(() {
+          SubscriptionAccessController.to.isPremium.value;
           if (controller.isLoading.value && controller.dashboard.value == null) {
             return  ShimmerWidget.list();
           }
@@ -104,7 +107,9 @@ class HomePage extends GetView<HomeController> {
                           image: topic.coverImage,
                           title: topic.title,
                           totalLessons: topic.totalLessons,
-                          onTap: () => controller.openChapter(topic.chapterId),
+                          isLocked: !SubscriptionAccessController.to
+                              .canAccessChapter(topic.chapterNumber),
+                          onTap: () => controller.openChapter(topic),
                         ),
                       );
                     },
@@ -370,12 +375,14 @@ class _StudyTopicCard extends StatelessWidget {
   final int totalLessons;
   final VoidCallback onTap;
   final String image;
+  final bool isLocked;
 
   const _StudyTopicCard({
     required this.image,
     required this.title,
     required this.totalLessons,
     required this.onTap,
+    this.isLocked = false,
   });
 
   @override
@@ -391,35 +398,45 @@ class _StudyTopicCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: AppColors.border),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            SizedBox(
-              height: 36,
-              width: 36,
-              child: Image.network(
-                image,
-                fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => const Icon(
-                  Icons.image_not_supported,
-                  size: 30,
-                  color: Colors.grey,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 36,
+                  width: 36,
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => const Icon(
+                      Icons.image_not_supported,
+                      size: 30,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ),
+                const SizedBox(height: 10),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.label,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  '$totalLessons Lessons',
+                  style: AppTextStyles.caption,
+                ),
+              ],
+            ),
+            if (isLocked)
+              const Positioned(
+                top: 0,
+                right: 0,
+                child: PremiumLockBadge(size: 14),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.label,
-            ),
-            const SizedBox(height: 6),
-            Text(
-              '$totalLessons Lessons',
-              style: AppTextStyles.caption,
-            ),
           ],
         ),
       ),

@@ -16,6 +16,8 @@ class RevenueCatService {
       dotenv.env['REVENUECAT_ANDROID_API_KEY'] ?? '';
 
   static bool _configured = false;
+  static bool _listenerAttached = false;
+  static final List<void Function(CustomerInfo)> _customerInfoListeners = [];
 
   static String get _apiKey {
     if (Platform.isIOS) return _iosApiKey;
@@ -48,6 +50,7 @@ class RevenueCatService {
       await Purchases.configure(configuration);
       await Purchases.setLogLevel(LogLevel.debug);
       _configured = true;
+      _attachCustomerInfoListener();
 
       debugPrint('[RevenueCat] Configured successfully.');
     } else if (appUserId != null && appUserId.isNotEmpty) {
@@ -187,8 +190,37 @@ class RevenueCatService {
     return Purchases.getCustomerInfo();
   }
 
+  static void addCustomerInfoUpdateListener(
+    void Function(CustomerInfo) listener,
+  ) {
+    _customerInfoListeners.add(listener);
+    if (_configured) {
+      _attachCustomerInfoListener();
+    }
+  }
+
+  static void _attachCustomerInfoListener() {
+    if (_listenerAttached || !_configured) return;
+    Purchases.addCustomerInfoUpdateListener((info) {
+      for (final listener in List.of(_customerInfoListeners)) {
+        listener(info);
+      }
+    });
+    _listenerAttached = true;
+  }
+
   static bool isPremium(CustomerInfo info) {
-    return info.entitlements.all[entitlementId]?.isActive ?? false;
+    final named = info.entitlements.all[entitlementId];
+    if (named?.isActive == true) return true;
+    return info.entitlements.active.containsKey(entitlementId);
+  }
+
+  static DateTime? premiumExpiration(CustomerInfo info) {
+    final entitlement = info.entitlements.all[entitlementId];
+    if (entitlement == null || !entitlement.isActive) return null;
+    final raw = entitlement.expirationDate;
+    if (raw == null || raw.isEmpty) return null;
+    return DateTime.tryParse(raw);
   }
 
   static Future<PurchaseResult> purchase(Package package) async {

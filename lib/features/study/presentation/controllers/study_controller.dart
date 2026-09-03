@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../../data/models/study_materials_model.dart';
 import '../../domain/repositories/study_repository.dart';
 
@@ -33,8 +34,11 @@ class StudyController extends GetxController {
     }
   }
 
-  void openChapter(String chapterId) {
-    Get.toNamed(AppRoutes.chapterDetail, arguments: {'chapterId': chapterId})
+  void openChapter(ChapterModel chapter) {
+    if (!SubscriptionAccessController.to.requireChapterAccess(chapter.chapterNumber)) {
+      return;
+    }
+    Get.toNamed(AppRoutes.chapterDetail, arguments: {'chapterId': chapter.id})
         ?.then((_) => fetchMaterials());
   }
 }

@@ -6,6 +6,9 @@ import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/custom_button.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
 import '../../../../shared/widgets/loading_widget.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
+import '../../../subscription/presentation/widgets/premium_lock_badge.dart';
+import '../../../subscription/presentation/widgets/upgrade_banner.dart';
 import '../../data/models/test_list_model.dart';
 import '../controllers/test_list_controller.dart';
 
@@ -23,6 +26,7 @@ class TestListPage extends GetView<TestListController> {
         title: Text('Practice Tests'.tr, style: AppTextStyles.h2),
       ),
       body: Obx(() {
+        SubscriptionAccessController.to.isPremium.value;
         if (controller.isLoading.value && controller.testList.value == null) {
           return  ShimmerWidget.list();
         }
@@ -63,10 +67,16 @@ class TestListPage extends GetView<TestListController> {
                 ),
               ),
               const SizedBox(height: 20),
-              ...data.tests.map((test) => _TestCard(
-                    test: test,
-                    onTap: () => controller.openTest(test.testNumber),
-                  )),
+              const UpgradeBanner(),
+              ...data.tests.map((test) {
+                final locked = !SubscriptionAccessController.to
+                    .canAccessTest(test.testNumber);
+                return _TestCard(
+                  test: test,
+                  isLocked: locked,
+                  onTap: () => controller.openTest(test.testNumber),
+                );
+              }),
             ],
           ),
         );
@@ -97,8 +107,13 @@ class _OverviewStat extends StatelessWidget {
 class _TestCard extends StatelessWidget {
   final TestListItemModel test;
   final VoidCallback onTap;
+  final bool isLocked;
 
-  const _TestCard({required this.test, required this.onTap});
+  const _TestCard({
+    required this.test,
+    required this.onTap,
+    this.isLocked = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +162,9 @@ class _TestCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (test.isCompleted)
+              if (isLocked)
+                const PremiumLockBadge()
+              else if (test.isCompleted)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -174,8 +191,8 @@ class _TestCard extends StatelessWidget {
           ],
           const SizedBox(height: 12),
           CustomButton(
-            text: test.action.tr,
-            isOutlined: test.isCompleted,
+            text: isLocked ? 'Unlock Premium'.tr : test.action.tr,
+            isOutlined: !isLocked && test.isCompleted,
             onPressed: onTap,
           ),
         ],

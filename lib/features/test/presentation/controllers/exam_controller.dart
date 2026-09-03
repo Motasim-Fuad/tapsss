@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../../data/models/start_test_model.dart';
 import '../../domain/repositories/test_repository.dart';
 
@@ -31,6 +32,22 @@ class ExamController extends GetxController {
     super.onInit();
     final args = Get.arguments as Map<String, dynamic>? ?? {};
     testNumber = args['testNumber'] ?? 0;
+    if (!SubscriptionAccessController.to.canAccessTest(testNumber)) {
+      isLoading.value = false;
+      Future.microtask(() {
+        Get.back();
+        SubscriptionAccessController.to.openPaywall();
+      });
+      return;
+    }
+    ever(SubscriptionAccessController.to.isPremium, (premium) {
+      if (!premium &&
+          !SubscriptionAccessController.to.canAccessTest(testNumber)) {
+        _timer?.cancel();
+        Get.back();
+        SubscriptionAccessController.to.openPaywall();
+      }
+    });
     _startExam();
   }
 

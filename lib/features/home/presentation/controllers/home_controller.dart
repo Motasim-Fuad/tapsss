@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../../data/models/dashboard_model.dart';
 import '../../domain/repositories/home_repository.dart';
 
@@ -33,7 +34,11 @@ class HomeController extends GetxController {
     }
   }
 
-  void openChapter(String chapterId) {
-    Get.toNamed(AppRoutes.chapterDetail, arguments: {'chapterId': chapterId});
+  void openChapter(StudyTopicModel topic) {
+    if (!SubscriptionAccessController.to
+        .requireChapterAccess(topic.chapterNumber)) {
+      return;
+    }
+    Get.toNamed(AppRoutes.chapterDetail, arguments: {'chapterId': topic.chapterId});
   }
 }

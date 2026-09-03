@@ -10,6 +10,7 @@ import '../../../../shared/widgets/app_network_image.dart';
 import '../../../../shared/widgets/asset_placeholder.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
 import '../../../../shared/widgets/loading_widget.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfilePage extends GetView<ProfileController> {
@@ -20,6 +21,7 @@ class ProfilePage extends GetView<ProfileController> {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Obx(() {
+        SubscriptionAccessController.to.isPremium.value;
         if (controller.isLoading.value && controller.profile.value == null) {
           return ShimmerWidget.list();
         }
@@ -103,6 +105,16 @@ class ProfilePage extends GetView<ProfileController> {
                                     style: AppTextStyles.h3.copyWith(color: AppColors.white)),
                                 Text(profile.email,
                                     style: AppTextStyles.caption.copyWith(color: AppColors.white70)),
+                                const SizedBox(height: 4),
+                                Text(
+                                  SubscriptionAccessController.to.isPremium.value
+                                      ? 'Premium'.tr
+                                      : 'Free plan'.tr,
+                                  style: AppTextStyles.caption.copyWith(
+                                    color: AppColors.accent,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
@@ -160,9 +172,20 @@ class ProfilePage extends GetView<ProfileController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Card(
                   color: AppColors.surface,
-                  child: _MenuTile(
+                  child:                   _MenuTile(
                     icon: Icons.credit_card,
                     label: 'My Subscription'.tr,
+                    trailing: Text(
+                      SubscriptionAccessController.to.isPremium.value
+                          ? 'Premium'.tr
+                          : 'Free'.tr,
+                      style: AppTextStyles.caption.copyWith(
+                        color: SubscriptionAccessController.to.isPremium.value
+                            ? AppColors.success
+                            : AppColors.textSecondary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                     onTap: () => Get.toNamed(AppRoutes.subscription),
                   ),
                 ),

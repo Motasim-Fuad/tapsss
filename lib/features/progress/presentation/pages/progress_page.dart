@@ -8,6 +8,8 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
 import '../../../../shared/widgets/loading_widget.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
+import '../../../subscription/presentation/widgets/upgrade_banner.dart';
 import '../../data/models/progress_models.dart';
 import '../controllers/progress_controller.dart';
 
@@ -48,6 +50,7 @@ class ProgressPage extends GetView<ProgressController> {
             children: [
              Text('Track your readiness for the citizenship test'.tr, style: AppTextStyles.bodySecondary),
               const SizedBox(height: 16),
+              const UpgradeBanner(),
               Row(
                 children: [
                   Expanded(
@@ -157,6 +160,32 @@ class ProgressPage extends GetView<ProgressController> {
               SizedBox(
                 height: 180,
                 child: Obx(() {
+                  if (!SubscriptionAccessController.to.isPremium.value) {
+                    return InkWell(
+                      onTap: SubscriptionAccessController.to.openPaywall,
+                      borderRadius: BorderRadius.circular(14),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.lock_outline, color: AppColors.primary),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Unlock Premium to see advanced analytics'.tr,
+                              textAlign: TextAlign.center,
+                              style: AppTextStyles.caption,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
                   final points = controller.scoreHistory;
                   if (points.isEmpty) {
                     return Center(child: Text('No score data yet'.tr, style: AppTextStyles.bodySecondary));

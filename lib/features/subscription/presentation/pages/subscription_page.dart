@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/custom_button.dart';
+import '../controllers/subscription_access_controller.dart';
 import '../controllers/subscription_controller.dart';
 
 class SubscriptionPage extends GetView<SubscriptionController> {
@@ -32,32 +33,37 @@ class SubscriptionPage extends GetView<SubscriptionController> {
             children: [
               _heroCard(context),
               const SizedBox(height: 20),
-              Text('Choose your plan'.tr, style: AppTextStyles.h3),
-              const SizedBox(height: 12),
-              if (controller.isLoading.value)
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(30),
-                    child: CircularProgressIndicator(),
+              if (!controller.isPremium.value) ...[
+                Text('Choose your plan'.tr, style: AppTextStyles.h3),
+                const SizedBox(height: 12),
+                if (controller.isLoading.value)
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(30),
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
+                else if (controller.plans.isEmpty)
+                  _emptyPlans()
+                else
+                  ...controller.plans.map(
+                    (plan) => _PlanTile(
+                      plan: plan,
+                      isSelected:
+                          controller.selectedPlanId.value == plan.id,
+                      onTap: () => controller.selectPlan(plan.id),
+                    ),
                   ),
-                )
-              else if (controller.plans.isEmpty)
-                _emptyPlans()
-              else
-                ...controller.plans.map(
-                  (plan) => _PlanTile(
-                    plan: plan,
-                    isSelected:
-                        controller.selectedPlanId.value == plan.id,
-                    onTap: () => controller.selectPlan(plan.id),
-                  ),
-                ),
-              const SizedBox(height: 18),
+                const SizedBox(height: 18),
+              ] else ...[
+                _activeStatus(controller),
+                const SizedBox(height: 18),
+              ],
               Text('Premium Includes'.tr, style: AppTextStyles.h3),
               const SizedBox(height: 10),
               ..._features.map((f) => _FeatureRow(text: f)),
               const SizedBox(height: 24),
-              if (controller.plans.isNotEmpty)
+              if (!controller.isPremium.value && controller.plans.isNotEmpty)
                 CustomButton(
                   text: controller.isPurchasing.value
                       ? 'Processing...'.tr
@@ -162,6 +168,35 @@ class SubscriptionPage extends GetView<SubscriptionController> {
               );
             },
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _activeStatus(SubscriptionController controller) {
+    final access = SubscriptionAccessController.to;
+    final expires = access.expirationDate.value;
+    String subtitle = 'Your Tapass Pro access is active.'.tr;
+    if (expires != null) {
+      final date =
+          '${expires.year}-${expires.month.toString().padLeft(2, '0')}-${expires.day.toString().padLeft(2, '0')}';
+      subtitle = 'Renews or expires on @date'.trParams({'date': date});
+    }
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.successBg,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.success.withOpacity(0.4)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Premium active'.tr, style: AppTextStyles.h3),
+          const SizedBox(height: 4),
+          Text(subtitle, style: AppTextStyles.body),
         ],
       ),
     );

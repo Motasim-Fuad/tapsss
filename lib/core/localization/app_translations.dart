@@ -220,6 +220,17 @@ class AppTranslations extends Translations {
     'Payment Successful': 'Payment Successful',
     'Payment Failed': 'Payment Failed',
     'Restore Failed': 'Restore Failed',
+    'Free plan: 1 chapter and 1 mock exam. Unlock Premium for full access.':
+        'Free plan: 1 chapter and 1 mock exam. Unlock Premium for full access.',
+    'Upgrade': 'Upgrade',
+    'Premium active': 'Premium active',
+    'Your Tapass Pro access is active.': 'Your Tapass Pro access is active.',
+    'Renews or expires on @date': 'Renews or expires on @date',
+    'Unlock Premium to see advanced analytics':
+        'Unlock Premium to see advanced analytics',
+    'Premium': 'Premium',
+    'Free': 'Free',
+    'Free plan': 'Free plan',
   };
 
   static const Map<String, String> _swedish = {
@@ -438,5 +449,16 @@ class AppTranslations extends Translations {
     '/83 SEK/month': '/83 SEK/månad',
     'Most Popular': 'Mest populär',
     'Save 44%': 'Spara 44 %',
+    'Free plan: 1 chapter and 1 mock exam. Unlock Premium for full access.':
+        'Gratisplan: 1 kapitel och 1 övningsprov. Lås upp Premium för full åtkomst.',
+    'Upgrade': 'Uppgradera',
+    'Premium active': 'Premium aktiv',
+    'Your Tapass Pro access is active.': 'Din Tapass Pro-åtkomst är aktiv.',
+    'Renews or expires on @date': 'Förnyas eller löper ut @date',
+    'Unlock Premium to see advanced analytics':
+        'Lås upp Premium för att se avancerad analys',
+    'Premium': 'Premium',
+    'Free': 'Gratis',
+    'Free plan': 'Gratisplan',
   };
 }

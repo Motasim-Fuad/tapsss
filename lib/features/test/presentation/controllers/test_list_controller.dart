@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 import '../../data/models/test_list_model.dart';
 import '../../domain/repositories/test_repository.dart';
 
@@ -34,6 +35,9 @@ class TestListController extends GetxController {
   }
 
   void openTest(int testNumber) {
+    if (!SubscriptionAccessController.to.requireTestAccess(testNumber)) {
+      return;
+    }
     Get.toNamed(AppRoutes.testDetail, arguments: {'testNumber': testNumber})
         ?.then((_) => fetchTests());
   }
