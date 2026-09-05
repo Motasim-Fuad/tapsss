@@ -180,11 +180,10 @@ class _ExamReadinessCard extends StatelessWidget {
           ),
         ],
       ),
-      child: ClipRRect(
+            child: ClipRRect(
         borderRadius: BorderRadius.circular(18),
         child: Stack(
           children: [
-            // Background Image
             Positioned.fill(
               child: Opacity(
                 opacity: 0.8,
@@ -195,7 +194,6 @@ class _ExamReadinessCard extends StatelessWidget {
               ),
             ),
 
-            // Gradient Overlay
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -211,7 +209,6 @@ class _ExamReadinessCard extends StatelessWidget {
               ),
             ),
 
-            // Content
             Padding(
               padding: const EdgeInsets.all(18),
               child: Column(
@@ -311,30 +308,6 @@ class _ExamReadinessCard extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 14),
-
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   height: 46,
-                  //   child: ElevatedButton.icon(
-                  //     onPressed: () => Get.toNamed(AppRoutes.main),
-                  //     style: ElevatedButton.styleFrom(
-                  //       backgroundColor: AppColors.accent,
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(12),
-                  //       ),
-                  //     ),
-                  //     icon: const Icon(
-                  //       Icons.play_arrow,
-                  //       color: AppColors.primaryDark,
-                  //     ),
-                  //     label: Text(
-                  //       'Start Practice Test',
-                  //       style: AppTextStyles.buttonText.copyWith(
-                  //         color: AppColors.primaryDark,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

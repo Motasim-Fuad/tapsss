@@ -67,10 +67,8 @@ class _ReadinessPainter extends CustomPainter {
       ..strokeWidth = 15
       ..strokeCap = StrokeCap.round;
 
-    // Full Yellow Ring
     canvas.drawCircle(center, radius, yellowPaint);
 
-    // Blue Segments
     const double arcLength = 0.70;
 
     final starts = [

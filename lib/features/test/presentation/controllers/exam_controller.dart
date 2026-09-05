@@ -118,11 +118,6 @@ class ExamController extends GetxController {
     errorMessage.value = null;
 
     try {
-      // final answers = examData.value!.questions
-      //     .where((q) => selectedAnswers.containsKey(q.id))
-      //     .map((q) => {'questionId': q.id, 'selectedAnswer': selectedAnswers[q.id]!})
-      //     .toList();
-
       final answers = examData.value!.questions
           .map((q) => {
         'questionId': q.id,

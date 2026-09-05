@@ -56,7 +56,6 @@ class LoginController extends GetxController {
       final response = await authRepository.loginWithGoogle(idToken: idToken);
       await _finishLogin(response);
     } on SocialAuthCancelledException {
-      // User closed the Google sheet — stay on login.
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {
@@ -80,7 +79,6 @@ class LoginController extends GetxController {
       );
       await _finishLogin(response);
     } on SocialAuthCancelledException {
-      // User closed the Apple sheet — stay on login.
     } on ApiException catch (e) {
       errorMessage.value = e.message;
     } catch (_) {

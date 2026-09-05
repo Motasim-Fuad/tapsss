@@ -72,7 +72,6 @@ class AuthRemoteDataSource {
     return response.data['msg']?.toString() ?? 'OTP sent to your email';
   }
 
-  /// Returns the resetToken (if the backend issues one) alongside the message.
   Future<Map<String, dynamic>> verifyForgotPasswordOtp({
     required String email,
     required String otp,

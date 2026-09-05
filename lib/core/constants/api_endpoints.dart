@@ -3,8 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class ApiEndpoints {
   ApiEndpoints._();
 
-  /// iPhone cannot use localhost — that is the phone itself.
-  /// Use the Mac LAN IP while the backend runs on this machine.
   static String get baseUrl =>
       dotenv.env['API_BASE_URL'] ?? 'http://13.61.95.127:8000';
 

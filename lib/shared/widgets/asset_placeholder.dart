@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_text_styles.dart';
 
-/// Placeholder used wherever a local asset image (from Figma) needs to be
-/// dropped in later. Replace this widget with Image.asset('assets/images/...')
-/// once the exported asset is added to the project.
 class AssetPlaceholder extends StatelessWidget {
   final double? width;
   final double? height;

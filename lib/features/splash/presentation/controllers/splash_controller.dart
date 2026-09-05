@@ -1,8 +1,8 @@
 import 'package:arashmati_app/core/services/preference_service.dart';
+import 'package:arashmati_app/core/services/storage_service.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/storage_keys.dart';
-import '../../../../core/services/storage_service.dart';
 import '../../../auth/presentation/controllers/auth_session_controller.dart';
 import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
 
@@ -20,7 +20,6 @@ class SplashController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    // If Lottie never finishes (asset fail), still leave splash.
     Future.delayed(const Duration(seconds: 4), goNext);
   }
 
@@ -54,9 +53,7 @@ class SplashController extends GetxController {
       } else {
         Get.offAllNamed(AppRoutes.login);
       }
-    } catch (e, stack) {
-      print('SPLASH NAVIGATION ERROR: $e');
-      print(stack);
+    } catch (_) {
       Get.offAllNamed(AppRoutes.login);
     }
   }

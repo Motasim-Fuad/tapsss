@@ -1,7 +1,6 @@
 class StorageKeys {
   StorageKeys._();
 
-  // Secure Storage
   static const String accessToken = 'access_token';
   static const String refreshToken = 'refresh_token';
   static const String userId = 'user_id';
@@ -9,7 +8,6 @@ class StorageKeys {
   static const String userEmail = 'user_email';
   static const String userProfilePic = 'user_profile_pic';
 
-  // Shared Preferences
   static const String hasSeenOnboarding = 'has_seen_onboarding';
   static const String language = 'language';
   static const String themeMode = 'theme_mode';

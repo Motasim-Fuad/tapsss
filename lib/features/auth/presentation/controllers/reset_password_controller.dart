@@ -55,11 +55,4 @@ class ResetPasswordController extends GetxController {
       isLoading.value = false;
     }
   }
-
-  // @override
-  // void onClose() {
-  //   passwordController.dispose();
-  //   confirmPasswordController.dispose();
-  //   super.onClose();
-  // }
 }

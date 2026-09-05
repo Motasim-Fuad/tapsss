@@ -5,8 +5,6 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/services/revenuecat_service.dart';
 
-/// App-wide access gate driven only by RevenueCat entitlements.
-/// Free users get a limited preview; premium (`Tapass Pro`) is unlimited.
 class SubscriptionAccessController extends GetxController
     with WidgetsBindingObserver {
   static const int freeChapterCount = 1;

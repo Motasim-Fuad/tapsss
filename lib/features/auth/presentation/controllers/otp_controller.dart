@@ -67,10 +67,4 @@ class OtpController extends GetxController {
       errorMessage.value = 'Failed to resend code'.tr;
     }
   }
-
-  // @override
-  // void onClose() {
-  //   otpController.dispose();
-  //   super.onClose();
-  // }
 }

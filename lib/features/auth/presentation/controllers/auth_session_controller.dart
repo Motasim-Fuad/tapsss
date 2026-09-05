@@ -27,8 +27,6 @@ class AuthSessionController extends GetxController {
     currentUser.value = data.user;
     isLoggedIn.value = true;
 
-    // Use the backend user id as RevenueCat appUserID so the same
-    // subscription identity can be recognized across iOS and Android.
     if (Get.isRegistered<SubscriptionAccessController>()) {
       await SubscriptionAccessController.to.identifyUser(data.user.id);
     } else {
@@ -53,9 +51,7 @@ class AuthSessionController extends GetxController {
     try {
 
       await authRepository.logout();
-    } catch (_) {
-      // ignore network errors on logout, clear local session regardless
-    }
+    } catch (_) {}
     await NotificationController.to.clear();
     await SocialAuthService.instance.signOut();
     await storageService.deleteAll();

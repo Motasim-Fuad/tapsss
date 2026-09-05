@@ -40,14 +40,12 @@ class SubscriptionController extends GetxController {
 
   Offering? currentOffering;
 
-  // iOS product IDs
   static const Map<String, String> _iosProductLabels = {
     '3_months_premium_study_materials': '3 Months',
     '6_months_premium_study_materials': '6 Months',
     'yearly_premium_study_materials': 'Yearly',
   };
 
-  // Android product IDs
   static const Map<String, String> _androidProductLabels = {
     'tapass_premium:3-months-premium-study-materials': '3 Months',
     'tapass_premium:6-months-premium-study-materials': '6 Months',
@@ -90,7 +88,6 @@ class SubscriptionController extends GetxController {
     isLoading.value = true;
 
     try {
-      // This already returns the CURRENT Offering.
       final Offering? offering =
       await RevenueCatService.getCurrentOffering();
 
@@ -99,7 +96,6 @@ class SubscriptionController extends GetxController {
       final loadedPlans = <SubscriptionPlan>[];
 
       if (offering != null) {
-        // No .current here because `offering` is already an Offering.
         for (final package in offering.availablePackages) {
           final productId = package.storeProduct.identifier;
           final label = _productLabels[productId];
@@ -201,7 +197,6 @@ class SubscriptionController extends GetxController {
     } catch (e) {
       final message = e.toString();
 
-      // RevenueCat returns a platform exception for cancellation too.
       if (message.toLowerCase().contains('cancel')) {
         return;
       }

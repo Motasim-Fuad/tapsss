@@ -25,14 +25,12 @@ class OnboardingController extends GetxController {
   final PageController pageController = PageController();
   final RxInt currentPage = 0.obs;
 
-  /// Onboarding Images
   final List<String> images = [
     'assets/images/onboarding1.png',
     'assets/images/onboarding2.png',
     'assets/images/onboarding3.png',
   ];
 
-  /// Onboarding Content
   final List<OnboardingSlide> slides = [
     OnboardingSlide(
       title: 'Prepare for Your Swedish Citizenship Journey'.tr,
