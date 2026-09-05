@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
@@ -82,13 +84,15 @@ class LoginPage extends GetView<LoginController> {
                             ? null
                             : controller.loginWithGoogle,
                       ),
-                      const SizedBox(width: 16),
-                      _SocialIconButton(
-                        icon: Icons.apple,
-                        onTap: controller.isLoading.value
-                            ? null
-                            : controller.loginWithApple,
-                      ),
+                      if (Platform.isIOS) ...[
+                        const SizedBox(width: 16),
+                        _SocialIconButton(
+                          icon: Icons.apple,
+                          onTap: controller.isLoading.value
+                              ? null
+                              : controller.loginWithApple,
+                        ),
+                      ],
                     ],
                   )),
               const SizedBox(height: 24),

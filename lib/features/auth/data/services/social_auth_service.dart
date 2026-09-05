@@ -29,10 +29,12 @@ class SocialAuthService {
   GoogleSignIn get googleSignIn {
     if (_googleSignIn != null) return _googleSignIn!;
     final iosClientId = dotenv.env['GOOGLE_IOS_CLIENT_ID']?.trim() ?? '';
+    final webClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID']?.trim() ?? '';
 
     _googleSignIn = GoogleSignIn(
-      scopes: const ['email', 'profile'],
+      scopes: const ['email', 'profile', 'openid'],
       clientId: Platform.isIOS && iosClientId.isNotEmpty ? iosClientId : null,
+      serverClientId: webClientId.isNotEmpty ? webClientId : null,
     );
     return _googleSignIn!;
   }
