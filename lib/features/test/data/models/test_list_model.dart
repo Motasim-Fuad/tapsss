@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class TestsOverviewModel {
   final int completedCount;
   final int totalTests;
@@ -13,10 +15,10 @@ class TestsOverviewModel {
 
   factory TestsOverviewModel.fromJson(Map<String, dynamic> json) {
     return TestsOverviewModel(
-      completedCount: json['completedCount'] ?? 0,
-      totalTests: json['totalTests'] ?? 0,
-      bestScore: json['bestScore'],
-      avgScore: json['avgScore'],
+      completedCount: asInt(json['completedCount']),
+      totalTests: asInt(json['totalTests']),
+      bestScore: asIntOrNull(json['bestScore']),
+      avgScore: asIntOrNull(json['avgScore']),
     );
   }
 }
@@ -44,12 +46,12 @@ class TestListItemModel {
 
   factory TestListItemModel.fromJson(Map<String, dynamic> json) {
     return TestListItemModel(
-      testNumber: json['testNumber'] ?? 0,
+      testNumber: asInt(json['testNumber']),
       testName: json['testName']?.toString() ?? '',
-      durationMinutes: json['durationMinutes'] ?? 0,
-      totalQuestions: json['totalQuestions'] ?? 0,
+      durationMinutes: asInt(json['durationMinutes']),
+      totalQuestions: asInt(json['totalQuestions']),
       isCompleted: json['isCompleted'] == true,
-      bestScore: json['bestScore'],
+      bestScore: asIntOrNull(json['bestScore']),
       passed: json['passed'] == true,
       action: json['action']?.toString() ?? 'Start Test',
     );

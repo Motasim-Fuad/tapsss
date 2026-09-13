@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class StudyTopicModel {
   final int chapterNumber;
   final String chapterId;
@@ -17,12 +19,12 @@ class StudyTopicModel {
 
   factory StudyTopicModel.fromJson(Map<String, dynamic> json) {
     return StudyTopicModel(
-      chapterNumber: json['chapterNumber'] ?? 0,
+      chapterNumber: asInt(json['chapterNumber']),
       chapterId: json['chapterId']?.toString() ?? '',
       title: json['title']?.toString() ?? '',
       subtitle: json['subtitle']?.toString() ?? '',
       coverImage: json['coverImage']?.toString() ?? '',
-      totalLessons: json['totalLessons'] ?? 0,
+      totalLessons: asInt(json['totalLessons']),
     );
   }
 }
@@ -71,11 +73,11 @@ class DashboardModel {
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     return DashboardModel(
-      examReadinessScore: json['examReadinessScore'] ?? 0,
+      examReadinessScore: asInt(json['examReadinessScore']),
       examStatus: json['examStatus']?.toString() ?? '',
-      totalTests: json['totalTests'] ?? 0,
-      testsDone: json['testsDone'] ?? 0,
-      streak: json['streak'] ?? 0,
+      totalTests: asInt(json['totalTests']),
+      testsDone: asInt(json['testsDone']),
+      streak: asInt(json['streak']),
       studyTopics: (json['studyTopics'] as List? ?? [])
           .map((e) => StudyTopicModel.fromJson(e))
           .toList(),

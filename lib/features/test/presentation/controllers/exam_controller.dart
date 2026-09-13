@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/error/exceptions.dart';
@@ -139,7 +140,9 @@ class ExamController extends GetxController {
     } on ApiException catch (e) {
       errorMessage.value = e.message;
       isSubmitting.value = false;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      debugPrint('[Exam] submit failed: $e');
+      debugPrint('$stackTrace');
       errorMessage.value = 'Something went wrong. Please try again.'.tr;
       isSubmitting.value = false;
     }

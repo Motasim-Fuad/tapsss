@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class TestResultModel {
   final int testNumber;
   final String testName;
@@ -23,14 +25,14 @@ class TestResultModel {
 
   factory TestResultModel.fromJson(Map<String, dynamic> json) {
     return TestResultModel(
-      testNumber: json['testNumber'] ?? 0,
+      testNumber: asInt(json['testNumber']),
       testName: json['testName']?.toString() ?? '',
-      totalQuestions: json['totalQuestions'] ?? 0,
-      score: json['score'] ?? 0,
-      correctCount: json['correctCount'] ?? 0,
-      incorrectCount: json['incorrectCount'] ?? 0,
-      accuracyRate: json['accuracyRate'] ?? 0,
-      timeTaken: json['timeTaken'] ?? 0,
+      totalQuestions: asInt(json['totalQuestions']),
+      score: asInt(json['score']),
+      correctCount: asInt(json['correctCount']),
+      incorrectCount: asInt(json['incorrectCount']),
+      accuracyRate: asInt(json['accuracyRate']),
+      timeTaken: asInt(json['timeTaken']),
       timeTakenFormatted: json['timeTakenFormatted']?.toString() ?? '',
     );
   }

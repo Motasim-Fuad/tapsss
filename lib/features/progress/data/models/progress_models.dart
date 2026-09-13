@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class ProgressOverviewModel {
   final int readinessScore;
   final String weekChange;
@@ -17,12 +19,12 @@ class ProgressOverviewModel {
 
   factory ProgressOverviewModel.fromJson(Map<String, dynamic> json) {
     return ProgressOverviewModel(
-      readinessScore: json['readinessScore'] ?? 0,
+      readinessScore: asInt(json['readinessScore']),
       weekChange: json['weekChange']?.toString() ?? '0%',
-      testsDone: json['testsDone'] ?? 0,
-      totalTests: json['totalTests'] ?? 0,
-      accuracy: json['accuracy'] ?? 0,
-      streak: json['streak'] ?? 0,
+      testsDone: asInt(json['testsDone']),
+      totalTests: asInt(json['totalTests']),
+      accuracy: asInt(json['accuracy']),
+      streak: asInt(json['streak']),
     );
   }
 }
@@ -50,9 +52,9 @@ class TestHistoryItemModel {
     return TestHistoryItemModel(
       testId: json['testId']?.toString() ?? '',
       testName: json['testName']?.toString() ?? '',
-      testNumber: json['testNumber'] ?? 0,
-      score: json['score'] ?? 0,
-      totalMarks: json['totalMarks'] ?? 100,
+      testNumber: asInt(json['testNumber']),
+      score: asInt(json['score']),
+      totalMarks: asInt(json['totalMarks'], fallback: 100),
       date: json['date']?.toString() ?? '',
       statusColor: json['statusColor']?.toString() ?? 'green',
     );
@@ -79,9 +81,9 @@ class ScoreHistoryPointModel {
   factory ScoreHistoryPointModel.fromJson(Map<String, dynamic> json) {
     return ScoreHistoryPointModel(
       testId: json['testId']?.toString() ?? '',
-      testNumber: json['testNumber'] ?? 0,
+      testNumber: asInt(json['testNumber']),
       testName: json['testName']?.toString() ?? '',
-      score: json['score'] ?? 0,
+      score: asInt(json['score']),
       date: json['date']?.toString() ?? '',
       day: json['day']?.toString() ?? '',
     );

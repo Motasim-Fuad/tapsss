@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,14 +52,21 @@ class EditProfileController extends GetxController {
         name: name,
         imagePath: pickedImagePath.value,
       );
-      sessionController.updateUser(sessionController.currentUser.value!.copyWith(
-        name: updated.name,
-        profilePic: updated.profilePic,
-      ));
+      final current = sessionController.currentUser.value;
+      if (current != null) {
+        sessionController.updateUser(
+          current.copyWith(
+            name: updated.name,
+            profilePic: updated.profilePic,
+          ),
+        );
+      }
       Get.back();
     } on ApiException catch (e) {
       errorMessage.value = e.message;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      debugPrint('[Profile] update failed: $e');
+      debugPrint('$stackTrace');
       errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;

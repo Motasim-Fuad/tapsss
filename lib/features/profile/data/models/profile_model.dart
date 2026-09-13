@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class TestStatsModel {
   final int totalTests;
   final int completedCount;
@@ -13,10 +15,10 @@ class TestStatsModel {
 
   factory TestStatsModel.fromJson(Map<String, dynamic> json) {
     return TestStatsModel(
-      totalTests: json['totalTests'] ?? 0,
-      completedCount: json['completedCount'] ?? 0,
-      bestScore: json['bestScore'] ?? 0,
-      averageScore: json['averageScore'] ?? 0,
+      totalTests: asInt(json['totalTests']),
+      completedCount: asInt(json['completedCount']),
+      bestScore: asInt(json['bestScore']),
+      averageScore: asInt(json['averageScore']),
     );
   }
 }
@@ -51,7 +53,7 @@ class ProfileModel {
       role: user['role']?.toString() ?? 'user',
       profilePic: user['profile_pic']?.toString(),
       isVerified: user['isVerified'] == true,
-      streak: user['streak'] ?? 0,
+      streak: asInt(user['streak']),
       testStats: TestStatsModel.fromJson(json['testStats'] ?? {}),
     );
   }

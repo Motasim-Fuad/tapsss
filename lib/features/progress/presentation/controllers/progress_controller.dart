@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../data/models/progress_models.dart';
@@ -36,7 +37,9 @@ class ProgressController extends GetxController {
       scoreHistory.assignAll(results[2] as List<ScoreHistoryPointModel>);
     } on ApiException catch (e) {
       errorMessage.value = e.message;
-    } catch (_) {
+    } catch (e, stackTrace) {
+      debugPrint('[Progress] load failed: $e');
+      debugPrint('$stackTrace');
       errorMessage.value = 'Something went wrong. Please try again.'.tr;
     } finally {
       isLoading.value = false;
