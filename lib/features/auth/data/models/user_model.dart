@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class UserModel {
   final String id;
   final String name;
@@ -29,7 +31,7 @@ class UserModel {
       role: json['role']?.toString() ?? 'user',
       profilePic: json['profile_pic']?.toString(),
       isVerified: json['isVerified'] == true,
-      streak: json['streak'] is int ? json['streak'] : int.tryParse('${json['streak']}') ?? 0,
+      streak: asInt(json['streak']),
       lastLoginDate: json['lastLoginDate']?.toString(),
       createdAt: json['createdAt']?.toString(),
     );

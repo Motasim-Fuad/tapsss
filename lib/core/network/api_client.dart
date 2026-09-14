@@ -66,9 +66,22 @@ class ApiClient {
     } else if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.connectionError) {
-      message = 'Connection failed. Check your internet and try again.';
+      message = 'Connection failed. Check your internet and try again.'.tr;
+    }
+
+    if (_isAuthMessage(message)) {
+      message = 'Something went wrong. Please try again.'.tr;
     }
 
     return ApiException(message, statusCode: e.response?.statusCode);
+  }
+
+  bool _isAuthMessage(String message) {
+    final lower = message.toLowerCase();
+    return lower.contains('jwt') ||
+        lower.contains('token expired') ||
+        lower.contains('invalid token') ||
+        lower.contains('unauthorized') ||
+        lower.contains('access denied');
   }
 }

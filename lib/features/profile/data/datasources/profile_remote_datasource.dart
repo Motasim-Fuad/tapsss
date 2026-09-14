@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../core/utils/json_parsers.dart';
 import '../models/faq_model.dart';
 import '../models/profile_model.dart';
 
@@ -12,7 +13,7 @@ class ProfileRemoteDataSource {
 
   Future<ProfileModel> getProfile() async {
     final response = await apiClient.get(ApiEndpoints.profile);
-    return ProfileModel.fromJson(response.data);
+    return ProfileModel.fromJson(asJsonMap(response.data));
   }
 
   Future<ProfileModel> updateProfile({required String name, String? imagePath}) async {
@@ -22,7 +23,7 @@ class ProfileRemoteDataSource {
     });
 
     final response = await apiClient.patch(ApiEndpoints.profile, data: formData);
-    return ProfileModel.fromJson(response.data);
+    return ProfileModel.fromJson(asJsonMap(response.data));
   }
 
   Future<List<FaqModel>> getFaqs() async {

@@ -78,11 +78,11 @@ class DashboardModel {
       totalTests: asInt(json['totalTests']),
       testsDone: asInt(json['testsDone']),
       streak: asInt(json['streak']),
-      studyTopics: (json['studyTopics'] as List? ?? [])
-          .map((e) => StudyTopicModel.fromJson(e))
+      studyTopics: asJsonMapList(json['studyTopics'])
+          .map(StudyTopicModel.fromJson)
           .toList(),
-      recentActivity: (json['recentActivity'] as List? ?? [])
-          .map((e) => RecentActivityModel.fromJson(e))
+      recentActivity: asJsonMapList(json['recentActivity'])
+          .map(RecentActivityModel.fromJson)
           .toList(),
     );
   }

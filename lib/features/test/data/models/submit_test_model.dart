@@ -74,16 +74,17 @@ class ReviewAnswerModel {
   });
 
   factory ReviewAnswerModel.fromJson(Map<String, dynamic> json) {
-    final rawOptions = json['options'] as Map<String, dynamic>? ?? {};
+    final rawOptions = asStringMap(json['options']);
+    final topicJson = json['topic'];
     return ReviewAnswerModel(
-      questionId: json['questionId']?.toString() ?? '',
-      questionText: json['questionText']?.toString() ?? '',
+      questionId: asString(json['questionId']),
+      questionText: asString(json['questionText']),
       image: (json['image']?.toString().isNotEmpty ?? false) ? json['image'].toString() : null,
-      options: rawOptions.map((key, value) => MapEntry(key, value.toString())),
+      options: rawOptions,
       selectedAnswer: json['selectedAnswer']?.toString(),
-      correctAnswer: json['correctAnswer']?.toString() ?? '',
+      correctAnswer: asString(json['correctAnswer']),
       isCorrect: json['isCorrect'] == true,
-      topic: json['topic'] != null ? TopicModel.fromJson(json['topic']) : null,
+      topic: topicJson is Map ? TopicModel.fromJson(asJsonMap(topicJson)) : null,
     );
   }
 }
@@ -96,9 +97,9 @@ class SubmitTestModel {
 
   factory SubmitTestModel.fromJson(Map<String, dynamic> json) {
     return SubmitTestModel(
-      testResult: TestResultModel.fromJson(json['testResult'] ?? {}),
-      reviewAnswers: (json['reviewAnswers'] as List? ?? [])
-          .map((e) => ReviewAnswerModel.fromJson(e))
+      testResult: TestResultModel.fromJson(asJsonMap(json['testResult'])),
+      reviewAnswers: asJsonMapList(json['reviewAnswers'])
+          .map(ReviewAnswerModel.fromJson)
           .toList(),
     );
   }

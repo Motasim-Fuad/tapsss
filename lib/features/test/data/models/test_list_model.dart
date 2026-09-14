@@ -47,13 +47,13 @@ class TestListItemModel {
   factory TestListItemModel.fromJson(Map<String, dynamic> json) {
     return TestListItemModel(
       testNumber: asInt(json['testNumber']),
-      testName: json['testName']?.toString() ?? '',
+      testName: asString(json['testName']),
       durationMinutes: asInt(json['durationMinutes']),
       totalQuestions: asInt(json['totalQuestions']),
       isCompleted: json['isCompleted'] == true,
       bestScore: asIntOrNull(json['bestScore']),
       passed: json['passed'] == true,
-      action: json['action']?.toString() ?? 'Start Test',
+      action: asString(json['action'], fallback: 'Start Test'),
     );
   }
 }
@@ -65,9 +65,10 @@ class TestListModel {
   TestListModel({required this.overview, required this.tests});
 
   factory TestListModel.fromJson(Map<String, dynamic> json) {
+    final root = json['data'] is Map ? asJsonMap(json['data']) : json;
     return TestListModel(
-      overview: TestsOverviewModel.fromJson(json['overview'] ?? {}),
-      tests: (json['tests'] as List? ?? []).map((e) => TestListItemModel.fromJson(e)).toList(),
+      overview: TestsOverviewModel.fromJson(asJsonMap(root['overview'])),
+      tests: asJsonMapList(root['tests']).map(TestListItemModel.fromJson).toList(),
     );
   }
 }

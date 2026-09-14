@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class TestDetailModel {
   final int testNumber;
   final String testName;
@@ -23,15 +25,15 @@ class TestDetailModel {
 
   factory TestDetailModel.fromJson(Map<String, dynamic> json) {
     return TestDetailModel(
-      testNumber: json['testNumber'] ?? 0,
-      testName: json['testName']?.toString() ?? '',
-      durationMinutes: json['durationMinutes'] ?? 0,
-      totalQuestions: json['totalQuestions'] ?? 0,
-      passingPercentage: json['passingPercentage'] ?? 70,
+      testNumber: asInt(json['testNumber']),
+      testName: asString(json['testName']),
+      durationMinutes: asInt(json['durationMinutes']),
+      totalQuestions: asInt(json['totalQuestions']),
+      passingPercentage: asInt(json['passingPercentage'], fallback: 70),
       isCompleted: json['isCompleted'] == true,
-      bestScore: json['bestScore'],
+      bestScore: asIntOrNull(json['bestScore']),
       passed: json['passed'] == true,
-      action: json['action']?.toString() ?? 'Start Test',
+      action: asString(json['action'], fallback: 'Start Test'),
     );
   }
 }

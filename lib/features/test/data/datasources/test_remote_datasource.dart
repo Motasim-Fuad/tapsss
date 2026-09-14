@@ -1,5 +1,6 @@
 import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../core/utils/json_parsers.dart';
 import '../models/start_test_model.dart';
 import '../models/submit_test_model.dart';
 import '../models/test_detail_model.dart';
@@ -12,17 +13,17 @@ class TestRemoteDataSource {
 
   Future<TestListModel> getTests() async {
     final response = await apiClient.get(ApiEndpoints.tests);
-    return TestListModel.fromJson(response.data);
+    return TestListModel.fromJson(asJsonMap(response.data));
   }
 
   Future<TestDetailModel> getTestByNumber(int testNumber) async {
     final response = await apiClient.get(ApiEndpoints.testByNumber(testNumber));
-    return TestDetailModel.fromJson(response.data['test'] ?? {});
+    return TestDetailModel.fromJson(asJsonMap(response.data['test']));
   }
 
   Future<StartTestModel> startTest(int testNumber) async {
     final response = await apiClient.get(ApiEndpoints.startTest(testNumber));
-    return StartTestModel.fromJson(response.data);
+    return StartTestModel.fromJson(asJsonMap(response.data));
   }
 
   Future<SubmitTestModel> submitTest({
@@ -34,6 +35,6 @@ class TestRemoteDataSource {
       ApiEndpoints.submitTest(testNumber),
       data: {'answers': answers, 'timeTaken': timeTaken},
     );
-    return SubmitTestModel.fromJson(response.data);
+    return SubmitTestModel.fromJson(asJsonMap(response.data));
   }
 }

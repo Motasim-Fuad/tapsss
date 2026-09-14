@@ -1,5 +1,6 @@
 import 'package:arashmati_app/features/notification/presentation/controllers/notification_controller.dart';
 import 'package:get/get.dart';
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/storage_keys.dart';
 import '../../../../core/services/storage_service.dart';
 import '../../../../core/services/revenuecat_service.dart';
@@ -66,5 +67,27 @@ class AuthSessionController extends GetxController {
     }
     currentUser.value = null;
     isLoggedIn.value = false;
+  }
+
+  Future<void> onSessionExpired() async {
+    try {
+      if (Get.isRegistered<NotificationController>()) {
+        await NotificationController.to.clear();
+      }
+    } catch (_) {}
+    try {
+      await SocialAuthService.instance.signOut();
+    } catch (_) {}
+    await storageService.deleteAll();
+    if (Get.isRegistered<SubscriptionAccessController>()) {
+      try {
+        await SubscriptionAccessController.to.clearUser();
+      } catch (_) {}
+    }
+    currentUser.value = null;
+    isLoggedIn.value = false;
+    if (Get.currentRoute != AppRoutes.login) {
+      Get.offAllNamed(AppRoutes.login);
+    }
   }
 }

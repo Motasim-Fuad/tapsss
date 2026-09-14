@@ -45,16 +45,16 @@ class ProfileModel {
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
-    final user = json['user'] ?? {};
+    final user = asJsonMap(json['user'] ?? json['userData']);
     return ProfileModel(
-      id: user['_id']?.toString() ?? '',
-      name: user['name']?.toString() ?? '',
-      email: user['email']?.toString() ?? '',
-      role: user['role']?.toString() ?? 'user',
+      id: asString(user['_id']),
+      name: asString(user['name']),
+      email: asString(user['email']),
+      role: asString(user['role'], fallback: 'user'),
       profilePic: user['profile_pic']?.toString(),
       isVerified: user['isVerified'] == true,
       streak: asInt(user['streak']),
-      testStats: TestStatsModel.fromJson(json['testStats'] ?? {}),
+      testStats: TestStatsModel.fromJson(asJsonMap(json['testStats'])),
     );
   }
 }

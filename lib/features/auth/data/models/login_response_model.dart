@@ -1,3 +1,4 @@
+import '../../../../core/utils/json_parsers.dart';
 import 'user_model.dart';
 
 class LoginResponseModel {
@@ -15,7 +16,7 @@ class LoginResponseModel {
     return LoginResponseModel(
       accessToken: json['accessToken']?.toString() ?? '',
       refreshToken: json['refreshToken']?.toString() ?? '',
-      user: UserModel.fromJson(json['userData'] ?? json['user'] ?? {}),
+      user: UserModel.fromJson(asJsonMap(json['userData'] ?? json['user'])),
     );
   }
 }

@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class OverallProgressModel {
   final int totalChapters;
   final int completedChapters;
@@ -15,11 +17,11 @@ class OverallProgressModel {
 
   factory OverallProgressModel.fromJson(Map<String, dynamic> json) {
     return OverallProgressModel(
-      totalChapters: json['totalChapters'] ?? 0,
-      completedChapters: json['completedChapters'] ?? 0,
-      totalLessons: json['totalLessons'] ?? 0,
-      completedLessons: json['completedLessons'] ?? 0,
-      progressPercentage: json['progressPercentage'] ?? 0,
+      totalChapters: asInt(json['totalChapters']),
+      completedChapters: asInt(json['completedChapters']),
+      totalLessons: asInt(json['totalLessons']),
+      completedLessons: asInt(json['completedLessons']),
+      progressPercentage: asInt(json['progressPercentage']),
     );
   }
 }
@@ -49,14 +51,14 @@ class ChapterModel {
 
   factory ChapterModel.fromJson(Map<String, dynamic> json) {
     return ChapterModel(
-      id: json['_id']?.toString() ?? '',
-      chapterNumber: json['chapterNumber'] ?? 0,
-      title: json['title']?.toString() ?? '',
-      subtitle: json['subtitle']?.toString() ?? '',
-      coverImage: json['coverImage']?.toString() ?? '',
-      totalLessons: json['totalLessons'] ?? 0,
-      completedLessons: json['completedLessons'] ?? 0,
-      progressPercentage: json['progressPercentage'] ?? 0,
+      id: asString(json['_id']),
+      chapterNumber: asInt(json['chapterNumber']),
+      title: asString(json['title']),
+      subtitle: asString(json['subtitle']),
+      coverImage: asString(json['coverImage']),
+      totalLessons: asInt(json['totalLessons']),
+      completedLessons: asInt(json['completedLessons']),
+      progressPercentage: asInt(json['progressPercentage']),
       isChapterCompleted: json['isChapterCompleted'] == true,
     );
   }
@@ -69,9 +71,14 @@ class StudyMaterialsModel {
   StudyMaterialsModel({required this.overallProgress, required this.chapters});
 
   factory StudyMaterialsModel.fromJson(Map<String, dynamic> json) {
+    final root = json['data'] is Map ? asJsonMap(json['data']) : json;
     return StudyMaterialsModel(
-      overallProgress: OverallProgressModel.fromJson(json['overallProgress'] ?? {}),
-      chapters: (json['chapters'] as List? ?? []).map((e) => ChapterModel.fromJson(e)).toList(),
+      overallProgress: OverallProgressModel.fromJson(
+        asJsonMap(root['overallProgress']),
+      ),
+      chapters: asJsonMapList(root['chapters'])
+          .map(ChapterModel.fromJson)
+          .toList(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import '../../../../core/constants/api_endpoints.dart';
 import '../../../../core/network/api_client.dart';
+import '../../../../core/utils/json_parsers.dart';
 import '../models/dashboard_model.dart';
 
 class HomeRemoteDataSource {
@@ -9,6 +10,6 @@ class HomeRemoteDataSource {
 
   Future<DashboardModel> getDashboard() async {
     final response = await apiClient.get(ApiEndpoints.dashboard);
-    return DashboardModel.fromJson(response.data['data'] ?? {});
+    return DashboardModel.fromJson(asJsonMap(response.data['data']));
   }
 }

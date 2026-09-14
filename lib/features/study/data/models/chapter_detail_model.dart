@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class ParagraphModel {
   final String id;
   final int order;
@@ -7,9 +9,9 @@ class ParagraphModel {
 
   factory ParagraphModel.fromJson(Map<String, dynamic> json) {
     return ParagraphModel(
-      id: json['_id']?.toString() ?? '',
-      order: json['paragraphOrder'] ?? 0,
-      content: json['content']?.toString() ?? '',
+      id: asString(json['_id']),
+      order: asInt(json['paragraphOrder']),
+      content: asString(json['content']),
     );
   }
 }
@@ -31,12 +33,13 @@ class LessonModel {
 
   factory LessonModel.fromJson(Map<String, dynamic> json) {
     return LessonModel(
-      id: json['_id']?.toString() ?? '',
-      order: json['lessonOrder'] ?? 0,
-      heading: json['heading']?.toString() ?? '',
+      id: asString(json['_id']),
+      order: asInt(json['lessonOrder']),
+      heading: asString(json['heading']),
       lessonImage: json['lessonImage']?.toString(),
-      paragraphs:
-          (json['paragraphs'] as List? ?? []).map((e) => ParagraphModel.fromJson(e)).toList(),
+      paragraphs: asJsonMapList(json['paragraphs'])
+          .map(ParagraphModel.fromJson)
+          .toList(),
     );
   }
 }
@@ -70,18 +73,19 @@ class ChapterDetailModel {
 
   factory ChapterDetailModel.fromJson(Map<String, dynamic> json) {
     return ChapterDetailModel(
-      id: json['_id']?.toString() ?? '',
-      chapterNumber: json['chapterNumber'] ?? 0,
-      title: json['title']?.toString() ?? '',
-      subtitle: json['subtitle']?.toString() ?? '',
-      coverImage: json['coverImage']?.toString() ?? '',
-      totalLessons: json['totalLessons'] ?? 0,
-      completedLessons: json['completedLessons'] ?? 0,
-      progressPercentage: json['progressPercentage'] ?? 0,
+      id: asString(json['_id']),
+      chapterNumber: asInt(json['chapterNumber']),
+      title: asString(json['title']),
+      subtitle: asString(json['subtitle']),
+      coverImage: asString(json['coverImage']),
+      totalLessons: asInt(json['totalLessons']),
+      completedLessons: asInt(json['completedLessons']),
+      progressPercentage: asInt(json['progressPercentage']),
       isChapterCompleted: json['isChapterCompleted'] == true,
-      lessons: (json['lessons'] as List? ?? []).map((e) => LessonModel.fromJson(e)).toList(),
-      completedLessonIds:
-          (json['completedLessonIds'] as List? ?? []).map((e) => e.toString()).toList(),
+      lessons: asJsonMapList(json['lessons']).map(LessonModel.fromJson).toList(),
+      completedLessonIds: (json['completedLessonIds'] as List? ?? [])
+          .map((e) => e.toString())
+          .toList(),
     );
   }
 }

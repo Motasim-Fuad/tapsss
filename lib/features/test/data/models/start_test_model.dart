@@ -1,3 +1,5 @@
+import '../../../../core/utils/json_parsers.dart';
+
 class QuestionModel {
   final String id;
   final String questionText;
@@ -12,12 +14,13 @@ class QuestionModel {
   });
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) {
-    final rawOptions = json['options'] as Map<String, dynamic>? ?? {};
     return QuestionModel(
-      id: json['_id']?.toString() ?? '',
-      questionText: json['questionText']?.toString() ?? '',
-      image: (json['image']?.toString().isNotEmpty ?? false) ? json['image'].toString() : null,
-      options: rawOptions.map((key, value) => MapEntry(key, value.toString())),
+      id: asString(json['_id']),
+      questionText: asString(json['questionText']),
+      image: (json['image']?.toString().isNotEmpty ?? false)
+          ? json['image'].toString()
+          : null,
+      options: asStringMap(json['options']),
     );
   }
 }
@@ -40,15 +43,16 @@ class StartTestModel {
   });
 
   factory StartTestModel.fromJson(Map<String, dynamic> json) {
-    final test = json['test'] ?? {};
+    final test = asJsonMap(json['test']);
     return StartTestModel(
-      testNumber: test['testNumber'] ?? 0,
-      testName: test['testName']?.toString() ?? '',
-      durationMinutes: test['durationMinutes'] ?? 0,
-      totalQuestions: test['totalQuestions'] ?? 0,
-      passingPercentage: test['passingPercentage'] ?? 70,
-      questions:
-          (json['questions'] as List? ?? []).map((e) => QuestionModel.fromJson(e)).toList(),
+      testNumber: asInt(test['testNumber']),
+      testName: asString(test['testName']),
+      durationMinutes: asInt(test['durationMinutes']),
+      totalQuestions: asInt(test['totalQuestions']),
+      passingPercentage: asInt(test['passingPercentage'], fallback: 70),
+      questions: asJsonMapList(json['questions'])
+          .map(QuestionModel.fromJson)
+          .toList(),
     );
   }
 }
