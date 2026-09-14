@@ -13,14 +13,14 @@ class LocaleService {
   static const Locale swedish = Locale('sv', 'SE');
 
   static Locale get initialLocale {
-    return PreferenceService.instance.getString(StorageKeys.language) == 'sv'
-        ? swedish
-        : english;
+    return PreferenceService.instance.getString(StorageKeys.language) == 'en'
+        ? english
+        : swedish;
   }
 
   static String get currentLanguageCode {
     final code = PreferenceService.instance.getString(StorageKeys.language);
-    return code == 'sv' ? 'sv' : 'en';
+    return code == 'en' ? 'en' : 'sv';
   }
 
   static Future<void> changeLanguage(String languageCode) async {

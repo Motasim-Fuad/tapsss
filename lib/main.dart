@@ -46,7 +46,7 @@ class ArashmatiApp extends StatelessWidget {
       title: 'Sweden Citizenship Test',
       translations: AppTranslations(),
       locale: LocaleService.initialLocale,
-      fallbackLocale: LocaleService.english,
+      fallbackLocale: LocaleService.swedish,
       debugShowCheckedModeBanner: false,
       initialBinding: InitialBinding(),
       initialRoute: AppRoutes.splash,
