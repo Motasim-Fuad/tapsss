@@ -48,3 +48,4 @@ android/upload-keystore.jks
 /android/app/release
 
 .env
+.env
