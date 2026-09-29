@@ -14,6 +14,8 @@ plugins {
 
     // START: FlutterFire Configuration
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.firebase-perf")
     // END: FlutterFire Configuration
 
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
@@ -38,6 +40,18 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled = true
+        // Flutter adds x86_64 before this block. Clear it so the Play bundle
+        // only keeps phone ABIs. Emulator installs need a separate x86_64 build.
+        ndk {
+            abiFilters.clear()
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
+    }
+
+    packaging {
+        jniLibs {
+            excludes += "lib/x86_64/**"
+        }
     }
 
     // Release signing configuration

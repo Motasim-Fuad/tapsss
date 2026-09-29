@@ -22,7 +22,7 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.chapter.value == null) {
-          return ShimmerWidget.list();
+          return PageShimmer.chapter();
         }
 
         final chapter = controller.chapter.value;
@@ -42,7 +42,11 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
         return Column(
           children: [
             Expanded(
-              child: ListView(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 280),
+                switchInCurve: Curves.easeOutCubic,
+                child: ListView(
+                key: ValueKey(controller.currentLessonIndex.value),
                 padding: const EdgeInsets.all(20),
                 children: [
                   Row(
@@ -82,6 +86,7 @@ class ChapterDetailPage extends GetView<ChapterDetailController> {
                     ),
                   ),
                 ],
+              ),
               ),
             ),
             Padding(

@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class TestDetailPage extends GetView<TestDetailController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.testDetail.value == null) {
-          return  ShimmerWidget.list();
+          return PageShimmer.testDetail();
         }
 
         final test = controller.testDetail.value;
@@ -43,7 +44,8 @@ class TestDetailPage extends GetView<TestDetailController> {
           );
         }
 
-        return Padding(
+        return AppEntrance(
+          child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
@@ -136,6 +138,7 @@ class TestDetailPage extends GetView<TestDetailController> {
               ),
             ],
           ),
+        ),
         );
       }),
     );

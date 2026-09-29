@@ -1,4 +1,5 @@
 import 'package:arashmati_app/features/progress/presentation/widgets/readiness_widgets.dart';
+import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -28,7 +29,7 @@ class ProgressPage extends GetView<ProgressController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.overview.value == null) {
-          return  ShimmerWidget.list();
+          return PageShimmer.progress();
         }
 
         if (controller.errorMessage.value != null && controller.overview.value == null) {
@@ -47,7 +48,7 @@ class ProgressPage extends GetView<ProgressController> {
           onRefresh: controller.fetchAll,
           child: ListView(
             padding: const EdgeInsets.all(20),
-            children: [
+            children: stagger([
              Text('Track your readiness for the citizenship test'.tr, style: AppTextStyles.bodySecondary),
               const SizedBox(height: 16),
               const UpgradeBanner(),
@@ -339,7 +340,7 @@ class ProgressPage extends GetView<ProgressController> {
                       .toList(),
                 );
               }),
-            ],
+            ]),
           ),
         );
       }),

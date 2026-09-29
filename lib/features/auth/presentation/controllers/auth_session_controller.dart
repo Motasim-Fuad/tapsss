@@ -2,6 +2,7 @@ import 'package:arashmati_app/features/notification/presentation/controllers/not
 import 'package:get/get.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/constants/storage_keys.dart';
+import '../../../../core/services/observability.dart';
 import '../../../../core/services/storage_service.dart';
 import '../../../../core/services/revenuecat_service.dart';
 import '../../../subscription/presentation/controllers/subscription_access_controller.dart';
@@ -27,6 +28,8 @@ class AuthSessionController extends GetxController {
     await storageService.write(StorageKeys.userEmail, data.user.email);
     currentUser.value = data.user;
     isLoggedIn.value = true;
+
+    await Observability.setUser(data.user.id);
 
     if (Get.isRegistered<SubscriptionAccessController>()) {
       await SubscriptionAccessController.to.identifyUser(data.user.id);
@@ -67,6 +70,7 @@ class AuthSessionController extends GetxController {
     }
     currentUser.value = null;
     isLoggedIn.value = false;
+    await Observability.clearUser();
   }
 
   Future<void> onSessionExpired() async {
@@ -86,6 +90,7 @@ class AuthSessionController extends GetxController {
     }
     currentUser.value = null;
     isLoggedIn.value = false;
+    await Observability.clearUser();
     if (Get.currentRoute != AppRoutes.login) {
       Get.offAllNamed(AppRoutes.login);
     }

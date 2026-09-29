@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_text_styles.dart';
 import '../../../../shared/widgets/empty_state_widget.dart';
+import '../../../../shared/widgets/app_motion.dart';
 import '../../../../shared/widgets/shimmar_widgets.dart';
 import '../controllers/faq_controller.dart';
 
@@ -23,7 +24,7 @@ class FaqPage extends GetView<FaqController> {
       ),
       body: Obx(() {
         if (controller.isLoading.value && controller.faqs.isEmpty) {
-          return ShimmerWidget.list();
+          return PageShimmer.faq();
         }
         if (controller.errorMessage.value != null && controller.faqs.isEmpty) {
           return EmptyStateWidget(
@@ -47,7 +48,9 @@ class FaqPage extends GetView<FaqController> {
             separatorBuilder: (_, __) => const SizedBox(height: 8),
             itemBuilder: (context, index) {
               final faq = controller.faqs[index];
-              return Card(
+              return AppEntrance(
+                index: index,
+                child: Card(
                 color: AppColors.surface,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
@@ -70,6 +73,7 @@ class FaqPage extends GetView<FaqController> {
                     ],
                   ),
                 ),
+              ),
               );
             },
           ),

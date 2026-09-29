@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class StudyPage extends GetView<StudyController> {
       body: Obx(() {
         SubscriptionAccessController.to.isPremium.value;
         if (controller.isLoading.value && controller.materials.value == null) {
-          return ShimmerWidget.list();
+          return PageShimmer.study();
         }
 
         if (controller.errorMessage.value != null && controller.materials.value == null) {
@@ -47,7 +48,7 @@ class StudyPage extends GetView<StudyController> {
           onRefresh: controller.fetchMaterials,
           child: ListView(
             padding: const EdgeInsets.all(20),
-            children: [
+            children: stagger([
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -96,7 +97,7 @@ class StudyPage extends GetView<StudyController> {
                   onTap: () => controller.openChapter(chapter),
                 );
               }),
-            ],
+            ]),
           ),
         );
       }),

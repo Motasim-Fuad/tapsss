@@ -1,3 +1,4 @@
+import 'package:arashmati_app/core/services/observability.dart';
 import 'package:arashmati_app/core/services/preference_service.dart';
 import 'package:arashmati_app/core/services/storage_service.dart';
 import 'package:get/get.dart';
@@ -41,8 +42,11 @@ class SplashController extends GetxController {
 
       final hasSession = await sessionController.hasValidSession();
       if (hasSession) {
+        final userId = await Get.find<StorageService>().read(StorageKeys.userId);
+        if (userId != null && userId.isNotEmpty) {
+          await Observability.setUser(userId);
+        }
         if (Get.isRegistered<SubscriptionAccessController>()) {
-          final userId = await Get.find<StorageService>().read(StorageKeys.userId);
           if (userId != null && userId.isNotEmpty) {
             await SubscriptionAccessController.to.identifyUser(userId);
           } else {

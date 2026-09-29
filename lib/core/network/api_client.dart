@@ -5,6 +5,7 @@ import '../error/exceptions.dart';
 import '../services/storage_service.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
+import 'interceptors/performance_interceptor.dart';
 
 class ApiClient {
   late final Dio dio;
@@ -20,6 +21,7 @@ class ApiClient {
     );
 
     dio.interceptors.add(AuthInterceptor(storageService: storageService, dio: dio));
+    dio.interceptors.add(PerformanceInterceptor());
     dio.interceptors.add(LoggingInterceptor());
   }
 

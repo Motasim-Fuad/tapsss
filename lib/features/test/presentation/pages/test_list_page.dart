@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class TestListPage extends GetView<TestListController> {
       body: Obx(() {
         SubscriptionAccessController.to.isPremium.value;
         if (controller.isLoading.value && controller.testList.value == null) {
-          return  ShimmerWidget.list();
+          return PageShimmer.tests();
         }
 
         if (controller.errorMessage.value != null && controller.testList.value == null) {
@@ -47,7 +48,7 @@ class TestListPage extends GetView<TestListController> {
           onRefresh: controller.fetchTests,
           child: ListView(
             padding: const EdgeInsets.all(20),
-            children: [
+            children: stagger([
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
@@ -77,7 +78,7 @@ class TestListPage extends GetView<TestListController> {
                   onTap: () => controller.openTest(test.testNumber),
                 );
               }),
-            ],
+            ]),
           ),
         );
       }),

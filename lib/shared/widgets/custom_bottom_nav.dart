@@ -38,10 +38,15 @@ class CustomBottomNav extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        isActive ? item.activeIcon : item.icon,
-                        color: isActive ? AppColors.primary : AppColors.textHint,
-                        size: 24,
+                      AnimatedScale(
+                        scale: isActive ? 1.12 : 1,
+                        duration: const Duration(milliseconds: 220),
+                        curve: Curves.easeOutBack,
+                        child: Icon(
+                          isActive ? item.activeIcon : item.icon,
+                          color: isActive ? AppColors.primary : AppColors.textHint,
+                          size: 24,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(

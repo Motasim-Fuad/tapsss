@@ -6,6 +6,7 @@ import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/progress/presentation/pages/progress_page.dart';
 import '../../features/study/presentation/pages/study_page.dart';
 import '../../features/test/presentation/pages/test_list_page.dart';
+import '../../shared/widgets/app_motion.dart';
 import '../../shared/widgets/custom_bottom_nav.dart';
 
 class MainController extends GetxController {
@@ -33,7 +34,16 @@ class MainPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Obx(() => IndexedStack(index: controller.currentIndex.value, children: pages)),
+      body: Obx(() {
+        final index = controller.currentIndex.value;
+        return IndexedStack(
+          index: index,
+          children: [
+            for (var i = 0; i < pages.length; i++)
+              TabSwitchFade(play: i == index, child: pages[i]),
+          ],
+        );
+      }),
       bottomNavigationBar: Obx(() => CustomBottomNav(
             currentIndex: controller.currentIndex.value,
             onTap: controller.changeTab,

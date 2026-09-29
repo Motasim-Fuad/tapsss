@@ -1,3 +1,4 @@
+import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,7 +24,7 @@ class ProfilePage extends GetView<ProfileController> {
       body: Obx(() {
         SubscriptionAccessController.to.isPremium.value;
         if (controller.isLoading.value && controller.profile.value == null) {
-          return ShimmerWidget.list();
+          return PageShimmer.profile();
         }
 
         if (controller.errorMessage.value != null && controller.profile.value == null) {
@@ -42,7 +43,7 @@ class ProfilePage extends GetView<ProfileController> {
           onRefresh: controller.fetchProfile,
           child: ListView(
             padding: EdgeInsets.zero,
-            children: [
+            children: stagger([
               Stack(
                 children: [
                   const Positioned.fill(
@@ -280,7 +281,7 @@ class ProfilePage extends GetView<ProfileController> {
                 )),
               ),
               const SizedBox(height: 30),
-            ],
+            ]),
           ),
         );
       }),

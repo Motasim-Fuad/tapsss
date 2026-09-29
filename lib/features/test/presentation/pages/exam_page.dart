@@ -76,7 +76,7 @@ class ExamPage extends GetView<ExamController> {
         body: SafeArea(
           child: Obx(() {
             if (controller.isLoading.value && controller.examData.value == null) {
-              return  ShimmerWidget.list();
+              return PageShimmer.exam();
             }
 
             if (controller.examData.value == null) {
@@ -158,7 +158,23 @@ class ExamPage extends GetView<ExamController> {
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(20),
-                    child: Column(
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 280),
+                      switchInCurve: Curves.easeOutCubic,
+                      transitionBuilder: (child, animation) {
+                        return FadeTransition(
+                          opacity: animation,
+                          child: SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0.06, 0),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: child,
+                          ),
+                        );
+                      },
+                      child: Column(
+                      key: ValueKey(controller.currentIndex.value),
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -222,6 +238,7 @@ class ExamPage extends GetView<ExamController> {
                           );
                         }),
                       ],
+                    ),
                     ),
                   ),
                 ),

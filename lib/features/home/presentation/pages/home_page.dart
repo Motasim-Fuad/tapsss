@@ -1,4 +1,5 @@
 import 'package:arashmati_app/features/profile/presentation/controllers/profile_controller.dart';
+import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class HomePage extends GetView<HomeController> {
         child: Obx(() {
           SubscriptionAccessController.to.isPremium.value;
           if (controller.isLoading.value && controller.dashboard.value == null) {
-            return  ShimmerWidget.list();
+            return PageShimmer.home();
           }
 
           if (controller.errorMessage.value != null && controller.dashboard.value == null) {
@@ -45,7 +46,7 @@ class HomePage extends GetView<HomeController> {
             onRefresh: controller.fetchDashboard,
             child: ListView(
               padding: const EdgeInsets.all(20),
-              children: [
+              children: stagger([
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -152,7 +153,7 @@ class HomePage extends GetView<HomeController> {
                     ],
                   ),
                 ),
-              ],
+              ]),
             ),
           );
         }),
