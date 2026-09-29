@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../features/notification/presentation/bindings/inbox_binding.dart';
 import '../../features/home/presentation/bindings/home_binding.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
 import '../../features/progress/presentation/bindings/progress_binding.dart';
@@ -8,6 +9,7 @@ import '../../features/test/presentation/bindings/test_binding.dart';
 class MainBinding extends Bindings {
   @override
   void dependencies() {
+    InboxBinding().dependencies();
     HomeBinding().dependencies();
     TestBinding().dependencies();
     StudyBinding().dependencies();

@@ -5,6 +5,8 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_verification_page.dart';
 import '../../features/auth/presentation/pages/reset_password_page.dart';
 import '../../features/auth/presentation/pages/signup_page.dart';
+import '../../features/notification/presentation/bindings/inbox_binding.dart';
+import '../../features/notification/presentation/pages/notifications_page.dart';
 import '../../features/onboarding/presentation/bindings/onboarding_binding.dart';
 import '../../features/onboarding/presentation/pages/onboarding_page.dart';
 import '../../features/profile/presentation/bindings/profile_binding.dart';
@@ -105,6 +107,11 @@ class AppPages {
       name: AppRoutes.faq,
       page: () => const FaqPage(),
       binding: FaqBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.notifications,
+      page: () => const NotificationsPage(),
+      binding: InboxBinding(),
     ),
   ];
 }

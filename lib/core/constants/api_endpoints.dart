@@ -19,6 +19,10 @@ class ApiEndpoints {
   static const String changeLanguage = '/api/auth/language';
 
   static const String registerNotificationToken = '/api/notification/register-fcm-token';
+  static const String notifications = '/api/notification';
+  static const String notificationUnreadCount = '/api/notification/unread-count';
+  static const String notificationReadAll = '/api/notification/read-all';
+  static String notificationRead(String id) => '/api/notification/$id/read';
 
 
   static const String dashboard = '/api/dashboard';

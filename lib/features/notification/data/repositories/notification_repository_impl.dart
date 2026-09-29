@@ -2,8 +2,8 @@ import 'package:arashmati_app/core/services/notification_services.dart';
 import 'package:flutter/foundation.dart';
 import '../../domain/repositories/notification_repository.dart';
 import '../datasources/notification_remote_datasource.dart';
+import '../models/app_notification_model.dart';
 import '../../../../core/services/storage_service.dart';
-import '../../../../core/constants/storage_keys.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationRemoteDataSource _dataSource;
@@ -51,6 +51,18 @@ class NotificationRepositoryImpl implements NotificationRepository {
       return false;
     }
   }
+
+  @override
+  Future<NotificationInbox> fetchNotifications() => _dataSource.fetchNotifications();
+
+  @override
+  Future<int> fetchUnreadCount() => _dataSource.fetchUnreadCount();
+
+  @override
+  Future<void> markRead(String id) => _dataSource.markRead(id);
+
+  @override
+  Future<void> markAllRead() => _dataSource.markAllRead();
 
   @override
   Future<void> clearTokenData() async {

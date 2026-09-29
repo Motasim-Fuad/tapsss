@@ -257,6 +257,43 @@ class PageShimmer {
     );
   }
 
+  static Widget notifications() {
+    return _shell(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      child: Column(
+        children: [
+          for (var i = 0; i < 6; i++) ...[
+            _box(
+              height: 88,
+              radius: 16,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  _box(width: 42, height: 42, radius: 12),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _line(width: 150, height: 14),
+                        const SizedBox(height: 8),
+                        _line(height: 12),
+                        const SizedBox(height: 8),
+                        _line(width: 48, height: 10),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+          ],
+        ],
+      ),
+    );
+  }
+
   static Widget exam() {
     return _shell(
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 20),

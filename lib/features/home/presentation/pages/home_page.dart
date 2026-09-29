@@ -1,3 +1,5 @@
+import 'package:arashmati_app/config/routes/app_routes.dart';
+import 'package:arashmati_app/features/notification/presentation/controllers/inbox_controller.dart';
 import 'package:arashmati_app/features/profile/presentation/controllers/profile_controller.dart';
 import 'package:arashmati_app/shared/widgets/app_motion.dart';
 import 'package:arashmati_app/shared/widgets/shimmar_widgets.dart';
@@ -68,7 +70,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                     Row(
                       children: [
-                        const Icon(Icons.notifications_none, color: AppColors.textPrimary),
+                        const _NotificationBell(),
                         const SizedBox(width: 12),
                         Obx(() {
                           final pic =  profileController.profile.value?.profilePic;
@@ -161,6 +163,31 @@ class HomePage extends GetView<HomeController> {
     );
   }
 }
+class _NotificationBell extends StatelessWidget {
+  const _NotificationBell();
+
+  @override
+  Widget build(BuildContext context) {
+    final inbox = Get.find<InboxController>();
+    return Obx(() {
+      final count = inbox.unreadCount.value;
+      return InkWell(
+        onTap: () => Get.toNamed(AppRoutes.notifications),
+        borderRadius: BorderRadius.circular(20),
+        child: Badge(
+          isLabelVisible: count > 0,
+          backgroundColor: AppColors.error,
+          label: Text(
+            count > 99 ? '99+' : '$count',
+            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
+          ),
+          child: const Icon(Icons.notifications_none, color: AppColors.textPrimary),
+        ),
+      );
+    });
+  }
+}
+
 class _ExamReadinessCard extends StatelessWidget {
   final DashboardModel data;
 
