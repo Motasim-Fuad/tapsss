@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:arashmati_app/firebase_options.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -28,13 +28,16 @@ class SocialAuthService {
 
   GoogleSignIn get googleSignIn {
     if (_googleSignIn != null) return _googleSignIn!;
-    final iosClientId = dotenv.env['GOOGLE_IOS_CLIENT_ID']?.trim() ?? '';
-    final webClientId = dotenv.env['GOOGLE_WEB_CLIENT_ID']?.trim() ?? '';
+    // Web client (type 3) from the Firebase project. Required so Google
+    // returns an ID token the backend can verify.
+    const webClientId =
+        '347085841227-r7glvuj2mjshioto6udte7ktp5qlb595.apps.googleusercontent.com';
+    final iosClientId = DefaultFirebaseOptions.ios.iosClientId;
 
     _googleSignIn = GoogleSignIn(
       scopes: const ['email', 'profile', 'openid'],
-      clientId: Platform.isIOS && iosClientId.isNotEmpty ? iosClientId : null,
-      serverClientId: webClientId.isNotEmpty ? webClientId : null,
+      clientId: Platform.isIOS ? iosClientId : null,
+      serverClientId: webClientId,
     );
     return _googleSignIn!;
   }

@@ -404,18 +404,12 @@ class _StudyTopicCard extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 36,
+                AppNetworkImage(
+                  url: image,
                   width: 36,
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.contain,
-                    errorBuilder: (_, __, ___) => const Icon(
-                      Icons.image_not_supported,
-                      size: 30,
-                      color: Colors.grey,
-                    ),
-                  ),
+                  height: 36,
+                  fit: BoxFit.contain,
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 const SizedBox(height: 10),
                 Text(

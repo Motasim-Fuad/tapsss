@@ -15,11 +15,13 @@ class Observability {
   Observability._();
 
   static bool sentryEnabled = false;
+  static bool firebaseReady = false;
 
   static Future<void> start() async {
     final dsn = dotenv.env['SENTRY_DSN']?.trim() ?? '';
     sentryEnabled = dsn.isNotEmpty;
 
+    firebaseReady = true;
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
     await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
     await FirebasePerformance.instance.setPerformanceCollectionEnabled(true);
@@ -46,7 +48,9 @@ class Observability {
   static void bindErrorHandlers() {
     final previousFlutter = FlutterError.onError;
     FlutterError.onError = (details) {
-      FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+      if (firebaseReady) {
+        FirebaseCrashlytics.instance.recordFlutterFatalError(details);
+      }
       if (previousFlutter != null) {
         previousFlutter(details);
       } else {
@@ -56,7 +60,9 @@ class Observability {
 
     final previousPlatform = PlatformDispatcher.instance.onError;
     PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      if (firebaseReady) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      }
       final handled = previousPlatform?.call(error, stack) ?? false;
       return handled || true;
     };
@@ -66,7 +72,8 @@ class Observability {
 
   static List<NavigatorObserver> get navigatorObservers {
     return _observers ??= [
-      FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+      if (firebaseReady)
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
       if (sentryEnabled) SentryNavigatorObserver(),
     ];
   }

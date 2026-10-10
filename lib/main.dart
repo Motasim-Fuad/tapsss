@@ -17,15 +17,32 @@ import 'core/services/notification_services.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e, st) {
+    debugPrint('dotenv load failed: $e\n$st');
+  }
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await Observability.start();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await Observability.start();
+  } catch (e, st) {
+    debugPrint('Firebase init failed: $e\n$st');
+  }
 
-  await Get.putAsync(() async => await NotificationService().init());
-  await PreferenceService.instance.init();
+  try {
+    await Get.putAsync(() async => await NotificationService().init());
+  } catch (e, st) {
+    debugPrint('Notification init failed: $e\n$st');
+  }
+
+  try {
+    await PreferenceService.instance.init();
+  } catch (e, st) {
+    debugPrint('Preference init failed: $e\n$st');
+  }
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -36,14 +53,18 @@ Future<void> main() async {
   ));
 
   if (Observability.sentryEnabled) {
-    await SentryFlutter.init(
-      Observability.configureSentry,
-      appRunner: () {
-        Observability.bindErrorHandlers();
-        runApp(const ArashmatiApp());
-      },
-    );
-    return;
+    try {
+      await SentryFlutter.init(
+        Observability.configureSentry,
+        appRunner: () {
+          Observability.bindErrorHandlers();
+          runApp(const ArashmatiApp());
+        },
+      );
+      return;
+    } catch (e, st) {
+      debugPrint('Sentry init failed: $e\n$st');
+    }
   }
 
   Observability.bindErrorHandlers();

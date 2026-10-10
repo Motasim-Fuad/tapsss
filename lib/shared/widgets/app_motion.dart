@@ -39,8 +39,11 @@ class _AppEntranceState extends State<AppEntrance> with SingleTickerProviderStat
     return FadeTransition(
       opacity: curved,
       child: SlideTransition(
-        position: Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero).animate(curved),
-        child: widget.child,
+        position: Tween<Offset>(begin: const Offset(0, 0.08), end: Offset.zero).animate(curved),
+        child: ScaleTransition(
+          scale: Tween<double>(begin: 0.97, end: 1).animate(curved),
+          child: widget.child,
+        ),
       ),
     );
   }

@@ -69,6 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '347085841227',
     projectId: 'tapass-2026',
     storageBucket: 'tapass-2026.firebasestorage.app',
+    androidClientId: '347085841227-2ogv8m0rlccu5oijrftlef8m4nnbqdjv.apps.googleusercontent.com',
+    iosClientId: '347085841227-9jgbkphrulv5sajm492rl5hcldcnfd4u.apps.googleusercontent.com',
     iosBundleId: 'com.tapass.tapassapp',
   );
 }

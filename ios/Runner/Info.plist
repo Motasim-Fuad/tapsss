@@ -91,7 +91,7 @@
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
 		<key>GIDClientID</key>
-		<string>234575698534-ej4rp8sf5mb10ql7te7tuvb4bijfasfq.apps.googleusercontent.com</string>
+		<string>347085841227-9jgbkphrulv5sajm492rl5hcldcnfd4u.apps.googleusercontent.com</string>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
@@ -99,7 +99,7 @@
 				<string>Editor</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.googleusercontent.apps.234575698534-ej4rp8sf5mb10ql7te7tuvb4bijfasfq</string>
+					<string>com.googleusercontent.apps.347085841227-9jgbkphrulv5sajm492rl5hcldcnfd4u</string>
 				</array>
 			</dict>
 		</array>

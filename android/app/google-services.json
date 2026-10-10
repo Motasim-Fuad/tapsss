@@ -12,7 +12,20 @@
           "package_name": "com.tapass.tapass"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "347085841227-2ogv8m0rlccu5oijrftlef8m4nnbqdjv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tapass.tapass",
+            "certificate_hash": "2b5f24a1d29383695106ede0053cddfaee586edc"
+          }
+        },
+        {
+          "client_id": "347085841227-r7glvuj2mjshioto6udte7ktp5qlb595.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBX3C57Hd6LBdpOop8VPhHvhBJ2KQ3ERgc"
@@ -20,7 +33,20 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347085841227-r7glvuj2mjshioto6udte7ktp5qlb595.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "347085841227-9jgbkphrulv5sajm492rl5hcldcnfd4u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tapass.tapassapp",
+                "app_store_id": "6799644651"
+              }
+            }
+          ]
         }
       }
     }
